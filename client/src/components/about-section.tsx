@@ -1,12 +1,12 @@
-import type { HomepageData } from "@/lib/types";
+import type { UnifiedData } from "@/lib/unified-data-service";
 
 interface AboutSectionProps {
-  data: HomepageData;
+  data: UnifiedData | null;
   isLoading: boolean;
 }
 
 export function AboutSection({ data, isLoading }: AboutSectionProps) {
-  const { owner } = data;
+  const owner = data?.owner;
   
   const aboutText = "Janvi Dreamer, whose real name is Janvi Gautam, from Madhya Pradesh, India. Born on 23rd February, she is a passionate creator who began her YouTube journey in 2022. Beyond content creation, Janvi finds joy in reading, writing, and playing video games, which fuel her creativity and imagination. She is also an avid traveller, always eager and enthusiastic to explore new places and experiences.";
   
@@ -60,12 +60,12 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
             <div data-aos="fade-right" data-aos-delay="200">
               <div className="bg-dark-800/50 p-8 rounded-2xl social-card">
                 <p className="text-lg leading-relaxed text-dark-200 mb-6" data-testid="text-about-description">
-                  {isLoading ? aboutText : (owner.description || aboutText)}
+                  {isLoading ? aboutText : (owner?.about || aboutText)}
                 </p>
                 
                 <div className="flex items-center text-dark-400 text-sm" data-testid="text-about-location">
                   <i className="fas fa-map-marker-alt mr-2"></i>
-                  <span>{isLoading ? 'Madhya Pradesh, India' : (owner.location || 'Madhya Pradesh, India')}</span>
+                  <span>Madhya Pradesh, India</span>
                 </div>
               </div>
             </div>

@@ -1,13 +1,15 @@
 import { useEffect } from "react";
-import type { HomepageData } from "@/lib/types";
+import type { HomeSocialsData } from "@/lib/home-data";
+import type { UnifiedData } from "@/lib/unified-data-service";
 
 interface SocialSectionProps {
-  data: HomepageData;
+  data: UnifiedData | null;
+  homeData: HomeSocialsData;
   isLoading: boolean;
 }
 
-export function SocialSection({ data, isLoading }: SocialSectionProps) {
-  const { socials, server } = data;
+export function SocialSection({ data, homeData, isLoading }: SocialSectionProps) {
+  const { socials, server } = homeData;
   
   useEffect(() => {
     // GSAP animations for social cards (mobile and desktop)
@@ -91,7 +93,7 @@ export function SocialSection({ data, isLoading }: SocialSectionProps) {
       gradient: 'from-indigo-500 to-purple-600',
       hoverGradient: 'from-indigo-400 to-purple-500',
       handle: 'Personal Profile',
-      url: socials?.discord?.user || '#',
+      url: data?.owner?.id ? `https://discord.com/users/${data.owner.id}` : socials?.discord?.url || '#',
       buttonText: 'Add Friend',
       testId: 'discord-user',
     },
@@ -101,7 +103,7 @@ export function SocialSection({ data, isLoading }: SocialSectionProps) {
       gradient: 'from-blue-500 to-cyan-500',
       hoverGradient: 'from-blue-400 to-cyan-400',
       handle: 'Community Server',
-      url: server?.inviteUrl || socials?.discord?.server || '#',
+      url: server?.inviteUrl || '#',
       buttonText: 'Join Server',
       testId: 'discord-server',
     },

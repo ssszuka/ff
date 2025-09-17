@@ -1,14 +1,15 @@
 import { useEffect, useRef } from "react";
-import type { HomepageData } from "@/lib/types";
+import type { UnifiedData } from "@/lib/unified-data-service";
+import type { HomeSocialsData } from "@/lib/home-data";
 
 interface HeroSectionProps {
-  data: HomepageData;
+  data: UnifiedData | null;
+  homeData: HomeSocialsData;
   isLoading: boolean;
   isConnected: boolean;
-  apiData?: { owner?: { status?: 'online' | 'idle' | 'dnd' | 'offline' } } | null;
 }
 
-export function HeroSection({ data, isLoading, isConnected, apiData }: HeroSectionProps) {
+export function HeroSection({ data, homeData, isLoading, isConnected }: HeroSectionProps) {
   const avatarRef = useRef<HTMLImageElement>(null);
   
   useEffect(() => {
@@ -51,7 +52,10 @@ export function HeroSection({ data, isLoading, isConnected, apiData }: HeroSecti
     }
   }, []);
   
-  const { owner, socials } = data;
+  if (!data) return null;
+  
+  const { owner } = data;
+  const { socials } = homeData;
   
   return (
     <section className="relative min-h-screen flex items-center justify-center hero-bg">
@@ -69,14 +73,14 @@ export function HeroSection({ data, isLoading, isConnected, apiData }: HeroSecti
                 data-testid="img-hero-avatar"
               />
               <div className={`absolute -bottom-2 -right-2 px-3 py-1 rounded-full text-sm font-mono animate-float ${
-                (apiData?.owner?.status === 'online') ? 'bg-neon-emerald text-dark-950' :
-                (apiData?.owner?.status === 'idle') ? 'bg-neon-yellow text-dark-950' :
-                (apiData?.owner?.status === 'dnd') ? 'bg-neon-orange text-dark-950' :
+                (data?.owner?.status === 'online') ? 'bg-neon-emerald text-dark-950' :
+                (data?.owner?.status === 'idle') ? 'bg-neon-yellow text-dark-950' :
+                (data?.owner?.status === 'dnd') ? 'bg-neon-orange text-dark-950' :
                 'bg-dark-600 text-dark-300'
               }`}>
-                {(apiData?.owner?.status === 'online') ? '🟢 Online' :
-                 (apiData?.owner?.status === 'idle') ? '🟡 Idle' :
-                 (apiData?.owner?.status === 'dnd') ? '🔴 Do Not Disturb' :
+                {(data?.owner?.status === 'online') ? '🟢 Online' :
+                 (data?.owner?.status === 'idle') ? '🟡 Idle' :
+                 (data?.owner?.status === 'dnd') ? '🔴 Do Not Disturb' :
                  '⚫ Offline'}
               </div>
             </div>
@@ -91,7 +95,7 @@ export function HeroSection({ data, isLoading, isConnected, apiData }: HeroSecti
               Content Creator & Digital Artist
             </p>
             <p className="text-lg text-dark-400 mb-8 max-w-2xl mx-auto" data-testid="text-hero-subtitle">
-              {isLoading ? 'Passionate creator from Madhya Pradesh, crafting digital dreams since 2022' : `Passionate creator from ${owner.location || 'Madhya Pradesh'}, crafting digital dreams since 2022`}
+              Passionate creator from Madhya Pradesh, crafting digital dreams since 2022
             </p>
           </div>
           
@@ -112,7 +116,7 @@ export function HeroSection({ data, isLoading, isConnected, apiData }: HeroSecti
             
             {socials?.discord && (
               <a 
-                href={socials.discord.server}
+                href={socials.discord.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-purple-500/25"

@@ -1,12 +1,9 @@
-import type { HomepageData } from "@/lib/types";
-
 export interface AppConfig {
-  USE_REMOTE_API: boolean;
   API: {
     INFO: string;
   };
   USE_REMOTE_API: boolean;
-  LOCAL_DATA: HomepageData;
+  LOCAL_DATA: any; // Temporary fix, will be replaced with unified data service
   UI: {
     LOADING_TIMEOUT: number;
     ANIMATION_DURATION: number;

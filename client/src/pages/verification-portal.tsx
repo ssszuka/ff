@@ -202,10 +202,10 @@ export function VerificationPortal() {
                 <div className="mb-6">
                   {isLoading ? (
                     <Skeleton className="w-20 h-20 rounded-full mx-auto" />
-                  ) : data?.server?.logo ? (
+                  ) : data?.guild?.iconUrl ? (
                     <Avatar className="w-20 h-20 mx-auto shadow-lg ring-2 ring-neon-purple/20" data-testid="img-server-icon-large">
-                      <AvatarImage src={data.server.logo} alt="Server Icon" />
-                      <AvatarFallback className="text-2xl">{data.server.name.charAt(0)}</AvatarFallback>
+                      <AvatarImage src={data.guild.iconUrl} alt="Server Icon" />
+                      <AvatarFallback className="text-2xl">{data.guild.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                   ) : null}
                 </div>
@@ -217,7 +217,7 @@ export function VerificationPortal() {
                     {isLoading ? (
                       <Skeleton className="inline-block w-48 h-10" />
                     ) : (
-                      data?.server?.name || "Dreamer's Land"
+                      data?.guild?.name || "Dreamer's Land"
                     )}
                   </span>
                 </h1>
@@ -239,7 +239,7 @@ export function VerificationPortal() {
                             {isLoading ? (
                               <Skeleton className="w-16 h-8" />
                             ) : (
-                              data?.server?.stats?.memberCountFormatted || "N/A"
+                              data?.guild?.memberCountFormatted || "N/A"
                             )}
                           </div>
                           <div className="text-dark-300 text-sm">Total Members</div>
@@ -257,7 +257,7 @@ export function VerificationPortal() {
                             {isLoading ? (
                               <Skeleton className="w-16 h-8" />
                             ) : (
-                              data?.server?.stats?.verifiedCountFormatted || "N/A"
+                              data?.guild?.verifiedUserCountFormatted || "N/A"
                             )}
                           </div>
                           <div className="text-dark-300 text-sm">Verified Members</div>
@@ -359,25 +359,25 @@ export function VerificationPortal() {
                       </div>
                       <Skeleton className="w-24 h-10 rounded-xl" />
                     </>
-                  ) : data?.youtubeChannel ? (
+                  ) : data?.youtube ? (
                     <>
                       <Avatar className="w-16 h-16" data-testid="img-youtube-avatar">
-                        <AvatarImage src={data.youtubeChannel.thumbnailUrl} alt="YouTube Channel" />
+                        <AvatarImage src={data.youtube.logoUrl} alt="YouTube Channel" />
                         <AvatarFallback>
                           <Youtube className="w-8 h-8 text-red-500" />
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1 text-left">
                         <h4 className="text-lg font-semibold text-white" data-testid="text-youtube-name">
-                          {data.youtubeChannel.name}
+                          {data.youtube.channelTitle}
                         </h4>
                         <p className="text-dark-300" data-testid="text-youtube-subscribers">
-                          {data.youtubeChannel.subscriberCount ? `${data.youtubeChannel.subscriberCount} subscribers` : 'N/A'}
+                          {data.youtube.subscriberCountFormatted ? `${data.youtube.subscriberCountFormatted} subscribers` : 'N/A'}
                         </p>
                       </div>
                       <Button 
                         className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white shadow-md hover:shadow-lg transition-all duration-300 active:scale-95"
-                        onClick={() => window.open(data.youtubeChannel!.url, '_blank')}
+                        onClick={() => window.open(data.youtube!.channelUrl, '_blank')}
                         data-testid="button-subscribe-youtube"
                       >
                         <Youtube className="w-5 h-5 mr-2" />
@@ -405,14 +405,14 @@ export function VerificationPortal() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex flex-col sm:flex-row items-center justify-between">
               <div className="flex items-center space-x-4 mb-4 sm:mb-0">
-                {data?.server?.logo && (
+                {data?.guild?.iconUrl && (
                   <Avatar className="w-6 h-6" data-testid="img-footer-logo">
-                    <AvatarImage src={data.server.logo} alt="Server Icon" />
-                    <AvatarFallback>{data.server.name.charAt(0)}</AvatarFallback>
+                    <AvatarImage src={data.guild.iconUrl} alt="Server Icon" />
+                    <AvatarFallback>{data.guild.name.charAt(0)}</AvatarFallback>
                   </Avatar>
                 )}
                 <span className="text-dark-400 text-sm" data-testid="text-copyright">
-                  © 2025 {data?.server?.name || "Dreamer's Land"}
+                  © 2025 {data?.guild?.name || "Dreamer's Land"}
                 </span>
               </div>
               <div className="flex space-x-6 text-sm">

@@ -48,10 +48,6 @@ Preferred communication style: Simple, everyday language.
 - **class-variance-authority**: Utility for creating component variants with TypeScript support
 - **clsx** and **tailwind-merge**: Class name utilities for conditional styling
 
-## Development Tools
-- **@replit/vite-plugin-cartographer**: Replit-specific development enhancements
-- **@replit/vite-plugin-runtime-error-modal**: Enhanced error reporting during development
-
 ## Optional Integrations
 - **Remote API**: Backend service for real-time Discord and YouTube data (disabled for static hosting)
 - **AOS Library**: Animate On Scroll library loaded via CDN

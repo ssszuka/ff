@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { usePortalData } from "@/hooks/use-portal-data";
+import { useUnifiedData } from "@/lib/unified-data-service";
 import { LoadingScreen } from "@/components/loading-screen";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -27,14 +27,15 @@ export function VerificationPortal() {
     isLoading,
     error,
     isConnected,
+    isFromFallback,
     refetch
-  } = usePortalData();
+  } = useUnifiedData();
   
   // Update meta tags with full SEO implementation
   useEffect(() => {
-    const title = data?.meta?.title || "Verification Portal | Dreamer's Land";
-    const description = data?.meta?.description || "Official verification portal for Dreamer's Land Discord server. Verify your YouTube subscription to unlock exclusive roles and access.";
-    const imageUrl = data?.server?.logo || "";
+    const title = "Verification Portal | Dreamer's Land";
+    const description = "Official verification portal for Dreamer's Land Discord server. Verify your YouTube subscription to unlock exclusive roles and access.";
+    const imageUrl = data?.guild?.iconUrl || "";
     const currentUrl = window.location.href;
     
     // Update page title
@@ -79,7 +80,7 @@ export function VerificationPortal() {
     updateOGTag('og:image', imageUrl);
     updateOGTag('og:url', currentUrl);
     updateOGTag('og:type', 'website');
-    updateOGTag('og:site_name', data?.server?.name || "Dreamer's Land");
+    updateOGTag('og:site_name', data?.guild?.name || "Dreamer's Land");
     
     // Twitter Card tags
     updateTwitterTag('twitter:card', 'summary_large_image');
@@ -164,17 +165,17 @@ export function VerificationPortal() {
               <div className="flex items-center space-x-3">
                 {isLoading ? (
                   <Skeleton className="w-8 h-8 rounded-full" />
-                ) : data?.server?.logo ? (
+                ) : data?.guild?.iconUrl ? (
                   <Avatar className="w-8 h-8" data-testid="img-server-logo">
-                    <AvatarImage src={data.server.logo} alt="Server Icon" />
-                    <AvatarFallback>{data.server.name.charAt(0)}</AvatarFallback>
+                    <AvatarImage src={data.guild.iconUrl} alt="Server Icon" />
+                    <AvatarFallback>{data.guild.name.charAt(0)}</AvatarFallback>
                   </Avatar>
                 ) : null}
                 <h1 className="text-xl font-bold text-white" data-testid="text-server-name">
                   {isLoading ? (
                     <Skeleton className="w-32 h-6" />
                   ) : (
-                    data?.server?.name || "Dreamer's Land"
+                    data?.guild?.name || "Dreamer's Land"
                   )}
                 </h1>
               </div>

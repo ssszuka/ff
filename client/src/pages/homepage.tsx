@@ -4,7 +4,8 @@ import { HeroSection } from "@/components/hero-section";
 import { AboutSection } from "@/components/about-section";
 import { SocialSection } from "@/components/social-section";
 import { Footer } from "@/components/footer";
-import { useHomepageData } from "@/hooks/use-homepage-data";
+import { useUnifiedData } from "@/lib/unified-data-service";
+import { homeData } from "@/lib/home-data";
 import { updateMetaTags, initializeAnimations, checkReducedMotion } from "@/lib/meta-utils";
 import { appConfig } from "@/lib/config";
 
@@ -14,16 +15,27 @@ export function Homepage() {
   
   const {
     data,
-    apiData,
     isLoading,
     error,
     isConnected,
-  } = useHomepageData();
+    isFromFallback,
+    refetch
+  } = useUnifiedData();
   
   // Update meta tags when data changes
   useEffect(() => {
     if (data && !isLoading) {
-      updateMetaTags(data);
+      // Create homepage data structure for meta tags
+      const homepageData = {
+        owner: data.owner,
+        socials: homeData.socials,
+        server: {
+          ...homeData.server,
+          memberCount: data.guild.memberCount,
+          memberCountFormatted: data.guild.memberCountFormatted
+        }
+      };
+      updateMetaTags(homepageData);
     }
   }, [data, isLoading]);
   
@@ -79,9 +91,9 @@ export function Homepage() {
       <main className={showLoading ? "hidden" : ""} data-testid="main-content">
         <HeroSection 
           data={data}
+          homeData={homeData}
           isLoading={isLoading}
           isConnected={isConnected}
-          apiData={apiData}
         />
         
         <AboutSection 
@@ -91,6 +103,7 @@ export function Homepage() {
         
         <SocialSection 
           data={data}
+          homeData={homeData}
           isLoading={isLoading}
         />
         

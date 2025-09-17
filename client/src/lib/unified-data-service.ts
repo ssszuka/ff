@@ -69,7 +69,7 @@ interface CacheEntry {
 class UnifiedDataService {
   private cache: CacheEntry | null = null;
   private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
-  private readonly BACKEND_URL = import.meta.env.VITE_BACKEND_URL || process.env.BACKEND_URL || '';
+  private readonly BACKEND_URL = import.meta.env.VITE_BACKEND_URL || process.env.BACKEND_URL || 'https://janvi.jarvibeta.xyz';
   private readonly FALLBACK_URL = '/cdn/assets/fallback-data.json';
   
   /**

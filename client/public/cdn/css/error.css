@@ -1,0 +1,42 @@
+/* Error Page Specific Styles */
+
+/* No unique error page styles found - error.html uses mostly shared styles */
+/* This file is created for future error-specific customizations */
+
+/* Error page specific background if needed */
+body.error-page {
+    background: linear-gradient(135deg, #0f172a 0%, #7f1d1d 50%, #581c87 100%);
+}
+
+/* Enhanced error styling for error page */
+.error-page .error-card {
+    animation: errorPulse 2s ease-in-out infinite;
+}
+
+@keyframes errorPulse {
+    0%, 100% { 
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4);
+        transform: scale(1);
+    }
+    50% { 
+        box-shadow: 0 0 20px 5px rgba(220, 38, 38, 0.2);
+        transform: scale(1.01);
+    }
+}
+
+/* Copy functionality visual feedback for error page */
+#verify-command {
+    transition: all 0.3s ease;
+}
+
+#verify-command:hover {
+    background-color: #374151 !important;
+    transform: scale(1.05);
+}
+
+/* Error page specific responsive adjustments */
+@media (max-width: 768px) {
+    .error-page .glass-card {
+        padding: 1.5rem;
+    }
+}

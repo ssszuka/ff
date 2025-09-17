@@ -1,0 +1,159 @@
+import { useEffect } from "react";
+import type { HomepageData } from "@/lib/types";
+
+interface SocialSectionProps {
+  data: HomepageData;
+  isLoading: boolean;
+}
+
+export function SocialSection({ data, isLoading }: SocialSectionProps) {
+  const { socials, server } = data;
+  
+  useEffect(() => {
+    // GSAP animations for social cards (mobile and desktop)
+    if (typeof window !== 'undefined' && 'gsap' in window) {
+      const gsap = (window as any).gsap;
+      const socialCards = document.querySelectorAll('.social-card');
+      const isMobile = window.innerWidth < 768;
+      
+      socialCards.forEach(card => {
+        const animateIn = () => {
+          gsap.to(card, {
+            y: isMobile ? -5 : -10, // Less movement on mobile
+            boxShadow: isMobile ? "0 10px 25px rgba(0,0,0,0.2)" : "0 20px 40px rgba(0,0,0,0.3)",
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        };
+        
+        const animateOut = () => {
+          gsap.to(card, {
+            y: 0,
+            boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        };
+        
+        // Add both mouse and touch events for better mobile support
+        card.addEventListener('mouseenter', animateIn);
+        card.addEventListener('mouseleave', animateOut);
+        card.addEventListener('touchstart', animateIn);
+        card.addEventListener('touchend', animateOut);
+        
+        // Cleanup function to remove event listeners
+        const cleanup = () => {
+          card.removeEventListener('mouseenter', animateIn);
+          card.removeEventListener('mouseleave', animateOut);
+          card.removeEventListener('touchstart', animateIn);
+          card.removeEventListener('touchend', animateOut);
+        };
+        
+        // Store cleanup function for later use
+        (card as any)._animationCleanup = cleanup;
+      });
+      
+      // Return cleanup function
+      return () => {
+        socialCards.forEach(card => {
+          if ((card as any)._animationCleanup) {
+            (card as any)._animationCleanup();
+          }
+        });
+      };
+    }
+  }, []);
+  
+  const socialPlatforms = [
+    {
+      name: 'YouTube',
+      icon: 'fab fa-youtube',
+      gradient: 'from-red-500 to-red-600',
+      hoverGradient: 'from-red-400 to-red-500',
+      handle: socials?.youtube?.handle || '@janvidreamer',
+      url: socials?.youtube?.url || '#',
+      buttonText: 'Subscribe',
+      testId: 'youtube',
+    },
+    {
+      name: 'Instagram',
+      icon: 'fab fa-instagram',
+      gradient: 'from-pink-500 to-purple-600',
+      hoverGradient: 'from-pink-400 to-purple-500',
+      handle: socials?.instagram?.handle || '@janvidreamer',
+      url: socials?.instagram?.url || '#',
+      buttonText: 'Follow',
+      testId: 'instagram',
+    },
+    {
+      name: 'Discord',
+      icon: 'fab fa-discord',
+      gradient: 'from-indigo-500 to-purple-600',
+      hoverGradient: 'from-indigo-400 to-purple-500',
+      handle: 'Personal Profile',
+      url: socials?.discord?.user || '#',
+      buttonText: 'Add Friend',
+      testId: 'discord-user',
+    },
+    {
+      name: "Dreamer's Land",
+      icon: 'fas fa-users',
+      gradient: 'from-blue-500 to-cyan-500',
+      hoverGradient: 'from-blue-400 to-cyan-400',
+      handle: 'Community Server',
+      url: server?.inviteUrl || socials?.discord?.server || '#',
+      buttonText: 'Join Server',
+      testId: 'discord-server',
+    },
+  ];
+  
+  return (
+    <section className="py-20 bg-dark-950 relative">
+      <div className="container mx-auto px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16" data-aos="fade-up">
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-white" data-testid="text-social-title">
+              Connect & Follow
+            </h2>
+            <p className="text-xl text-dark-300 max-w-2xl mx-auto" data-testid="text-social-subtitle">
+              Join the dreamer's community across all platforms
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {socialPlatforms.map((platform, index) => (
+              <div 
+                key={platform.name}
+                className="social-card bg-dark-800/30 p-6 rounded-2xl hover:transform hover:-translate-y-2 transition-all duration-300 group" 
+                data-aos="fade-up" 
+                data-aos-delay={100 + (index * 100)}
+                data-testid={`card-social-${platform.testId}`}
+              >
+                <div className="text-center">
+                  <div className={`w-16 h-16 bg-gradient-to-br ${platform.gradient} rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
+                    <i className={`${platform.icon} text-white text-2xl`}></i>
+                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-2" data-testid={`text-${platform.testId}-name`}>
+                    {platform.name}
+                  </h3>
+                  <p className="text-dark-300 text-sm mb-4" data-testid={`text-${platform.testId}-handle`}>
+                    {platform.handle}
+                  </p>
+                  <a 
+                    href={platform.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`block bg-gradient-to-r ${platform.gradient} hover:bg-gradient-to-r hover:${platform.hoverGradient} text-white py-2 px-4 rounded-full text-sm font-medium transition-all`}
+                    data-testid={`link-${platform.testId}`}
+                  >
+                    {platform.buttonText}
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

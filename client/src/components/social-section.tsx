@@ -110,42 +110,42 @@ export function SocialSection({ data, homeData, isLoading }: SocialSectionProps)
   ];
   
   return (
-    <section className="py-20 bg-dark-950 relative">
-      <div className="container mx-auto px-6">
+    <section className="py-12 md:py-20 bg-dark-950 relative">
+      <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16" data-aos="fade-up">
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-white" data-testid="text-social-title">
+          <div className="text-center mb-8 md:mb-16" data-aos="fade-up">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4 md:mb-6 text-white" data-testid="text-social-title">
               Connect & Follow
             </h2>
-            <p className="text-xl text-dark-300 max-w-2xl mx-auto" data-testid="text-social-subtitle">
+            <p className="text-base sm:text-lg md:text-xl text-dark-300 max-w-2xl mx-auto px-4" data-testid="text-social-subtitle">
               Join the dreamer's community across all platforms
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {socialPlatforms.map((platform, index) => (
               <div 
                 key={platform.name}
-                className="social-card bg-dark-800/30 p-6 rounded-2xl hover:transform hover:-translate-y-2 transition-all duration-300 group" 
+                className="social-card bg-dark-800/30 p-4 md:p-6 rounded-2xl hover:transform hover:-translate-y-2 transition-all duration-200 group" 
                 data-aos="fade-up" 
-                data-aos-delay={100 + (index * 100)}
+                data-aos-delay={50 + (index * 50)}
                 data-testid={`card-social-${platform.testId}`}
               >
                 <div className="text-center">
-                  <div className={`w-16 h-16 bg-gradient-to-br ${platform.gradient} rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
-                    <i className={`${platform.icon} text-white text-2xl`}></i>
+                  <div className={`w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br ${platform.gradient} rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-transform`}>
+                    <i className={`${platform.icon} text-white text-lg md:text-2xl`}></i>
                   </div>
-                  <h3 className="text-xl font-semibold text-white mb-2" data-testid={`text-${platform.testId}-name`}>
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2" data-testid={`text-${platform.testId}-name`}>
                     {platform.name}
                   </h3>
-                  <p className="text-dark-300 text-sm mb-4" data-testid={`text-${platform.testId}-handle`}>
+                  <p className="text-dark-300 text-xs md:text-sm mb-3 md:mb-4" data-testid={`text-${platform.testId}-handle`}>
                     {platform.handle}
                   </p>
                   <a 
                     href={platform.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`block bg-gradient-to-r ${platform.gradient} hover:bg-gradient-to-r hover:${platform.hoverGradient} text-white py-2 px-4 rounded-full text-sm font-medium transition-all`}
+                    className={`block bg-gradient-to-r ${platform.gradient} hover:bg-gradient-to-r hover:${platform.hoverGradient} text-white py-2 px-3 md:px-4 rounded-full text-xs md:text-sm font-medium transition-all`}
                     data-testid={`link-${platform.testId}`}
                   >
                     {platform.buttonText}

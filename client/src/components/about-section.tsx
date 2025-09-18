@@ -46,41 +46,41 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
   ];
   
   return (
-    <section className="py-20 bg-dark-900/50 relative">
-      <div className="container mx-auto px-6">
+    <section className="py-12 md:py-20 bg-dark-900/50 relative">
+      <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16" data-aos="fade-up">
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-white" data-testid="text-about-title">
+          <div className="text-center mb-8 md:mb-16" data-aos="fade-up">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4 md:mb-6 text-white" data-testid="text-about-title">
               About the Dreamer
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-neon-purple to-neon-cyan mx-auto"></div>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div data-aos="fade-right" data-aos-delay="200">
-              <div className="bg-dark-800/50 p-8 rounded-2xl social-card">
-                <p className="text-lg leading-relaxed text-dark-200 mb-6" data-testid="text-about-description">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-12 items-center">
+            <div data-aos="fade-right" data-aos-delay="100">
+              <div className="bg-dark-800/50 p-6 md:p-8 rounded-2xl social-card">
+                <p className="text-base md:text-lg leading-relaxed text-dark-200 mb-4 md:mb-6" data-testid="text-about-description">
                   {isLoading ? aboutText : (owner?.about || aboutText)}
                 </p>
                 
-                <div className="flex items-center text-dark-400 text-sm" data-testid="text-about-location">
+                <div className="flex items-center text-dark-400 text-sm md:text-base" data-testid="text-about-location">
                   <i className="fas fa-map-marker-alt mr-2"></i>
                   <span>Madhya Pradesh, India</span>
                 </div>
               </div>
             </div>
             
-            <div data-aos="fade-left" data-aos-delay="400">
-              <div className="space-y-4">
+            <div data-aos="fade-left" data-aos-delay="200">
+              <div className="space-y-3 md:space-y-4">
                 {badges.map((badge, index) => (
                   <div 
                     key={badge.title}
-                    className={`bg-gradient-to-r ${badge.gradient} p-4 rounded-xl border ${badge.border}`}
+                    className={`bg-gradient-to-r ${badge.gradient} p-3 md:p-4 rounded-xl border ${badge.border}`}
                     data-testid={`card-badge-${badge.title.toLowerCase()}`}
                   >
                     <div className="flex items-center">
-                      <div className={`w-12 h-12 ${badge.bg} rounded-full flex items-center justify-center mr-4`}>
-                        <i className={`${badge.icon} text-white text-xl`}></i>
+                      <div className={`w-10 h-10 md:w-12 md:h-12 ${badge.bg} rounded-full flex items-center justify-center mr-3 md:mr-4`}>
+                        <i className={`${badge.icon} text-white text-lg md:text-xl`}></i>
                       </div>
                       <div>
                         <h3 className="font-semibold text-white">{badge.title}</h3>

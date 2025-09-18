@@ -15,8 +15,7 @@ import {
   BookOpen, 
   Shield,
   Sparkles,
-  Crown,
-  MessageSquare
+  Crown
 } from "lucide-react";
 import { initializeAnimations, checkReducedMotion } from "@/lib/meta-utils";
 
@@ -209,16 +208,15 @@ export function VerificationPortal() {
                 </div>
                 
                 {/* Title */}
-                <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4" data-testid="text-welcome-title">
-                  Welcome to{' '}
+                <h3 className="text-3xl sm:text-4xl font-bold text-white mb-4" data-testid="text-welcome-title">
+                  Welcome to the Portal of{' '}
                   <span className="gradient-text">
                     {isLoading ? (
-                      <Skeleton className="inline-block w-32 h-8" />
+                      <Skeleton className="inline-block w-48 h-10" />
                     ) : (
                       data?.guild?.name || "Dreamer's Land"
                     )}
                   </span>
-                  {' '}Verification Portal
                 </h3>
                 
                 {/* Description */}
@@ -269,21 +267,23 @@ export function VerificationPortal() {
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button 
-                    className="w-full sm:min-w-[200px] bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-4 px-8 rounded-2xl shadow-xl hover:shadow-blue-500/30 transform hover:scale-105 active:scale-95 transition-all duration-200 border-0 text-base md:text-lg"
+                    className="w-full sm:min-w-[200px] bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 text-white font-bold py-4 px-8 rounded-3xl shadow-2xl hover:shadow-purple-500/30 transform hover:scale-105 active:scale-95 transition-all duration-300 border-0 text-lg"
                     onClick={() => window.open('https://joindc.pages.dev', '_blank', 'noopener,noreferrer')}
                     data-testid="button-join-discord"
                   >
-                    <MessageSquare className="w-5 h-5 mr-3" />
+                    <svg className="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09-.01-.02-.04-.03-.07-.03-1.5.26-2.93.71-4.27 1.33-.01 0-.02.01-.03.02-2.72 4.07-3.47 8.03-3.1 11.95 0 .02.01.04.03.05 1.8 1.32 3.53 2.12 5.24 2.65.03.01.06 0 .07-.02.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.32-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.21.17.32.25.04.03.04.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.01.06.02.09.01 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.03.03-.05.44-4.53-.73-8.46-3.1-11.95-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12z"/>
+                    </svg>
                     Join Discord
                   </Button>
                   
                   <Link href="/" className="block">
                     <Button 
                       variant="outline" 
-                      className="w-full sm:min-w-[200px] border-2 border-gray-600 text-gray-300 hover:text-white hover:border-blue-500 hover:bg-blue-500/10 font-semibold py-4 px-8 rounded-2xl transition-all duration-200 hover:shadow-lg text-base md:text-lg"
+                      className="w-full sm:min-w-[200px] border-2 border-dark-500 text-dark-200 hover:text-white hover:border-neon-purple hover:bg-neon-purple/10 font-semibold py-4 px-8 rounded-3xl transition-all duration-300 hover:shadow-lg text-lg"
                       data-testid="button-go-home"
                     >
-                      <Home className="w-5 h-5 mr-3" />
+                      <Home className="w-6 h-6 mr-3" />
                       Go to Homepage
                     </Button>
                   </Link>
@@ -373,11 +373,11 @@ export function VerificationPortal() {
                         </p>
                       </div>
                       <Button 
-                        className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white shadow-md hover:shadow-lg transition-all duration-200 active:scale-95"
+                        className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white shadow-md hover:shadow-lg transition-all duration-300 active:scale-95"
                         onClick={() => window.open(data.youtube!.channelUrl, '_blank', 'noopener,noreferrer')}
                         data-testid="button-subscribe-youtube"
                       >
-                        <Youtube className="w-4 h-4 mr-2" />
+                        <Youtube className="w-5 h-5 mr-2" />
                         Subscribe
                       </Button>
                     </>

@@ -22,13 +22,12 @@ export function initializeAnimations() {
   // Initialize AOS animations if available
   if (typeof window !== 'undefined' && 'AOS' in window) {
     (window as any).AOS.init({
-      duration: 600, // Faster animation duration
-      easing: 'ease-out', // Smoother easing
+      duration: 1000,
+      easing: 'ease-in-out',
       once: false, // Allow animations to trigger on scroll up and down
       mirror: true, // Animate elements out while scrolling up
-      offset: 80, // Trigger animations earlier for smoother feel
+      offset: 100, // Trigger animations 100px before the element comes into view
       delay: 0,
-      disable: 'mobile' // Disable on mobile for better performance
     });
   }
   

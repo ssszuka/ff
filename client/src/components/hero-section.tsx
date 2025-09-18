@@ -82,24 +82,26 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                 }`}>
                   {(data?.owner?.status === 'online') && (
                     <>
-                      <div className="w-2 h-2 bg-current rounded-full"></div>
+                      <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" fill="currentColor"/>
+                      </svg>
                       <span>Online</span>
                     </>
                   )}
                   {(data?.owner?.status === 'idle') && (
                     <>
-                      <div className="w-2 h-2 bg-current rounded-full opacity-60"></div>
+                      <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM12 7c-.83 0-1.5.67-1.5 1.5v3c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-3c0-.83-.67-1.5-1.5-1.5z" fill="currentColor"/>
+                      </svg>
                       <span>Idle</span>
                     </>
                   )}
                   {(data?.owner?.status === 'dnd') && (
                     <>
-                      <div className="w-2 h-2 bg-current rounded-full relative">
-                        <div className="absolute inset-0.5 bg-dark-950 rounded-full"></div>
-                      </div>
-                      <spandnd>
-                        <span>dnd</span>
-                      </spandnd>
+                      <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11H7v-2h10v2z" fill="currentColor"/>
+                      </svg>
+                      <span>DND</span>
                     </>
                   )}
                 </div>

@@ -73,7 +73,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                 data-testid="img-hero-avatar"
               />
               {/* Only show status if it's not 'NA' and is a valid status */}
-              {data?.owner?.status && data.owner.status !== 'NA' && ['online', 'idle', 'dnd', 'offline'].includes(data.owner.status) && (
+              {data?.owner?.status && data.owner.status !== ['NA', 'offline'] && ['online', 'idle', 'dnd'].includes(data.owner.status) && (
                 <div className={`absolute -bottom-2 -right-2 px-3 py-1 rounded-full text-sm font-mono animate-float flex items-center gap-1 ${
                   (data?.owner?.status === 'online') ? 'bg-neon-emerald text-dark-950' :
                   (data?.owner?.status === 'idle') ? 'bg-neon-yellow text-dark-950' :
@@ -97,13 +97,9 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                       <div className="w-2 h-2 bg-current rounded-full relative">
                         <div className="absolute inset-0.5 bg-dark-950 rounded-full"></div>
                       </div>
-                      <span>dnd</span>
-                    </>
-                  )}
-                  {(data?.owner?.status === 'offline') && (
-                    <>
-                      <div className="w-2 h-2 border border-current rounded-full"></div>
-                      <span>Offline</span>
+                      <spandnd>
+                        <span>dnd</span>
+                      </spandnd>
                     </>
                   )}
                 </div>

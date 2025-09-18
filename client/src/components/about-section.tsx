@@ -70,7 +70,7 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
               </div>
             </div>
             
-            <div data-aos="zoom-in-left" data-aos-delay="200">
+            <div data-aos="zoom-in-left" data-aos-delay="100">
               <div className="space-y-3 md:space-y-4">
                 {badges.map((badge, index) => (
                   <div 
@@ -92,6 +92,8 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
               </div>
             </div>
           </div>
+        </div>
+      </div>
         </div>
       </div>
     </section>

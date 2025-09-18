@@ -165,8 +165,16 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
           </div>
 
           {/* Scroll Indicator */}
-          <div className="animate-bounce" data-aos="fade-in" data-aos-delay="300">
-            <i className="fas fa-chevron-down text-2xl text-dark-400"></i>
+          <div className="animate-bounce cursor-pointer" data-aos="fade-in" data-aos-delay="300" onClick={() => {
+            const aboutSection = document.querySelector('section[class*="py-12"]') || document.querySelector('section[class*="py-20"]');
+            if (aboutSection) {
+              aboutSection.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }
+          }}>
+            <i className="fas fa-chevron-down text-2xl text-dark-400 hover:text-neon-purple transition-colors duration-300"></i>
           </div>
         </div>
       </div>

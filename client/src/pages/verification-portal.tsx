@@ -17,6 +17,7 @@ import {
   Sparkles,
   Crown
 } from "lucide-react";
+import { initializeAnimations, checkReducedMotion } from "@/lib/meta-utils";
 
 export function VerificationPortal() {
   const [showLoading, setShowLoading] = useState(true);
@@ -95,12 +96,9 @@ export function VerificationPortal() {
   
   // Initialize animations after loading
   useEffect(() => {
-    if (!showLoading && !animationsInitialized) {
+    if (!showLoading && !animationsInitialized && !checkReducedMotion()) {
       const timer = setTimeout(() => {
-        // Initialize AOS animations if available
-        if (typeof window !== 'undefined' && 'AOS' in window) {
-          (window as any).AOS.refresh();
-        }
+        initializeAnimations();
         setAnimationsInitialized(true);
       }, 100);
       
@@ -270,7 +268,7 @@ export function VerificationPortal() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button 
                     className="w-full sm:min-w-[200px] bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 text-white font-bold py-4 px-8 rounded-3xl shadow-2xl hover:shadow-purple-500/30 transform hover:scale-105 active:scale-95 transition-all duration-300 border-0 text-lg"
-                    onClick={() => window.open('https://joindc.pages.dev', '_blank')}
+                    onClick={() => window.open('https://joindc.pages.dev', '_blank', 'noopener,noreferrer')}
                     data-testid="button-join-discord"
                   >
                     <svg className="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
@@ -376,7 +374,7 @@ export function VerificationPortal() {
                       </div>
                       <Button 
                         className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white shadow-md hover:shadow-lg transition-all duration-300 active:scale-95"
-                        onClick={() => window.open(data.youtube!.channelUrl, '_blank')}
+                        onClick={() => window.open(data.youtube!.channelUrl, '_blank', 'noopener,noreferrer')}
                         data-testid="button-subscribe-youtube"
                       >
                         <Youtube className="w-5 h-5 mr-2" />

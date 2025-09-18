@@ -21,7 +21,14 @@ export function updateMetaTags(data: any) {
 export function initializeAnimations() {
   // Initialize AOS animations if available
   if (typeof window !== 'undefined' && 'AOS' in window) {
-    (window as any).AOS.refresh();
+    (window as any).AOS.init({
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: false, // Allow animations to trigger on scroll up and down
+      mirror: true, // Animate elements out while scrolling up
+      offset: 100, // Trigger animations 100px before the element comes into view
+      delay: 0,
+    });
   }
   
   // Initialize GSAP animations if available

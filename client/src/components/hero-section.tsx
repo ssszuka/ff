@@ -72,17 +72,42 @@ export function HeroSection({ data, homeData, isLoading, isConnected }: HeroSect
                 className={`w-48 h-48 md:w-56 md:h-56 rounded-full border-4 border-neon-purple animate-pulse-glow ${isLoading ? 'loading-shimmer' : ''}`}
                 data-testid="img-hero-avatar"
               />
-              <div className={`absolute -bottom-2 -right-2 px-3 py-1 rounded-full text-sm font-mono animate-float ${
-                (data?.owner?.status === 'online') ? 'bg-neon-emerald text-dark-950' :
-                (data?.owner?.status === 'idle') ? 'bg-neon-yellow text-dark-950' :
-                (data?.owner?.status === 'dnd') ? 'bg-neon-orange text-dark-950' :
-                'bg-dark-600 text-dark-300'
-              }`}>
-                {(data?.owner?.status === 'online') ? '🟢 Online' :
-                 (data?.owner?.status === 'idle') ? '🟡 Idle' :
-                 (data?.owner?.status === 'dnd') ? '🔴 Do Not Disturb' :
-                 '⚫ Offline'}
-              </div>
+              {/* Only show status if it's not 'NA' and is a valid status */}
+              {data?.owner?.status && data.owner.status !== 'NA' && ['online', 'idle', 'dnd', 'offline'].includes(data.owner.status) && (
+                <div className={`absolute -bottom-2 -right-2 px-3 py-1 rounded-full text-sm font-mono animate-float flex items-center gap-1 ${
+                  (data?.owner?.status === 'online') ? 'bg-neon-emerald text-dark-950' :
+                  (data?.owner?.status === 'idle') ? 'bg-neon-yellow text-dark-950' :
+                  (data?.owner?.status === 'dnd') ? 'bg-neon-orange text-dark-950' :
+                  'bg-dark-600 text-dark-300'
+                }`}>
+                  {(data?.owner?.status === 'online') && (
+                    <>
+                      <div className="w-2 h-2 bg-current rounded-full"></div>
+                      <span>Online</span>
+                    </>
+                  )}
+                  {(data?.owner?.status === 'idle') && (
+                    <>
+                      <div className="w-2 h-2 bg-current rounded-full opacity-60"></div>
+                      <span>Idle</span>
+                    </>
+                  )}
+                  {(data?.owner?.status === 'dnd') && (
+                    <>
+                      <div className="w-2 h-2 bg-current rounded-full relative">
+                        <div className="absolute inset-0.5 bg-dark-950 rounded-full"></div>
+                      </div>
+                      <span>Do Not Disturb</span>
+                    </>
+                  )}
+                  {(data?.owner?.status === 'offline') && (
+                    <>
+                      <div className="w-2 h-2 border border-current rounded-full"></div>
+                      <span>Offline</span>
+                    </>
+                  )}
+                </div>
+              )}
             </div>
           </div>
           

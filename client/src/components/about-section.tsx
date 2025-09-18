@@ -56,9 +56,9 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
             <div className="w-24 h-1 bg-gradient-to-r from-neon-purple to-neon-cyan mx-auto"></div>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-6 md:gap-12 items-center">
-            <div data-aos="zoom-in-right" data-aos-delay="100">
-              <div className="bg-dark-800/50 p-6 md:p-8 rounded-2xl social-card">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
+            <div data-aos="zoom-in-right" data-aos-delay="100" className="h-full">
+              <div className="bg-dark-800/50 p-6 md:p-8 rounded-2xl social-card h-full flex flex-col justify-center">
                 <p className="text-base md:text-lg leading-relaxed text-dark-200 mb-4 md:mb-6" data-testid="text-about-description">
                   {isLoading ? aboutText : (owner?.about || aboutText)}
                 </p>
@@ -70,8 +70,8 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
               </div>
             </div>
             
-            <div data-aos="zoom-in-left" data-aos-delay="100">
-              <div className="space-y-3 md:space-y-4">
+            <div data-aos="zoom-in-left" data-aos-delay="100" className="h-full">
+              <div className="space-y-3 md:space-y-4 h-full flex flex-col justify-center">
                 {badges.map((badge, index) => (
                   <div 
                     key={badge.title}
@@ -92,8 +92,6 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
               </div>
             </div>
           </div>
-        </div>
-      </div>
         </div>
       </div>
     </section>

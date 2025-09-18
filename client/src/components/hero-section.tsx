@@ -9,7 +9,7 @@ interface HeroSectionProps {
   isConnected: boolean;
 }
 
-export function HeroSection({ data, homeData, isLoading, isConnected }: HeroSectionProps) {
+export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
   const avatarRef = useRef<HTMLImageElement>(null);
   
   useEffect(() => {
@@ -97,7 +97,7 @@ export function HeroSection({ data, homeData, isLoading, isConnected }: HeroSect
                       <div className="w-2 h-2 bg-current rounded-full relative">
                         <div className="absolute inset-0.5 bg-dark-950 rounded-full"></div>
                       </div>
-                      <span>Do Not Disturb</span>
+                      <span>dnd</span>
                     </>
                   )}
                   {(data?.owner?.status === 'offline') && (
@@ -117,10 +117,10 @@ export function HeroSection({ data, homeData, isLoading, isConnected }: HeroSect
               {isLoading ? 'Janvi Dreamer' : owner.displayName}
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl text-dark-300 mb-2 font-light" data-testid="text-hero-tagline">
-              Content Creator & Digital Artist
+              YouTuber & Gamer
             </p>
             <p className="text-base sm:text-lg text-dark-400 mb-6 md:mb-8 max-w-2xl mx-auto px-4" data-testid="text-hero-subtitle">
-              Passionate creator from Madhya Pradesh, crafting digital dreams since 2022
+              Passionate creator from Madhya Pradesh, India. Join me on my journey through YouTube, gaming, and more!
             </p>
           </div>
           
@@ -135,7 +135,7 @@ export function HeroSection({ data, homeData, isLoading, isConnected }: HeroSect
                 data-testid="link-youtube-cta"
               >
                 <i className="fab fa-youtube mr-2"></i>
-                Subscribe on YouTube
+                YouTube
               </a>
             )}
             
@@ -148,7 +148,7 @@ export function HeroSection({ data, homeData, isLoading, isConnected }: HeroSect
                 data-testid="link-discord-cta"
               >
                 <i className="fab fa-discord mr-2"></i>
-                Join Discord
+                Discord
               </a>
             )}
             
@@ -161,7 +161,7 @@ export function HeroSection({ data, homeData, isLoading, isConnected }: HeroSect
                 data-testid="link-instagram-cta"
               >
                 <i className="fab fa-instagram mr-2"></i>
-                Follow Instagram
+                Instagram
               </a>
             )}
           </div>

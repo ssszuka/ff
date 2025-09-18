@@ -57,7 +57,7 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
           </div>
           
           <div className="grid md:grid-cols-2 gap-6 md:gap-12 items-center">
-            <div data-aos="fade-right" data-aos-delay="100">
+            <div data-aos="zoom-in-right" data-aos-delay="100">
               <div className="bg-dark-800/50 p-6 md:p-8 rounded-2xl social-card">
                 <p className="text-base md:text-lg leading-relaxed text-dark-200 mb-4 md:mb-6" data-testid="text-about-description">
                   {isLoading ? aboutText : (owner?.about || aboutText)}
@@ -70,7 +70,7 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
               </div>
             </div>
             
-            <div data-aos="fade-left" data-aos-delay="200">
+            <div data-aos="zoom-in-left" data-aos-delay="200">
               <div className="space-y-3 md:space-y-4">
                 {badges.map((badge, index) => (
                   <div 

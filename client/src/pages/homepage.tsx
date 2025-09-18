@@ -18,7 +18,6 @@ export function Homepage() {
     isLoading,
     error,
     isConnected,
-    isFromFallback,
     refetch
   } = useUnifiedData();
   

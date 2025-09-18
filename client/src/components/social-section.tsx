@@ -113,7 +113,7 @@ export function SocialSection({ data, homeData, isLoading }: SocialSectionProps)
     <section className="py-12 md:py-20 relative">
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8 md:mb-16" data-aos="fade-up">
+          <div className="text-center mb-8 md:mb-16" data-aos="zoom-in-up">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4 md:mb-6 text-white" data-testid="text-social-title">
               Connect & Follow
             </h2>
@@ -127,7 +127,7 @@ export function SocialSection({ data, homeData, isLoading }: SocialSectionProps)
               <div 
                 key={platform.name}
                 className="social-card bg-dark-800/30 p-4 md:p-6 rounded-2xl hover:transform hover:-translate-y-2 transition-all duration-200 group" 
-                data-aos="fade-up" 
+                data-aos="zoom-in-down" 
                 data-aos-delay={50 + (index * 50)}
                 data-testid={`card-social-${platform.testId}`}
               >

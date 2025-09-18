@@ -11,14 +11,14 @@ interface HeroSectionProps {
 
 export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
   const avatarRef = useRef<HTMLImageElement>(null);
-  
+
   useEffect(() => {
     // GSAP animations for avatar interaction (mobile and desktop)
     if (typeof window !== 'undefined' && 'gsap' in window && avatarRef.current) {
       const gsap = (window as any).gsap;
       const avatar = avatarRef.current;
       const isMobile = window.innerWidth < 768;
-      
+
       const animateIn = () => {
         gsap.to(avatar, {
           scale: isMobile ? 1.05 : 1.1, // Smaller scale on mobile
@@ -27,7 +27,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
           ease: "power2.out"
         });
       };
-      
+
       const animateOut = () => {
         gsap.to(avatar, {
           scale: 1,
@@ -36,13 +36,13 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
           ease: "power2.out"
         });
       };
-      
+
       // Add both mouse and touch events for better mobile support
       avatar.addEventListener('mouseenter', animateIn);
       avatar.addEventListener('mouseleave', animateOut);
       avatar.addEventListener('touchstart', animateIn);
       avatar.addEventListener('touchend', animateOut);
-      
+
       return () => {
         avatar.removeEventListener('mouseenter', animateIn);
         avatar.removeEventListener('mouseleave', animateOut);
@@ -51,15 +51,15 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
       };
     }
   }, []);
-  
+
   if (!data) return null;
-  
+
   const { owner } = data;
   const { socials } = homeData;
-  
+
   return (
     <section className="relative min-h-screen flex items-center justify-center hero-bg">
-      
+
       <div className="container mx-auto px-6 text-center relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Avatar */}
@@ -73,7 +73,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                 data-testid="img-hero-avatar"
               />
               {/* Only show status if it's not 'NA' and is a valid status */}
-              {data?.owner?.status && data.owner.status !== ['NA', 'offline'] && ['online', 'idle', 'dnd'].includes(data.owner.status) && (
+              {data?.owner?.status && !['NA', 'offline'].includes(data.owner.status) && ['online', 'idle', 'dnd'].includes(data.owner.status) && (
                 <div className={`absolute -bottom-2 -right-2 px-3 py-1 rounded-full text-sm font-mono animate-float flex items-center gap-1 ${
                   (data?.owner?.status === 'online') ? 'bg-neon-emerald text-dark-950' :
                   (data?.owner?.status === 'idle') ? 'bg-neon-yellow text-dark-950' :
@@ -108,7 +108,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
               )}
             </div>
           </div>
-          
+
           {/* Name & Title */}
           <div data-aos="fade-up" data-aos-delay="100">
             <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-3 md:mb-4 gradient-text" data-testid="text-hero-name">
@@ -121,7 +121,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
               Passionate creator from Madhya Pradesh, India. Join me on my journey through YouTube, gaming, and more!
             </p>
           </div>
-          
+
           {/* Social CTA Buttons */}
           <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-8 md:mb-12 px-4" data-aos="fade-up" data-aos-delay="200">
             {socials?.youtube && (
@@ -136,7 +136,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                 YouTube
               </a>
             )}
-            
+
             {socials?.discord && (
               <a 
                 href={socials.discord.url}
@@ -149,7 +149,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                 Discord
               </a>
             )}
-            
+
             {socials?.instagram && (
               <a 
                 href={socials.instagram.url}
@@ -163,7 +163,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
               </a>
             )}
           </div>
-          
+
           {/* Scroll Indicator */}
           <div className="animate-bounce" data-aos="fade-in" data-aos-delay="300">
             <i className="fas fa-chevron-down text-2xl text-dark-400"></i>

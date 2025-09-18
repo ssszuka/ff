@@ -73,11 +73,11 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                 data-testid="img-hero-avatar"
               />
               {/* Only show status if it's not 'NA' and is a valid status */}
-              {data?.owner?.status && !['NA', 'offline'].includes(data.owner.status) && ['online', 'idle', 'dnd'].includes(data.owner.status) && (
+              {data?.owner?.status && data.owner.status !== ['NA', 'offline'] && ['online', 'idle', 'dnd'].includes(data.owner.status) && (
                 <div className={`absolute -bottom-2 -right-2 px-3 py-1 rounded-full text-sm font-mono animate-float flex items-center gap-1 ${
                   (data?.owner?.status === 'online') ? 'bg-neon-emerald text-dark-950' :
                   (data?.owner?.status === 'idle') ? 'bg-neon-yellow text-dark-950' :
-                  (data?.owner?.status === 'dnd') ? 'bg-red-400 text-white' :
+                  (data?.owner?.status === 'dnd') ? 'bg-neon-orange text-dark-950' :
                   'bg-dark-600 text-dark-300'
                 }`}>
                   {(data?.owner?.status === 'online') && (
@@ -91,7 +91,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                   {(data?.owner?.status === 'idle') && (
                     <>
                       <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
-                        <path d="M17.75 4.09L15.22 6.03L16.13 9.09L13.5 7.28L10.87 9.09L11.78 6.03L9.25 4.09L12.44 4L13.5 1L14.56 4L17.75 4.09ZM21.25 11L19.61 12.25L20.2 14.23L18.5 13.06L16.8 14.23L17.39 12.25L15.75 11L17.81 10.95L18.5 9L19.19 10.95L21.25 11ZM18.97 15.95C19.8 15.87 20.69 17.05 20.16 17.8C19.84 18.25 19.5 18.67 19.08 19.07C15.17 23 8.84 23 4.94 19.07C1.03 15.17 1.03 8.83 4.94 4.93C5.34 4.53 5.76 4.17 6.21 3.85C6.96 3.32 8.14 4.21 8.06 5.04C7.79 7.9 8.75 10.87 10.95 13.06C13.14 15.26 16.1 16.22 18.97 15.95Z" fill="currentColor"/>
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM12 7c-.83 0-1.5.67-1.5 1.5v3c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-3c0-.83-.67-1.5-1.5-1.5z" fill="currentColor"/>
                       </svg>
                       <span>Idle</span>
                     </>

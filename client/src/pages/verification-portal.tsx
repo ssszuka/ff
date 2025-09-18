@@ -10,13 +10,12 @@ import {
   Users, 
   UserCheck, 
   Home, 
-  ExternalLink, 
+  MessagesSquare,
   Youtube, 
   BookOpen, 
   Shield,
   Sparkles,
-  Crown,
-  MessageSquare
+  Crown
 } from "lucide-react";
 import { initializeAnimations, checkReducedMotion } from "@/lib/meta-utils";
 
@@ -273,7 +272,7 @@ export function VerificationPortal() {
                     onClick={() => window.open('https://joindc.pages.dev', '_blank', 'noopener,noreferrer')}
                     data-testid="button-join-discord"
                   >
-                    <MessageSquare className="w-5 h-5 mr-3" />
+                    <MessagesSquare className="w-5 h-5 mr-3" />
                     Join Discord
                   </Button>
                   

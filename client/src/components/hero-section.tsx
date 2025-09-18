@@ -75,10 +75,10 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
               {/* Only show status if it's not 'NA' and is a valid status */}
               {data?.owner?.status && !['NA', 'offline'].includes(data.owner.status) && ['online', 'idle', 'dnd'].includes(data.owner.status) && (
                 <div className={`absolute -bottom-2 -right-2 px-3 py-1 rounded-full text-sm font-mono animate-float flex items-center gap-1 ${
-                  (data?.owner?.status === 'online') ? 'bg-neon-emerald text-dark-950' :
-                  (data?.owner?.status === 'idle') ? 'bg-neon-yellow text-dark-950' :
-                  (data?.owner?.status === 'dnd') ? 'bg-neon-orange text-dark-950' :
-                  'bg-dark-600 text-dark-300'
+                  (data?.owner?.status === 'online') ? 'bg-green-500 text-white' :
+                  (data?.owner?.status === 'idle') ? 'bg-yellow-500 text-black' :
+                  (data?.owner?.status === 'dnd') ? 'bg-red-400 text-white' :
+                  'bg-gray-600 text-gray-300'
                 }`}>
                   {(data?.owner?.status === 'online') && (
                     <>

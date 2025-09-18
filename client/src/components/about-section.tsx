@@ -30,7 +30,7 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
     {
       icon: "fas fa-gamepad",
       title: "Gamer",
-      subtitle: "Digital adventures",
+      subtitle: "video game adventures",
       gradient: "from-purple-500/20 to-pink-500/20",
       border: "border-purple-500/30",
       bg: "bg-purple-500",
@@ -38,7 +38,7 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
     {
       icon: "fas fa-pen-fancy",
       title: "Writer",
-      subtitle: "Creator by choice",
+      subtitle: "Dreams in words ✨",
       gradient: "from-green-500/20 to-emerald-500/20",
       border: "border-green-500/30",
       bg: "bg-green-500",

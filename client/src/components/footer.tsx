@@ -12,7 +12,7 @@ export function Footer({ isConnected }: FooterProps) {
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="mb-4 md:mb-0">
               <p className="text-dark-400 text-sm" data-testid="text-footer-copyright">
-                © {currentYear} Janvi Dreamer. Made with ❤️ for dreamers worldwide.
+                © {currentYear} Janvi Dreamer. Built with ❤️ by the one who belongs to her.
               </p>
             </div>
             <div className="flex items-center space-x-4">

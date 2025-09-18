@@ -210,7 +210,7 @@ export function VerificationPortal() {
                 </div>
                 
                 {/* Title */}
-                <hé className="text-3xl sm:text-4xl font-bold text-white mb-4" data-testid="text-welcome-title">
+                <h3 className="text-3xl sm:text-4xl font-bold text-white mb-4" data-testid="text-welcome-title">
                   Welcome to the Portal of{' '}
                   <span className="gradient-text">
                     {isLoading ? (

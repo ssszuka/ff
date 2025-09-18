@@ -63,13 +63,13 @@ export function HeroSection({ data, homeData, isLoading, isConnected }: HeroSect
       <div className="container mx-auto px-6 text-center relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Avatar */}
-          <div className="mb-6 md:mb-8" data-aos="zoom-in" data-aos-duration="500">
+          <div className="mb-8" data-aos="zoom-in" data-aos-duration="1000">
             <div className="relative inline-block">
               <img 
                 ref={avatarRef}
                 src={isLoading ? "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='100' fill='%23374151'/%3E%3C/svg%3E" : owner.avatarUrl}
                 alt={owner.displayName}
-                className={`w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full border-4 border-neon-purple animate-pulse-glow ${isLoading ? 'loading-shimmer' : ''}`}
+                className={`w-48 h-48 md:w-56 md:h-56 rounded-full border-4 border-neon-purple animate-pulse-glow ${isLoading ? 'loading-shimmer' : ''}`}
                 data-testid="img-hero-avatar"
               />
               {/* Only show status if it's not 'NA' and is a valid status */}
@@ -112,26 +112,26 @@ export function HeroSection({ data, homeData, isLoading, isConnected }: HeroSect
           </div>
           
           {/* Name & Title */}
-          <div data-aos="fade-up" data-aos-delay="100">
-            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-3 md:mb-4 gradient-text" data-testid="text-hero-name">
+          <div data-aos="fade-up" data-aos-delay="200">
+            <h1 className="text-5xl md:text-7xl font-display font-bold mb-4 gradient-text" data-testid="text-hero-name">
               {isLoading ? 'Janvi Dreamer' : owner.displayName}
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-dark-300 mb-2 font-light" data-testid="text-hero-tagline">
+            <p className="text-xl md:text-2xl text-dark-300 mb-2 font-light" data-testid="text-hero-tagline">
               Content Creator & Digital Artist
             </p>
-            <p className="text-base sm:text-lg text-dark-400 mb-6 md:mb-8 max-w-2xl mx-auto px-4" data-testid="text-hero-subtitle">
+            <p className="text-lg text-dark-400 mb-8 max-w-2xl mx-auto" data-testid="text-hero-subtitle">
               Passionate creator from Madhya Pradesh, crafting digital dreams since 2022
             </p>
           </div>
           
           {/* Social CTA Buttons */}
-          <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-8 md:mb-12 px-4" data-aos="fade-up" data-aos-delay="200">
+          <div className="flex flex-wrap justify-center gap-4 mb-12" data-aos="fade-up" data-aos-delay="400">
             {socials?.youtube && (
               <a 
                 href={socials.youtube.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group bg-gradient-to-r from-red-600 to-red-500 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-red-500 hover:to-red-400 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-red-500/25 text-sm md:text-base"
+                className="group bg-gradient-to-r from-red-600 to-red-500 text-white px-8 py-4 rounded-full font-semibold hover:from-red-500 hover:to-red-400 transform hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-red-500/25"
                 data-testid="link-youtube-cta"
               >
                 <i className="fab fa-youtube mr-2"></i>
@@ -144,7 +144,7 @@ export function HeroSection({ data, homeData, isLoading, isConnected }: HeroSect
                 href={socials.discord.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-purple-500/25 text-sm md:text-base"
+                className="group bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-purple-500/25"
                 data-testid="link-discord-cta"
               >
                 <i className="fab fa-discord mr-2"></i>
@@ -157,7 +157,7 @@ export function HeroSection({ data, homeData, isLoading, isConnected }: HeroSect
                 href={socials.instagram.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group bg-gradient-to-r from-pink-600 to-purple-600 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-pink-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-pink-500/25 text-sm md:text-base"
+                className="group bg-gradient-to-r from-pink-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold hover:from-pink-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-pink-500/25"
                 data-testid="link-instagram-cta"
               >
                 <i className="fab fa-instagram mr-2"></i>
@@ -167,7 +167,7 @@ export function HeroSection({ data, homeData, isLoading, isConnected }: HeroSect
           </div>
           
           {/* Scroll Indicator */}
-          <div className="animate-bounce" data-aos="fade-in" data-aos-delay="300">
+          <div className="animate-bounce" data-aos="fade-in" data-aos-delay="600">
             <i className="fas fa-chevron-down text-2xl text-dark-400"></i>
           </div>
         </div>

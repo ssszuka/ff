@@ -27,7 +27,6 @@ export function VerificationPortal() {
     isLoading,
     error,
     isConnected,
-    isFromFallback,
     refetch
   } = useUnifiedData();
   
@@ -195,7 +194,7 @@ export function VerificationPortal() {
         <div className="flex-1 flex items-center justify-center px-4 py-8">
           <div className="max-w-2xl w-full text-center space-y-8">
             
-            {/* Welcome Section */}
+            {/* Main Section */}
             <Card className="bg-dark-800/40 border-dark-600 backdrop-blur-md" data-testid="card-welcome">
               <CardContent className="p-8">
                 {/* Server Icon */}
@@ -211,8 +210,8 @@ export function VerificationPortal() {
                 </div>
                 
                 {/* Title */}
-                <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4" data-testid="text-welcome-title">
-                  Welcome to{' '}
+                <hé className="text-3xl sm:text-4xl font-bold text-white mb-4" data-testid="text-welcome-title">
+                  Welcome to the Portal of{' '}
                   <span className="gradient-text">
                     {isLoading ? (
                       <Skeleton className="inline-block w-48 h-10" />
@@ -220,7 +219,7 @@ export function VerificationPortal() {
                       data?.guild?.name || "Dreamer's Land"
                     )}
                   </span>
-                </h1>
+                </h3>
                 
                 {/* Description */}
                 <p className="text-dark-300 text-lg mb-8 leading-relaxed" data-testid="text-description">

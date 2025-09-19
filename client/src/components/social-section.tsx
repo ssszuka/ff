@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import type { HomeSocialsData } from "@/lib/home-data";
 import type { UnifiedData } from "@/lib/unified-data-service";
 
@@ -11,60 +10,7 @@ interface SocialSectionProps {
 export function SocialSection({ data, homeData, isLoading }: SocialSectionProps) {
   const { socials, server } = homeData;
   
-  useEffect(() => {
-    // GSAP animations for social cards (mobile and desktop)
-    if (typeof window !== 'undefined' && 'gsap' in window) {
-      const gsap = (window as any).gsap;
-      const socialCards = document.querySelectorAll('.social-card');
-      const isMobile = window.innerWidth < 768;
-      
-      socialCards.forEach(card => {
-        const animateIn = () => {
-          gsap.to(card, {
-            y: isMobile ? -5 : -10, // Less movement on mobile
-            boxShadow: isMobile ? "0 10px 25px rgba(0,0,0,0.2)" : "0 20px 40px rgba(0,0,0,0.3)",
-            duration: 0.3,
-            ease: "power2.out"
-          });
-        };
-        
-        const animateOut = () => {
-          gsap.to(card, {
-            y: 0,
-            boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
-            duration: 0.3,
-            ease: "power2.out"
-          });
-        };
-        
-        // Add both mouse and touch events for better mobile support
-        card.addEventListener('mouseenter', animateIn);
-        card.addEventListener('mouseleave', animateOut);
-        card.addEventListener('touchstart', animateIn);
-        card.addEventListener('touchend', animateOut);
-        
-        // Cleanup function to remove event listeners
-        const cleanup = () => {
-          card.removeEventListener('mouseenter', animateIn);
-          card.removeEventListener('mouseleave', animateOut);
-          card.removeEventListener('touchstart', animateIn);
-          card.removeEventListener('touchend', animateOut);
-        };
-        
-        // Store cleanup function for later use
-        (card as any)._animationCleanup = cleanup;
-      });
-      
-      // Return cleanup function
-      return () => {
-        socialCards.forEach(card => {
-          if ((card as any)._animationCleanup) {
-            (card as any)._animationCleanup();
-          }
-        });
-      };
-    }
-  }, []);
+  // Removed GSAP hover animations to prevent conflict with AOS animations
   
   const socialPlatforms = [
     {

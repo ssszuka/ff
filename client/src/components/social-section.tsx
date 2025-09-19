@@ -126,7 +126,7 @@ export function SocialSection({ data, homeData, isLoading }: SocialSectionProps)
             {socialPlatforms.map((platform, index) => (
               <div 
                 key={platform.name}
-                className="social-card bg-dark-800/30 p-4 md:p-6 rounded-2xl hover:transform hover:-translate-y-2 transition-all duration-200 group" 
+                className="social-card bg-dark-800/30 p-4 md:p-6 rounded-2xl group" 
                 data-aos="zoom-in-down" 
                 data-aos-delay={50 + (index * 50)}
                 data-testid={`card-social-${platform.testId}`}

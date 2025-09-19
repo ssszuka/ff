@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import type { UnifiedData } from "@/lib/unified-data-service";
 import type { HomeSocialsData } from "@/lib/home-data";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface HeroSectionProps {
   data: UnifiedData | null;
@@ -52,9 +53,9 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
     }
   }, []);
 
-  if (!data) return null;
+  // Remove the null return, show skeleton instead when no data
 
-  const { owner } = data;
+  const { owner } = data || { owner: null };
   const { socials } = homeData;
 
   return (
@@ -67,13 +68,13 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
             <div className="relative inline-block">
               <img 
                 ref={avatarRef}
-                src={isLoading ? "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='100' fill='%23374151'/%3E%3C/svg%3E" : owner.avatarUrl}
-                alt={owner.displayName}
+                src={isLoading || !owner ? "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='100' fill='%23374151'/%3E%3C/svg%3E" : owner.avatarUrl}
+                alt={owner?.displayName || 'Avatar'}
                 className={`w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full border-4 border-neon-purple animate-pulse-glow ${isLoading ? 'loading-shimmer' : ''}`}
                 data-testid="img-hero-avatar"
               />
               {/* Only show status if it's not 'NA' and is a valid status */}
-              {data?.owner?.status && !['NA', 'offline'].includes(data.owner.status) && ['online', 'idle', 'dnd'].includes(data.owner.status) && (
+              {owner && data?.owner?.status && !['NA', 'offline'].includes(data.owner.status) && ['online', 'idle', 'dnd'].includes(data.owner.status) && (
                 <div className={`absolute -bottom-4 -right-4 px-2 py-1 rounded-full text-xs font-mono animate-float flex items-center gap-1 ${
                   (data?.owner?.status === 'online') ? 'bg-green-500 text-white' :
                   (data?.owner?.status === 'idle') ? 'bg-yellow-500 text-black' :
@@ -112,55 +113,78 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
           {/* Name & Title */}
           <div data-aos="fade-up" data-aos-delay="100">
             <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-3 md:mb-4 gradient-text" data-testid="text-hero-name">
-              {isLoading ? 'Janvi Dreamer' : owner.displayName}
+              {isLoading || !owner ? (
+                <Skeleton className="h-12 md:h-16 lg:h-20 w-80 mx-auto mb-2 bg-dark-700/50" />
+              ) : (
+                owner.displayName
+              )}
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-dark-300 mb-2 font-light" data-testid="text-hero-tagline">
-              YouTuber & Gamer
-            </p>
-            <p className="text-base sm:text-lg text-dark-400 mb-6 md:mb-8 max-w-2xl mx-auto px-4" data-testid="text-hero-subtitle">
-              Passionate creator from Madhya Pradesh, India. Join me on my journey through YouTube, gaming, and more!
-            </p>
+            {isLoading || !owner ? (
+              <>
+                <Skeleton className="h-6 md:h-8 w-48 mx-auto mb-2 bg-dark-700/50" />
+                <Skeleton className="h-20 w-full max-w-2xl mx-auto bg-dark-700/50" />
+              </>
+            ) : (
+              <>
+                <p className="text-lg sm:text-xl md:text-2xl text-dark-300 mb-2 font-light" data-testid="text-hero-tagline">
+                  YouTuber & Gamer
+                </p>
+                <p className="text-base sm:text-lg text-dark-400 mb-6 md:mb-8 max-w-2xl mx-auto px-4" data-testid="text-hero-subtitle">
+                  Passionate creator from Madhya Pradesh, India. Join me on my journey through YouTube, gaming, and more!
+                </p>
+              </>
+            )}
           </div>
 
           {/* Social CTA Buttons */}
           <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-8 md:mb-12 px-4" data-aos="fade-up" data-aos-delay="200">
-            {socials?.youtube && (
-              <a 
-                href={socials.youtube.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group bg-gradient-to-r from-red-600 to-red-500 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-red-500 hover:to-red-400 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-red-500/25 text-sm md:text-base"
-                data-testid="link-youtube-cta"
-              >
-                <i className="fab fa-youtube mr-2"></i>
-                YouTube
-              </a>
-            )}
+            {isLoading || !owner ? (
+              <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+                <Skeleton className="h-12 w-28 md:w-32 rounded-full bg-dark-700/50" />
+                <Skeleton className="h-12 w-24 md:w-28 rounded-full bg-dark-700/50" />
+                <Skeleton className="h-12 w-32 md:w-36 rounded-full bg-dark-700/50" />
+              </div>
+            ) : (
+              <>
+                {socials?.youtube && (
+                  <a 
+                    href={socials.youtube.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group bg-gradient-to-r from-red-600 to-red-500 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-red-500 hover:to-red-400 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-red-500/25 text-sm md:text-base"
+                    data-testid="link-youtube-cta"
+                  >
+                    <i className="fab fa-youtube mr-2"></i>
+                    YouTube
+                  </a>
+                )}
 
-            {socials?.discord && (
-              <a 
-                href={socials.discord.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-purple-500/25 text-sm md:text-base"
-                data-testid="link-discord-cta"
-              >
-                <i className="fab fa-discord mr-2"></i>
-                Discord
-              </a>
-            )}
+                {socials?.discord && (
+                  <a 
+                    href={socials.discord.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-purple-500/25 text-sm md:text-base"
+                    data-testid="link-discord-cta"
+                  >
+                    <i className="fab fa-discord mr-2"></i>
+                    Discord
+                  </a>
+                )}
 
-            {socials?.instagram && (
-              <a 
-                href={socials.instagram.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group bg-gradient-to-r from-pink-600 to-purple-600 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-pink-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-pink-500/25 text-sm md:text-base"
-                data-testid="link-instagram-cta"
-              >
-                <i className="fab fa-instagram mr-2"></i>
-                Instagram
-              </a>
+                {socials?.instagram && (
+                  <a 
+                    href={socials.instagram.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group bg-gradient-to-r from-pink-600 to-purple-600 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-pink-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-pink-500/25 text-sm md:text-base"
+                    data-testid="link-instagram-cta"
+                  >
+                    <i className="fab fa-instagram mr-2"></i>
+                    Instagram
+                  </a>
+                )}
+              </>
             )}
           </div>
 

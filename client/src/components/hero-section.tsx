@@ -7,7 +7,6 @@ interface HeroSectionProps {
   data: UnifiedData | null;
   homeData: HomeSocialsData;
   isLoading: boolean;
-  isConnected: boolean;
 }
 
 export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
@@ -52,8 +51,6 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
       };
     }
   }, []);
-
-  // Remove the null return, show skeleton instead when no data
 
   const { owner } = data || { owner: null };
   const { socials } = homeData;

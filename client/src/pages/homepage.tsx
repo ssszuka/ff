@@ -18,8 +18,7 @@ export function Homepage() {
     data,
     isLoading,
     error,
-    isConnected,
-    refetch
+    isConnected
   } = useUnifiedData();
   
   // Update meta tags when data changes
@@ -66,7 +65,6 @@ export function Homepage() {
   // Handle loading completion
   const handleLoadingComplete = () => {
     setShowLoading(false);
-    setForceShow(true); // Ensure content is shown
   };
   
   // Error boundary
@@ -106,7 +104,6 @@ export function Homepage() {
           data={data}
           homeData={homeData}
           isLoading={isLoading}
-          isConnected={isConnected}
         />
         
         <AboutSection 

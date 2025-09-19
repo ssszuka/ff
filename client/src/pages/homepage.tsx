@@ -31,8 +31,8 @@ export function Homepage() {
         socials: homeData.socials,
         server: {
           ...homeData.server,
-          memberCount: data.guild.memberCount,
-          memberCountFormatted: data.guild.memberCountFormatted
+          memberCount: data.guild?.memberCount,
+          memberCountFormatted: data.guild?.memberCountFormatted
         }
       };
       updateMetaTags(homepageData);

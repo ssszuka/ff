@@ -12,6 +12,7 @@ import { appConfig } from "@/lib/config";
 export function Homepage() {
   const [showLoading, setShowLoading] = useState(appConfig.FEATURES.LOADING_SCREEN);
   const [animationsInitialized, setAnimationsInitialized] = useState(false);
+  const [forceShow, setForceShow] = useState(false);
   
   const {
     data,
@@ -38,6 +39,18 @@ export function Homepage() {
     }
   }, [data, isLoading]);
   
+  // Emergency fallback to ensure content shows even if loading fails
+  useEffect(() => {
+    if (appConfig.FEATURES.LOADING_SCREEN) {
+      const emergencyTimeout = setTimeout(() => {
+        setForceShow(true);
+        setShowLoading(false);
+      }, 5000); // Force show after 5 seconds
+      
+      return () => clearTimeout(emergencyTimeout);
+    }
+  }, []);
+
   // Initialize animations after loading
   useEffect(() => {
     if (!showLoading && !animationsInitialized && !checkReducedMotion()) {
@@ -53,6 +66,7 @@ export function Homepage() {
   // Handle loading completion
   const handleLoadingComplete = () => {
     setShowLoading(false);
+    setForceShow(true); // Ensure content is shown
   };
   
   // Error boundary
@@ -87,7 +101,7 @@ export function Homepage() {
       />
       
       {/* Main Content */}
-      <main className={showLoading ? "hidden" : ""} data-testid="main-content">
+      <main className={showLoading && !forceShow ? "hidden" : ""} data-testid="main-content">
         <HeroSection 
           data={data}
           homeData={homeData}

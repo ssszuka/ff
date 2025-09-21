@@ -104,8 +104,6 @@ class UnifiedDataService {
     try {
       // Try to fetch from backend
       const backendUrl = `${this.BACKEND_URL}/api/info`;
-      console.log('Fetching data from:', backendUrl);
-      
       const response = await fetch(backendUrl, {
         method: 'GET',
         headers: {
@@ -137,7 +135,6 @@ class UnifiedDataService {
       };
       
     } catch (error) {
-      console.warn('Backend fetch failed, using fallback data:', error);
       
       try {
         // Try to get fallback data
@@ -158,7 +155,6 @@ class UnifiedDataService {
         };
         
       } catch (fallbackError) {
-        console.error('Both backend and fallback failed:', fallbackError);
         
         // If we have any cached data (even if expired), use it
         if (this.cache) {

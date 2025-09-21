@@ -2,7 +2,6 @@ export interface AppConfig {
   API: {
     INFO: string;
   };
-  USE_REMOTE_API: boolean;
   LOCAL_DATA: any; // Temporary fix, will be replaced with unified data service
   UI: {
     LOADING_TIMEOUT: number;
@@ -18,7 +17,6 @@ export interface AppConfig {
 }
 
 export const appConfig: AppConfig = {
-  USE_REMOTE_API: false, // Disabled for static hosting
   API: {
     INFO: '/api/info',
   },

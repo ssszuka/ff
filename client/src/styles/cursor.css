@@ -35,7 +35,7 @@
   /* Additional cursor paths - Now Available! */
   --cursor-text-svg: url('/cdn/assets/cursor/text.svg');
   --cursor-wait-svg: url('/cdn/assets/cursor/wait.svg');
-  --cursor-grab-svg: url('/cdn/assets/cursor/grab.svg');
+  /* --cursor-grab-svg: url('/cdn/assets/cursor/grab.svg'); */
   --cursor-help-svg: url('/cdn/assets/cursor/help.svg');
   --cursor-copy-svg: url('/cdn/assets/cursor/copy.svg');
   --cursor-resize-svg: url('/cdn/assets/cursor/resize.svg');
@@ -43,7 +43,7 @@
   /* Hotspot coordinates for new cursors */
   --cursor-text-hotspot: 20 16;
   --cursor-wait-hotspot: 16 16;
-  --cursor-grab-hotspot: 16 16;
+  /* --cursor-grab-hotspot: 16 16; */
   --cursor-help-hotspot: 16 16;
   --cursor-copy-hotspot: 16 16;
   --cursor-resize-hotspot: 16 16;
@@ -156,14 +156,14 @@ textarea,
 /* ================================================
    GRABBABLE/DRAGGABLE ELEMENTS - GRAB CURSOR
    ================================================ */
-[draggable="true"],
+/* [draggable="true"],
 .draggable,
 .moveable,
 .grabbable,
 .cursor-grab {
   cursor: var(--cursor-grab-svg) var(--cursor-grab-hotspot), 
           grab !important;
-}
+} */
 
 /* ================================================
    RESIZABLE ELEMENTS - RESIZE CURSOR

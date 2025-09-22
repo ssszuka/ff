@@ -46,7 +46,7 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
   ];
   
   return (
-    <section className="py-12 md:py-20 bg-dark-900/50 relative">
+    <section id="about-section" className="py-12 md:py-20 bg-dark-900/50 relative">
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8 md:mb-16" data-aos="fade-up">

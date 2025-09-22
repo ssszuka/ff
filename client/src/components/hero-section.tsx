@@ -75,34 +75,32 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
     <section className="relative min-h-[80vh] md:min-h-screen flex flex-col items-center justify-center hero-bg pt-8 md:pt-16">
       
       <div className="container mx-auto px-6 text-center relative z-10">
-        {/* Navigation - Triangle Layout */}
-        <div className="flex flex-col items-center gap-6 md:gap-8 mb-8 md:mb-12">
-          {/* About - Top center position */}
+        {/* Navigation - Curved Circular Layout */}
+        <div className="relative flex justify-center items-center mb-4 md:mb-6">
+          {/* About - Top center, curved upward */}
           <button 
             onClick={() => scrollToSection('about-section')}
-            className="transform rotate-2 font-mono text-sm md:text-base font-bold text-dark-200 hover:text-neon-cyan transition-all duration-300 hover:scale-110 cursor-pointer"
+            className="absolute transform -translate-y-8 md:-translate-y-10 rotate-2 font-mono text-sm md:text-base font-bold text-dark-200 hover:text-neon-cyan transition-all duration-300 hover:scale-110 cursor-pointer"
+            style={{ transform: 'translateY(-2rem) rotate(2deg)' }}
           >
             About
           </button>
           
-          {/* Socials and Portal - Bottom line */}
-          <div className="flex justify-center items-center gap-12 md:gap-20">
-            {/* Socials - Bottom left */}
-            <button 
-              onClick={() => scrollToSection('socials-section')}
-              className="transform -rotate-12 font-mono text-base md:text-lg font-bold text-dark-200 hover:text-neon-purple transition-all duration-300 hover:scale-110 cursor-pointer"
-            >
-              Socials
-            </button>
-            
-            {/* Portal - Bottom right */}
-            <button 
-              onClick={navigateToPortal}
-              className="transform rotate-12 font-mono text-base md:text-lg font-bold text-dark-200 hover:text-neon-emerald transition-all duration-300 hover:scale-110 cursor-pointer"
-            >
-              Portal
-            </button>
-          </div>
+          {/* Socials - Bottom left, curved */}
+          <button 
+            onClick={() => scrollToSection('socials-section')}
+            className="absolute transform -translate-x-16 md:-translate-x-20 translate-y-4 md:translate-y-6 -rotate-25 font-mono text-base md:text-lg font-bold text-dark-200 hover:text-neon-purple transition-all duration-300 hover:scale-110 cursor-pointer"
+          >
+            Socials
+          </button>
+          
+          {/* Portal - Bottom right, curved */}
+          <button 
+            onClick={navigateToPortal}
+            className="absolute transform translate-x-16 md:translate-x-20 translate-y-4 md:translate-y-6 rotate-25 font-mono text-base md:text-lg font-bold text-dark-200 hover:text-neon-emerald transition-all duration-300 hover:scale-110 cursor-pointer"
+          >
+            Portal
+          </button>
         </div>
         <div className="max-w-4xl mx-auto">
           {/* Avatar */}

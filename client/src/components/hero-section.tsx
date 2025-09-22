@@ -74,7 +74,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
   return (
     <section className="relative min-h-screen flex items-center justify-center hero-bg">
       {/* Top Navigation - Fixed at screen top */}
-      <div className="fixed top-4 md:top-8 left-0 right-0 z-20 flex justify-center items-center gap-8 md:gap-16 px-6">
+      <div className="fixed top-2 md:top-8 left-0 right-0 z-20 flex justify-center items-center gap-6 md:gap-16 px-4 md:px-6">
         {/* Socials */}
         <button 
           onClick={() => scrollToSection('socials-section')}
@@ -100,7 +100,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
         </button>
       </div>
 
-      <div className="container mx-auto px-6 text-center relative z-10 pt-16 md:pt-20">
+      <div className="container mx-auto px-6 text-center relative z-10 pt-12 md:pt-20">
         <div className="max-w-4xl mx-auto">
           {/* Avatar */}
           <div className="mb-6 md:mb-8" data-aos="zoom-in" data-aos-duration="500">

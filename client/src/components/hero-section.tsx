@@ -75,31 +75,34 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
     <section className="relative min-h-[80vh] md:min-h-screen flex flex-col items-center justify-center hero-bg pt-8 md:pt-16">
       
       <div className="container mx-auto px-6 text-center relative z-10">
-        {/* Top Navigation - Scrollable with page */}
-        <div className="flex justify-center items-baseline gap-8 md:gap-16 mb-8 md:mb-12">
-          {/* About - Higher position */}
+        {/* Navigation - Triangle Layout */}
+        <div className="flex flex-col items-center gap-6 md:gap-8 mb-8 md:mb-12">
+          {/* About - Top center position */}
           <button 
             onClick={() => scrollToSection('about-section')}
-            className="transform rotate-2 font-mono text-base md:text-lg font-bold text-dark-200 hover:text-neon-cyan transition-all duration-300 hover:scale-110 cursor-pointer order-2"
+            className="transform rotate-2 font-mono text-sm md:text-base font-bold text-dark-200 hover:text-neon-cyan transition-all duration-300 hover:scale-110 cursor-pointer"
           >
             About
           </button>
           
-          {/* Socials - Lower position */}
-          <button 
-            onClick={() => scrollToSection('socials-section')}
-            className="transform -rotate-12 font-mono text-sm md:text-base font-bold text-dark-200 hover:text-neon-purple transition-all duration-300 hover:scale-110 cursor-pointer order-1 self-end"
-          >
-            Socials
-          </button>
-          
-          {/* Portal - Lower position */}
-          <button 
-            onClick={navigateToPortal}
-            className="transform rotate-12 font-mono text-sm md:text-base font-bold text-dark-200 hover:text-neon-emerald transition-all duration-300 hover:scale-110 cursor-pointer order-3 self-end"
-          >
-            Portal
-          </button>
+          {/* Socials and Portal - Bottom line */}
+          <div className="flex justify-center items-center gap-12 md:gap-20">
+            {/* Socials - Bottom left */}
+            <button 
+              onClick={() => scrollToSection('socials-section')}
+              className="transform -rotate-12 font-mono text-base md:text-lg font-bold text-dark-200 hover:text-neon-purple transition-all duration-300 hover:scale-110 cursor-pointer"
+            >
+              Socials
+            </button>
+            
+            {/* Portal - Bottom right */}
+            <button 
+              onClick={navigateToPortal}
+              className="transform rotate-12 font-mono text-base md:text-lg font-bold text-dark-200 hover:text-neon-emerald transition-all duration-300 hover:scale-110 cursor-pointer"
+            >
+              Portal
+            </button>
+          </div>
         </div>
         <div className="max-w-4xl mx-auto">
           {/* Avatar */}

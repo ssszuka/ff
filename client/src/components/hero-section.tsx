@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useLocation } from "wouter";
 import type { UnifiedData } from "@/lib/unified-data-service";
 import type { HomeSocialsData } from "@/lib/home-data";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -11,6 +12,21 @@ interface HeroSectionProps {
 
 export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
   const avatarRef = useRef<HTMLImageElement>(null);
+  const [, setLocation] = useLocation();
+
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
+  const navigateToPortal = () => {
+    setLocation('/portal');
+  };
 
   useEffect(() => {
     // GSAP animations for avatar interaction (mobile and desktop)
@@ -60,9 +76,35 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
 
       <div className="container mx-auto px-6 text-center relative z-10">
         <div className="max-w-4xl mx-auto">
-          {/* Avatar */}
+          {/* Avatar with Navigation */}
           <div className="mb-6 md:mb-8" data-aos="zoom-in" data-aos-duration="500">
             <div className="relative inline-block">
+              {/* Desktop Navigation Items */}
+              <div className="hidden md:block">
+                {/* Socials - Left upper side */}
+                <button 
+                  onClick={() => scrollToSection('socials-section')}
+                  className="absolute -top-16 -left-20 transform -rotate-12 font-sans text-lg font-medium text-dark-300 hover:text-neon-purple transition-all duration-300 hover:scale-110 cursor-pointer"
+                >
+                  Socials
+                </button>
+                
+                {/* About - Top center */}
+                <button 
+                  onClick={() => scrollToSection('about-section')}
+                  className="absolute -top-20 left-1/2 transform -translate-x-1/2 rotate-2 font-sans text-lg font-medium text-dark-300 hover:text-neon-cyan transition-all duration-300 hover:scale-110 cursor-pointer"
+                >
+                  About
+                </button>
+                
+                {/* Portal - Right upper side */}
+                <button 
+                  onClick={navigateToPortal}
+                  className="absolute -top-16 -right-20 transform rotate-12 font-sans text-lg font-medium text-dark-300 hover:text-neon-emerald transition-all duration-300 hover:scale-110 cursor-pointer"
+                >
+                  Portal
+                </button>
+              </div>
               <img 
                 ref={avatarRef}
                 src={isLoading || !owner ? "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='100' fill='%23374151'/%3E%3C/svg%3E" : owner.avatarUrl}
@@ -112,7 +154,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
 
           {/* Name & Title */}
           <div data-aos="fade-up" data-aos-delay="100">
-            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-3 md:mb-4 gradient-text" data-testid="text-hero-name">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-3 md:mb-4 gradient-text" data-testid="text-hero-name">
               {isLoading || !owner ? (
                 <Skeleton className="h-12 md:h-16 lg:h-20 w-80 mx-auto mb-2 bg-dark-700/50" />
               ) : (

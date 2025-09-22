@@ -73,38 +73,38 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center hero-bg">
+      {/* Top Navigation - Fixed at screen top */}
+      <div className="fixed top-4 md:top-8 left-0 right-0 z-20 flex justify-center items-center gap-8 md:gap-16 px-6">
+        {/* Socials */}
+        <button 
+          onClick={() => scrollToSection('socials-section')}
+          className="transform -rotate-12 font-serif text-lg md:text-xl font-semibold text-dark-200 hover:text-neon-purple transition-all duration-300 hover:scale-110 cursor-pointer"
+        >
+          Socials
+        </button>
+        
+        {/* About */}
+        <button 
+          onClick={() => scrollToSection('about-section')}
+          className="transform rotate-2 font-serif text-lg md:text-xl font-semibold text-dark-200 hover:text-neon-cyan transition-all duration-300 hover:scale-110 cursor-pointer"
+        >
+          About
+        </button>
+        
+        {/* Portal */}
+        <button 
+          onClick={navigateToPortal}
+          className="transform rotate-12 font-serif text-lg md:text-xl font-semibold text-dark-200 hover:text-neon-emerald transition-all duration-300 hover:scale-110 cursor-pointer"
+        >
+          Portal
+        </button>
+      </div>
 
-      <div className="container mx-auto px-6 text-center relative z-10">
+      <div className="container mx-auto px-6 text-center relative z-10 pt-16 md:pt-20">
         <div className="max-w-4xl mx-auto">
-          {/* Avatar with Navigation */}
+          {/* Avatar */}
           <div className="mb-6 md:mb-8" data-aos="zoom-in" data-aos-duration="500">
             <div className="relative inline-block">
-              {/* Navigation Items - Mobile और Desktop दोनों के लिए */}
-              <div>
-                {/* Socials - Left upper side */}
-                <button 
-                  onClick={() => scrollToSection('socials-section')}
-                  className="absolute -top-10 -left-12 md:-top-16 md:-left-20 transform -rotate-12 font-sans text-base md:text-lg font-medium text-dark-300 hover:text-neon-purple transition-all duration-300 hover:scale-110 cursor-pointer"
-                >
-                  Socials
-                </button>
-                
-                {/* About - Top center */}
-                <button 
-                  onClick={() => scrollToSection('about-section')}
-                  className="absolute -top-12 left-1/2 md:-top-20 transform -translate-x-1/2 rotate-2 font-sans text-base md:text-lg font-medium text-dark-300 hover:text-neon-cyan transition-all duration-300 hover:scale-110 cursor-pointer"
-                >
-                  About
-                </button>
-                
-                {/* Portal - Right upper side */}
-                <button 
-                  onClick={navigateToPortal}
-                  className="absolute -top-10 -right-12 md:-top-16 md:-right-20 transform rotate-12 font-sans text-base md:text-lg font-medium text-dark-300 hover:text-neon-emerald transition-all duration-300 hover:scale-110 cursor-pointer"
-                >
-                  Portal
-                </button>
-              </div>
               <img 
                 ref={avatarRef}
                 src={isLoading || !owner ? "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='100' fill='%23374151'/%3E%3C/svg%3E" : owner.avatarUrl}

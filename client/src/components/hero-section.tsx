@@ -76,27 +76,27 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
       
       <div className="container mx-auto px-6 text-center relative z-10">
         {/* Top Navigation - Scrollable with page */}
-        <div className="flex justify-center items-center gap-6 md:gap-12 mb-8 md:mb-12">
-          {/* About - Center and higher */}
+        <div className="flex justify-center items-baseline gap-8 md:gap-16 mb-8 md:mb-12">
+          {/* About - Higher position */}
           <button 
             onClick={() => scrollToSection('about-section')}
-            className="transform rotate-2 font-mono text-base md:text-lg font-bold text-dark-200 hover:text-neon-cyan transition-all duration-300 hover:scale-110 cursor-pointer"
+            className="transform rotate-2 font-mono text-base md:text-lg font-bold text-dark-200 hover:text-neon-cyan transition-all duration-300 hover:scale-110 cursor-pointer order-2"
           >
             About
           </button>
           
-          {/* Socials - Same line, left side */}
+          {/* Socials - Lower position */}
           <button 
             onClick={() => scrollToSection('socials-section')}
-            className="transform -rotate-1 font-mono text-sm md:text-base font-bold text-dark-200 hover:text-neon-purple transition-all duration-300 hover:scale-110 cursor-pointer"
+            className="transform -rotate-12 font-mono text-sm md:text-base font-bold text-dark-200 hover:text-neon-purple transition-all duration-300 hover:scale-110 cursor-pointer order-1 self-end"
           >
             Socials
           </button>
           
-          {/* Portal - Same line, right side */}
+          {/* Portal - Lower position */}
           <button 
             onClick={navigateToPortal}
-            className="transform rotate-1 font-mono text-sm md:text-base font-bold text-dark-200 hover:text-neon-emerald transition-all duration-300 hover:scale-110 cursor-pointer"
+            className="transform rotate-12 font-mono text-sm md:text-base font-bold text-dark-200 hover:text-neon-emerald transition-all duration-300 hover:scale-110 cursor-pointer order-3 self-end"
           >
             Portal
           </button>

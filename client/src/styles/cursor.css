@@ -1,0 +1,286 @@
+/* ================================================
+   JANVI DREAMER - CUSTOM CURSOR SYSTEM 
+   ================================================
+   
+   This file manages all custom cursors for the entire application.
+   To add new cursors, simply add the cursor files to /cdn/assets/cursor/
+   and add the CSS rules below following the same pattern.
+   
+   Cursor File Naming Convention:
+   - cursor-name.svg (modern browsers)
+   - cursor-name.cur (fallback for older browsers)
+   
+   CSS Pattern:
+   .cursor-[name] {
+     cursor: url('/cdn/assets/cursor/[name].svg') [hotspot-x] [hotspot-y], 
+             url('/cdn/assets/cursor/[name].cur'), 
+             [system-fallback];
+   }
+*/
+
+/* ================================================
+   BASE CURSOR VARIABLES 
+   ================================================ */
+:root {
+  /* Default cursor paths */
+  --cursor-default-svg: url('/cdn/assets/cursor/default.svg');
+  --cursor-default-cur: url('/cdn/assets/cursor/default.cur');
+  --cursor-pointer-svg: url('/cdn/assets/cursor/pointer.svg');
+  --cursor-pointer-cur: url('/cdn/assets/cursor/pointer.cur');
+  
+  /* Hotspot coordinates */
+  --cursor-default-hotspot: 1 1;
+  --cursor-pointer-hotspot: 12 8;
+  
+  /* Future cursor paths (add here when creating new cursors) */
+  /* Note: Currently only default and pointer cursors are available */
+  /* Uncomment and add files when other cursors are created:
+  --cursor-text-svg: url('/cdn/assets/cursor/text.svg');
+  --cursor-text-cur: url('/cdn/assets/cursor/text.cur');
+  --cursor-wait-svg: url('/cdn/assets/cursor/wait.svg');
+  --cursor-wait-cur: url('/cdn/assets/cursor/wait.cur');
+  --cursor-progress-svg: url('/cdn/assets/cursor/progress.svg');
+  --cursor-progress-cur: url('/cdn/assets/cursor/progress.cur');
+  --cursor-move-svg: url('/cdn/assets/cursor/move.svg');
+  --cursor-move-cur: url('/cdn/assets/cursor/move.cur');
+  --cursor-help-svg: url('/cdn/assets/cursor/help.svg');
+  --cursor-help-cur: url('/cdn/assets/cursor/help.cur');
+  */
+}
+
+/* ================================================
+   GLOBAL DEFAULT CURSOR 
+   ================================================ */
+*, *::before, *::after {
+  cursor: var(--cursor-default-svg) var(--cursor-default-hotspot), 
+          var(--cursor-default-cur), 
+          auto !important;
+}
+
+/* ================================================
+   INTERACTIVE ELEMENTS - POINTER CURSOR
+   ================================================ */
+
+/* Primary interactive elements */
+a, 
+button, 
+input[type="submit"], 
+input[type="button"], 
+input[type="reset"],
+input[type="checkbox"],
+input[type="radio"],
+select,
+option,
+[role="button"],
+[role="link"],
+[role="menuitem"],
+[role="tab"],
+[tabindex="0"]:not(input):not(textarea):not([role="textbox"]),
+.clickable,
+.cursor-pointer {
+  cursor: var(--cursor-pointer-svg) var(--cursor-pointer-hotspot), 
+          var(--cursor-pointer-cur), 
+          pointer !important;
+}
+
+/* Navigation and menu items */
+nav a,
+.nav-link,
+.menu-item,
+.dropdown-item,
+[role="menuitemcheckbox"],
+[role="menuitemradio"] {
+  cursor: var(--cursor-pointer-svg) var(--cursor-pointer-hotspot), 
+          var(--cursor-pointer-cur), 
+          pointer !important;
+}
+
+/* Interactive UI components */
+.card.clickable,
+.social-card,
+.hero-section button,
+[data-clickable="true"] {
+  cursor: var(--cursor-pointer-svg) var(--cursor-pointer-hotspot), 
+          var(--cursor-pointer-cur), 
+          pointer !important;
+}
+
+/* ================================================
+   TEXT INPUT ELEMENTS - TEXT CURSOR
+   ================================================ */
+input[type="text"],
+input[type="email"], 
+input[type="password"],
+input[type="search"],
+input[type="url"],
+input[type="tel"],
+input[type="number"],
+textarea,
+[contenteditable="true"],
+[role="textbox"],
+.cursor-text {
+  cursor: text !important;
+}
+
+/* ================================================
+   LOADING STATES - WAIT CURSOR
+   ================================================ */
+.loading,
+.loading *,
+[aria-busy="true"],
+[data-loading="true"],
+.cursor-wait {
+  cursor: wait !important;
+}
+
+/* Loading screen specific */
+.loading-screen,
+.loading-screen * {
+  cursor: wait !important;
+}
+
+/* ================================================
+   PROGRESS STATES - PROGRESS CURSOR
+   ================================================ */
+.progress,
+.progress-bar,
+[role="progressbar"],
+.cursor-progress {
+  cursor: progress !important;
+}
+
+/* ================================================
+   MOVEABLE ELEMENTS - MOVE CURSOR
+   ================================================ */
+[draggable="true"],
+.draggable,
+.moveable,
+.resizable-handle,
+.cursor-move {
+  cursor: move !important;
+}
+
+/* ================================================
+   HELP ELEMENTS - HELP CURSOR
+   ================================================ */
+[title]:hover,
+.tooltip-trigger,
+.help-icon,
+[data-help],
+.cursor-help {
+  cursor: help !important;
+}
+
+/* ================================================
+   DISABLED ELEMENTS - NOT ALLOWED CURSOR
+   ================================================ */
+[disabled],
+[aria-disabled="true"],
+.disabled,
+.cursor-not-allowed {
+  cursor: not-allowed !important;
+}
+
+/* ================================================
+   UTILITY CLASSES FOR DYNAMIC CURSOR CHANGES
+   ================================================ */
+
+/* Force specific cursors */
+.cursor-auto { cursor: auto !important; }
+.cursor-default { 
+  cursor: var(--cursor-default-svg) var(--cursor-default-hotspot), 
+          var(--cursor-default-cur), 
+          auto !important; 
+}
+.cursor-none { cursor: none !important; }
+
+/* Hover state cursors */
+.hover-pointer:hover {
+  cursor: var(--cursor-pointer-svg) var(--cursor-pointer-hotspot), 
+          var(--cursor-pointer-cur), 
+          pointer !important;
+}
+
+.hover-text:hover {
+  cursor: text !important;
+}
+
+/* ================================================
+   RESPONSIVE CURSOR ADJUSTMENTS
+   ================================================ */
+
+/* Mobile devices - reduce cursor complexity for performance */
+@media (hover: none) and (pointer: coarse) {
+  *, *::before, *::after {
+    cursor: auto !important;
+  }
+}
+
+/* Touch devices */
+@media (pointer: coarse) {
+  a, button, [role="button"], .clickable {
+    cursor: auto !important;
+  }
+}
+
+/* ================================================
+   ACCESSIBILITY CONSIDERATIONS
+   ================================================ */
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  [class*="cursor-"] {
+    cursor: auto !important;
+  }
+}
+
+/* High contrast mode compatibility */
+@media (prefers-contrast: high) {
+  :root {
+    /* Use simpler cursors for better visibility */
+    --cursor-default-svg: auto;
+    --cursor-pointer-svg: pointer;
+  }
+}
+
+/* ================================================
+   BROWSER COMPATIBILITY FALLBACKS
+   ================================================ */
+
+/* Firefox specific fixes */
+@-moz-document url-prefix() {
+  *, *::before, *::after {
+    cursor: var(--cursor-default-cur), auto !important;
+  }
+  
+  a, button, [role="button"], .clickable {
+    cursor: var(--cursor-pointer-cur), pointer !important;
+  }
+}
+
+/* ================================================
+   FUTURE CURSOR EXPANSION TEMPLATE
+   ================================================
+   
+   To add a new cursor (e.g., "zoom"):
+   
+   1. Add files to /cdn/assets/cursor/:
+      - zoom.svg
+      - zoom.cur
+   
+   2. Add CSS variables to :root:
+      --cursor-zoom-svg: url('/cdn/assets/cursor/zoom.svg');
+      --cursor-zoom-cur: url('/cdn/assets/cursor/zoom.cur');
+   
+   3. Add CSS rule:
+      .cursor-zoom,
+      .zoomable {
+        cursor: var(--cursor-zoom-svg) 16 16, 
+                var(--cursor-zoom-cur), 
+                zoom-in !important;
+      }
+   
+   4. Use in HTML:
+      <div class="cursor-zoom">Zoomable content</div>
+      
+   ================================================ */

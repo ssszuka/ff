@@ -24,7 +24,7 @@ export function LoadingScreen({ isVisible, onComplete, timeout = 3000 }: Loading
   
   return (
     <div 
-      className="fixed inset-0 bg-dark-950 z-50 flex items-center justify-center"
+      className="loading-screen fixed inset-0 bg-dark-950 z-50 flex items-center justify-center"
       data-testid="loading-screen"
     >
       <div className="text-center">

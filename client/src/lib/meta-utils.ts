@@ -35,7 +35,7 @@ export function initializeAnimations() {
       anchorPlacement: 'bottom-bottom', // Better control for out animations
       debounceDelay: 50, // Reduce debounce for more responsive animations
       throttleDelay: 99, // Optimize scroll performance
-      mirrorOffset: 300, // Specific offset for mirror (out) animations - triggers much earlier
+      mirrorOffset: 260, // Specific offset for mirror (out) animations - triggers much earlier
     });
   }
 

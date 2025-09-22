@@ -291,7 +291,7 @@ export function VerificationPortal() {
                 {/* Links */}
                 <div className="mt-8 pt-6 border-t border-white/10">
                   <div className="flex flex-wrap justify-center gap-6 text-sm">
-                    <Link href="/guide" className="text-dark-400 hover:text-white transition-colors inline-flex items-center" data-testid="link-guide">
+                    <Link href="/guide" className="text-dark-400 hover:text-white transition-colors inline-flex items-center cursor-help" data-testid="link-guide">
                       <BookOpen className="w-4 h-4 mr-2" />
                       Verification Guide
                     </Link>
@@ -313,7 +313,7 @@ export function VerificationPortal() {
                 </div>
                 <p className="text-dark-300 mb-4">
                   Visit the{' '}
-                  <Link href="/guide" className="text-neon-emerald font-semibold hover:text-neon-emerald/80 hover:underline transition" data-testid="link-guide-inline">
+                  <Link href="/guide" className="text-neon-emerald font-semibold hover:text-neon-emerald/80 hover:underline transition cursor-help" data-testid="link-guide-inline">
                     Verification Guide
                   </Link>
                   {' '}if you need help.
@@ -322,7 +322,7 @@ export function VerificationPortal() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <Link href="/guide">
-                    <Button variant="outline" className="border-dark-600 text-dark-300 hover:text-white" data-testid="button-how-to-verify">
+                    <Button variant="outline" className="border-dark-600 text-dark-300 hover:text-white cursor-help" data-testid="button-how-to-verify">
                       <BookOpen className="w-4 h-4 mr-2" />
                       How to Verify
                     </Button>
@@ -415,10 +415,10 @@ export function VerificationPortal() {
                 <Link href="/" className="text-dark-400 hover:text-white transition-colors" data-testid="link-footer-home">
                   Homepage
                 </Link>
-                <Link href="/guide" className="text-dark-400 hover:text-white transition-colors" data-testid="link-footer-guide">
+                <Link href="/guide" className="text-dark-400 hover:text-white transition-colors cursor-help" data-testid="link-footer-guide">
                   Guide
                 </Link>
-                <Link href="/privacy-policy" className="text-dark-400 hover:text-white transition-colors" data-testid="link-footer-privacy">
+                <Link href="/privacy-policy" className="text-dark-400 hover:text-white transition-colors cursor-help" data-testid="link-footer-privacy">
                   Privacy
                 </Link>
               </div>

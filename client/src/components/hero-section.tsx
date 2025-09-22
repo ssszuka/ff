@@ -222,7 +222,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
 
           {/* Scroll Indicator */}
           <div className="animate-bounce cursor-pointer" data-aos="fade-in" data-aos-delay="300" onClick={() => {
-            const aboutSection = document.querySelector('section[class*="py-12"]') || document.querySelector('section[class*="py-20"]');
+            const aboutSection = document.getElementById('about-section')
             if (aboutSection) {
               aboutSection.scrollIntoView({ 
                 behavior: 'smooth',

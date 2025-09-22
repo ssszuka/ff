@@ -13,6 +13,7 @@ export function Homepage() {
   const [showLoading, setShowLoading] = useState(appConfig.FEATURES.LOADING_SCREEN);
   const [animationsInitialized, setAnimationsInitialized] = useState(false);
   const [forceShow, setForceShow] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
   
   const {
     data,
@@ -66,6 +67,46 @@ export function Homepage() {
   const handleLoadingComplete = () => {
     setShowLoading(false);
   };
+
+  // IntersectionObserver to detect when user scrolls past hero section
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const heroEntry = entries[0];
+        // Show content when hero section is less than 70% visible (user has scrolled)
+        if (heroEntry.intersectionRatio < 0.7) {
+          setHasScrolled(true);
+        }
+      },
+      {
+        threshold: [0.7], // Trigger when 70% of hero is still visible
+        rootMargin: '0px'
+      }
+    );
+
+    // Observe the hero section
+    const heroElement = document.querySelector('[data-hero-section]');
+    if (heroElement) {
+      observer.observe(heroElement);
+    }
+
+    // Also show content on any scroll/touch interaction
+    const handleUserInteraction = () => {
+      setHasScrolled(true);
+    };
+
+    // Add passive listeners for better performance
+    window.addEventListener('wheel', handleUserInteraction, { passive: true, once: true });
+    window.addEventListener('touchstart', handleUserInteraction, { passive: true, once: true });
+    window.addEventListener('keydown', handleUserInteraction, { passive: true, once: true });
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('wheel', handleUserInteraction);
+      window.removeEventListener('touchstart', handleUserInteraction);
+      window.removeEventListener('keydown', handleUserInteraction);
+    };
+  }, []);
   
   // Error boundary
   if (error && !data) {
@@ -100,26 +141,34 @@ export function Homepage() {
       
       {/* Main Content */}
       <main className={showLoading && !forceShow ? "hidden" : ""} data-testid="main-content">
-        <HeroSection 
-          data={data}
-          homeData={homeData}
-          isLoading={isLoading}
-        />
+        <div data-hero-section>
+          <HeroSection 
+            data={data}
+            homeData={homeData}
+            isLoading={isLoading}
+          />
+        </div>
         
-        <AboutSection 
-          data={data}
-          isLoading={isLoading}
-        />
-        
-        <SocialSection 
-          data={data}
-          homeData={homeData}
-          isLoading={isLoading}
-        />
-        
-        <Footer 
-          isConnected={isConnected}
-        />
+        <div className={`transition-all duration-500 ease-in-out ${
+          hasScrolled 
+            ? 'opacity-100 translate-y-0 pointer-events-auto' 
+            : 'opacity-0 translate-y-8 pointer-events-none'
+        }`}>
+          <AboutSection 
+            data={data}
+            isLoading={isLoading}
+          />
+          
+          <SocialSection 
+            data={data}
+            homeData={homeData}
+            isLoading={isLoading}
+          />
+          
+          <Footer 
+            isConnected={isConnected}
+          />
+        </div>
       </main>
     </>
   );

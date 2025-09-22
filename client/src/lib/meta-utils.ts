@@ -26,12 +26,15 @@ export function initializeAnimations() {
       easing: 'ease-out', // Smoother easing for mobile
       once: false, // Allow animations to trigger on scroll up and down
       mirror: true, // Animate elements out while scrolling up
-      offset: 80, // Trigger animations earlier for smoother feel
+      offset: 150, // Increased offset for earlier animation triggers
       delay: 0,
       disable: false, // Enable on all devices
       startEvent: 'DOMContentLoaded', // Initialize on page load
       animatedClassName: 'aos-animate',
       initClassName: 'aos-init',
+      anchorPlacement: 'top-center', // Change anchor placement for better control
+      debounceDelay: 50, // Reduce debounce for more responsive animations
+      throttleDelay: 99, // Optimize scroll performance
     });
   }
 

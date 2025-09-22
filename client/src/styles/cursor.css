@@ -32,20 +32,21 @@
   --cursor-default-hotspot: 1 1;
   --cursor-pointer-hotspot: 12 8;
   
-  /* Future cursor paths (add here when creating new cursors) */
-  /* Note: Currently only default and pointer cursors are available */
-  /* Uncomment and add files when other cursors are created:
+  /* Additional cursor paths - Now Available! */
   --cursor-text-svg: url('/cdn/assets/cursor/text.svg');
-  --cursor-text-cur: url('/cdn/assets/cursor/text.cur');
   --cursor-wait-svg: url('/cdn/assets/cursor/wait.svg');
-  --cursor-wait-cur: url('/cdn/assets/cursor/wait.cur');
-  --cursor-progress-svg: url('/cdn/assets/cursor/progress.svg');
-  --cursor-progress-cur: url('/cdn/assets/cursor/progress.cur');
-  --cursor-move-svg: url('/cdn/assets/cursor/move.svg');
-  --cursor-move-cur: url('/cdn/assets/cursor/move.cur');
+  --cursor-grab-svg: url('/cdn/assets/cursor/grab.svg');
   --cursor-help-svg: url('/cdn/assets/cursor/help.svg');
-  --cursor-help-cur: url('/cdn/assets/cursor/help.cur');
-  */
+  --cursor-copy-svg: url('/cdn/assets/cursor/copy.svg');
+  --cursor-resize-svg: url('/cdn/assets/cursor/resize.svg');
+  
+  /* Hotspot coordinates for new cursors */
+  --cursor-text-hotspot: 16 16;
+  --cursor-wait-hotspot: 16 16;
+  --cursor-grab-hotspot: 16 16;
+  --cursor-help-hotspot: 16 16;
+  --cursor-copy-hotspot: 16 16;
+  --cursor-resize-hotspot: 16 16;
 }
 
 /* ================================================
@@ -119,7 +120,8 @@ textarea,
 [contenteditable="true"],
 [role="textbox"],
 .cursor-text {
-  cursor: text !important;
+  cursor: var(--cursor-text-svg) var(--cursor-text-hotspot), 
+          text !important;
 }
 
 /* ================================================
@@ -130,13 +132,15 @@ textarea,
 [aria-busy="true"],
 [data-loading="true"],
 .cursor-wait {
-  cursor: wait !important;
+  cursor: var(--cursor-wait-svg) var(--cursor-wait-hotspot), 
+          wait !important;
 }
 
 /* Loading screen specific */
 .loading-screen,
 .loading-screen * {
-  cursor: wait !important;
+  cursor: var(--cursor-wait-svg) var(--cursor-wait-hotspot), 
+          wait !important;
 }
 
 /* ================================================
@@ -150,14 +154,25 @@ textarea,
 }
 
 /* ================================================
-   MOVEABLE ELEMENTS - MOVE CURSOR
+   GRABBABLE/DRAGGABLE ELEMENTS - GRAB CURSOR
    ================================================ */
 [draggable="true"],
 .draggable,
 .moveable,
+.grabbable,
+.cursor-grab {
+  cursor: var(--cursor-grab-svg) var(--cursor-grab-hotspot), 
+          grab !important;
+}
+
+/* ================================================
+   RESIZABLE ELEMENTS - RESIZE CURSOR
+   ================================================ */
 .resizable-handle,
-.cursor-move {
-  cursor: move !important;
+.resize-corner,
+.cursor-resize {
+  cursor: var(--cursor-resize-svg) var(--cursor-resize-hotspot), 
+          nw-resize !important;
 }
 
 /* ================================================
@@ -168,7 +183,8 @@ textarea,
 .help-icon,
 [data-help],
 .cursor-help {
-  cursor: help !important;
+  cursor: var(--cursor-help-svg) var(--cursor-help-hotspot), 
+          help !important;
 }
 
 /* ================================================
@@ -202,7 +218,19 @@ textarea,
 }
 
 .hover-text:hover {
-  cursor: text !important;
+  cursor: var(--cursor-text-svg) var(--cursor-text-hotspot), 
+          text !important;
+}
+
+/* ================================================
+   COPY ELEMENTS - COPY CURSOR  
+   ================================================ */
+.copyable,
+[data-copy],
+.copy-button,
+.cursor-copy {
+  cursor: var(--cursor-copy-svg) var(--cursor-copy-hotspot), 
+          copy !important;
 }
 
 /* ================================================

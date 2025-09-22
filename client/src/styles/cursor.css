@@ -41,7 +41,7 @@
   --cursor-resize-svg: url('/cdn/assets/cursor/resize.svg');
   
   /* Hotspot coordinates for new cursors */
-  --cursor-text-hotspot: 16 16;
+  --cursor-text-hotspot: 20 16;
   --cursor-wait-hotspot: 16 16;
   --cursor-grab-hotspot: 16 16;
   --cursor-help-hotspot: 16 16;

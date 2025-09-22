@@ -79,12 +79,12 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
           {/* Avatar with Navigation */}
           <div className="mb-6 md:mb-8" data-aos="zoom-in" data-aos-duration="500">
             <div className="relative inline-block">
-              {/* Desktop Navigation Items */}
-              <div className="hidden md:block">
+              {/* Navigation Items - Mobile और Desktop दोनों के लिए */}
+              <div>
                 {/* Socials - Left upper side */}
                 <button 
                   onClick={() => scrollToSection('socials-section')}
-                  className="absolute -top-16 -left-20 transform -rotate-12 font-sans text-lg font-medium text-dark-300 hover:text-neon-purple transition-all duration-300 hover:scale-110 cursor-pointer"
+                  className="absolute -top-10 -left-12 md:-top-16 md:-left-20 transform -rotate-12 font-sans text-base md:text-lg font-medium text-dark-300 hover:text-neon-purple transition-all duration-300 hover:scale-110 cursor-pointer"
                 >
                   Socials
                 </button>
@@ -92,7 +92,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                 {/* About - Top center */}
                 <button 
                   onClick={() => scrollToSection('about-section')}
-                  className="absolute -top-20 left-1/2 transform -translate-x-1/2 rotate-2 font-sans text-lg font-medium text-dark-300 hover:text-neon-cyan transition-all duration-300 hover:scale-110 cursor-pointer"
+                  className="absolute -top-12 left-1/2 md:-top-20 transform -translate-x-1/2 rotate-2 font-sans text-base md:text-lg font-medium text-dark-300 hover:text-neon-cyan transition-all duration-300 hover:scale-110 cursor-pointer"
                 >
                   About
                 </button>
@@ -100,7 +100,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                 {/* Portal - Right upper side */}
                 <button 
                   onClick={navigateToPortal}
-                  className="absolute -top-16 -right-20 transform rotate-12 font-sans text-lg font-medium text-dark-300 hover:text-neon-emerald transition-all duration-300 hover:scale-110 cursor-pointer"
+                  className="absolute -top-10 -right-12 md:-top-16 md:-right-20 transform rotate-12 font-sans text-base md:text-lg font-medium text-dark-300 hover:text-neon-emerald transition-all duration-300 hover:scale-110 cursor-pointer"
                 >
                   Portal
                 </button>

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { useUnifiedData } from "@/lib/unified-data-service";
-// Removed LoadingScreen - no loading states needed
+import { LoadingScreen } from "@/components/loading-screen";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-// Removed Skeleton import - no loading states needed
+import { Skeleton } from "@/components/ui/skeleton";
 import { 
   Users, 
   UserCheck, 
@@ -20,13 +20,14 @@ import {
 import { initializeAnimations, checkReducedMotion } from "@/lib/meta-utils";
 
 export function VerificationPortal() {
+  const [showLoading, setShowLoading] = useState(true);
   const [animationsInitialized, setAnimationsInitialized] = useState(false);
   
   const {
     data,
+    isLoading,
     error,
     isConnected,
-    isFromDefault,
     refetch
   } = useUnifiedData();
   
@@ -88,9 +89,14 @@ export function VerificationPortal() {
     updateTwitterTag('twitter:image', imageUrl);
   }, [data]);
   
-  // Initialize animations immediately
+  // Handle loading completion
+  const handleLoadingComplete = () => {
+    setShowLoading(false);
+  };
+  
+  // Initialize animations after loading
   useEffect(() => {
-    if (!animationsInitialized && !checkReducedMotion()) {
+    if (!showLoading && !animationsInitialized && !checkReducedMotion()) {
       const timer = setTimeout(() => {
         initializeAnimations();
         setAnimationsInitialized(true);
@@ -98,10 +104,10 @@ export function VerificationPortal() {
       
       return () => clearTimeout(timer);
     }
-  }, [animationsInitialized]);
+  }, [showLoading, animationsInitialized]);
   
   // Error state for failed data loading
-  if (false) { // Always show content - no error boundary needed
+  if (error && !data) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-dark-950" data-testid="error-portal">
         <div className="text-center max-w-md mx-auto px-6">
@@ -139,24 +145,35 @@ export function VerificationPortal() {
       {/* Background Pattern */}
       <div className="fixed inset-0 bg-grain pointer-events-none"></div>
       
-      {/* No loading screen needed - instant content */}
+      {/* Loading Screen */}
+      <LoadingScreen 
+        isVisible={showLoading}
+        onComplete={handleLoadingComplete}
+        timeout={2000}
+      />
       
       {/* Main Content */}
-      <main className="min-h-screen" data-testid="portal-main">
+      <main className={`min-h-screen ${showLoading ? "hidden" : ""}`} data-testid="portal-main">
         {/* Header */}
         <header className="sticky top-0 z-40 border-b border-white/10 bg-dark-950/80 backdrop-blur-md" data-testid="portal-header">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               {/* Logo */}
               <div className="flex items-center space-x-3">
-                {data.guild?.iconUrl ? (
+                {isLoading ? (
+                  <Skeleton className="w-8 h-8 rounded-full" />
+                ) : data?.guild?.iconUrl ? (
                   <Avatar className="w-8 h-8" data-testid="img-server-logo">
                     <AvatarImage src={data.guild.iconUrl} alt="Server Icon" />
                     <AvatarFallback>{data.guild.name.charAt(0)}</AvatarFallback>
                   </Avatar>
                 ) : null}
                 <h1 className="text-xl font-bold text-white" data-testid="text-server-name">
-                  {data.guild?.name || "Dreamer's Land"}
+                  {isLoading ? (
+                    <Skeleton className="w-32 h-6" />
+                  ) : (
+                    data?.guild?.name || "Dreamer's Land"
+                  )}
                 </h1>
               </div>
               
@@ -180,7 +197,9 @@ export function VerificationPortal() {
               <CardContent className="p-8">
                 {/* Server Icon */}
                 <div className="mb-6">
-                  {data.guild?.iconUrl ? (
+                  {isLoading ? (
+                    <Skeleton className="w-20 h-20 rounded-full mx-auto" />
+                  ) : data?.guild?.iconUrl ? (
                     <Avatar className="w-20 h-20 mx-auto shadow-lg ring-2 ring-neon-purple/20" data-testid="img-server-icon-large">
                       <AvatarImage src={data.guild.iconUrl} alt="Server Icon" />
                       <AvatarFallback className="text-2xl">{data.guild.name.charAt(0)}</AvatarFallback>
@@ -192,7 +211,11 @@ export function VerificationPortal() {
                 <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4" data-testid="text-welcome-title">
                   Welcome to{' '}
                   <span className="gradient-text">
-                    {data.guild?.name || "Dreamer's Land"}
+                    {isLoading ? (
+                      <Skeleton className="inline-block w-32 h-8" />
+                    ) : (
+                      data?.guild?.name || "Dreamer's Land"
+                    )}
                   </span>
                   {' '}Verification Portal
                 </h3>
@@ -211,7 +234,11 @@ export function VerificationPortal() {
                         <Users className="w-8 h-8 text-neon-cyan" />
                         <div>
                           <div className="text-2xl font-bold text-neon-cyan" data-testid="text-member-count">
-                            {data.guild?.memberCountFormatted || "N/A"}
+                            {isLoading ? (
+                              <Skeleton className="w-16 h-8" />
+                            ) : (
+                              data?.guild?.memberCountFormatted || "N/A"
+                            )}
                           </div>
                           <div className="text-dark-300 text-sm">Total Members</div>
                         </div>
@@ -225,7 +252,11 @@ export function VerificationPortal() {
                         <UserCheck className="w-8 h-8 text-neon-emerald" />
                         <div>
                           <div className="text-2xl font-bold text-neon-emerald" data-testid="text-verified-count">
-                            {data.guild?.verifiedUserCountFormatted || "N/A"}
+                            {isLoading ? (
+                              <Skeleton className="w-16 h-8" />
+                            ) : (
+                              data?.guild?.verifiedUserCountFormatted || "N/A"
+                            )}
                           </div>
                           <div className="text-dark-300 text-sm">Verified Members</div>
                         </div>
@@ -315,7 +346,16 @@ export function VerificationPortal() {
                 </div>
                 
                 <div className="flex items-center space-x-4">
-                  {data.youtube ? (
+                  {isLoading ? (
+                    <>
+                      <Skeleton className="w-16 h-16 rounded-full" />
+                      <div className="flex-1 text-left">
+                        <Skeleton className="w-32 h-6 mb-2" />
+                        <Skeleton className="w-24 h-4" />
+                      </div>
+                      <Skeleton className="w-24 h-10 rounded-xl" />
+                    </>
+                  ) : data?.youtube ? (
                     <>
                       <Avatar className="w-16 h-16" data-testid="img-youtube-avatar">
                         <AvatarImage src={data.youtube.logoUrl} alt="YouTube Channel" />
@@ -333,7 +373,7 @@ export function VerificationPortal() {
                       </div>
                       <Button 
                         className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white shadow-md hover:shadow-lg transition-all duration-200 active:scale-95"
-                        onClick={() => window.open(data.youtube.channelUrl, '_blank', 'noopener,noreferrer')}
+                        onClick={() => window.open(data.youtube!.channelUrl, '_blank', 'noopener,noreferrer')}
                         data-testid="button-subscribe-youtube"
                       >
                         <Youtube className="w-4 h-4 mr-2" />

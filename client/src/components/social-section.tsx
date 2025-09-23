@@ -2,11 +2,12 @@ import type { HomeSocialsData } from "@/lib/home-data";
 import type { UnifiedData } from "@/lib/unified-data-service";
 
 interface SocialSectionProps {
-  data: UnifiedData;
+  data: UnifiedData | null;
   homeData: HomeSocialsData;
+  isLoading: boolean;
 }
 
-export function SocialSection({ data, homeData }: SocialSectionProps) {
+export function SocialSection({ data, homeData, isLoading }: SocialSectionProps) {
   const { socials, server } = homeData;
   
   // Removed GSAP hover animations to prevent conflict with AOS animations

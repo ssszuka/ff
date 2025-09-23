@@ -24,6 +24,7 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
+.replit
 
 # TypeScript cache
 *.tsbuildinfo
@@ -34,9 +35,6 @@ tsconfig.tsbuildinfo
 .env
 .env.*
 !.env.example
-
-# Replit config
-.replit
 
 # Custom assets (not tracked in Git)
 attached_assets/

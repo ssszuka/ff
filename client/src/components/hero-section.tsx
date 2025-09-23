@@ -84,7 +84,11 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                 {/* Socials - Left upper side */}
                 <button 
                   onClick={() => scrollToSection('socials-section')}
-                  className="absolute -top-14 -left-10 sm:-top-16 sm:-left-14 md:-top-20 md:-left-20 lg:-top-24 lg:-left-24 transform -rotate-12 font-sans text-sm sm:text-base md:text-lg font-medium text-dark-300 hover:text-neon-purple transition-all duration-300 hover:scale-110 cursor-pointer z-10 min-w-max px-2 py-1 rounded-lg hover:bg-dark-800/20"
+                  className="absolute -top-14 -left-10 sm:-top-16 sm:-left-14 md:-top-20 md:-left-20 lg:-top-24 lg:-left-24 transform -rotate-12 skew-x-2 skew-y-1 font-sans text-sm sm:text-base md:text-lg font-medium text-dark-300 hover:text-neon-purple transition-all duration-300 hover:scale-110 hover:skew-x-3 hover:skew-y-2 cursor-pointer z-10 min-w-max px-3 py-2 rounded-tl-xl rounded-br-xl rounded-tr-md rounded-bl-md hover:bg-dark-800/20 border border-transparent hover:border-neon-purple/30"
+                  style={{ 
+                    transformStyle: 'preserve-3d',
+                    perspective: '200px'
+                  }}
                 >
                   Socials
                 </button>
@@ -92,7 +96,12 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                 {/* About - Top center */}
                 <button 
                   onClick={() => scrollToSection('about-section')}
-                  className="absolute -top-16 left-1/2 sm:-top-20 md:-top-24 lg:-top-28 transform -translate-x-1/2 rotate-2 font-sans text-sm sm:text-base md:text-lg font-medium text-dark-300 hover:text-neon-cyan transition-all duration-300 hover:scale-110 cursor-pointer z-10 min-w-max px-2 py-1 rounded-lg hover:bg-dark-800/20"
+                  className="absolute -top-16 left-1/2 sm:-top-20 md:-top-24 lg:-top-28 transform -translate-x-1/2 rotate-2 skew-y-1 font-sans text-sm sm:text-base md:text-lg font-medium text-dark-300 hover:text-neon-cyan transition-all duration-300 hover:scale-110 hover:skew-y-2 cursor-pointer z-10 min-w-max px-3 py-2 rounded-2xl hover:bg-dark-800/20 border border-transparent hover:border-neon-cyan/30"
+                  style={{ 
+                    transformStyle: 'preserve-3d',
+                    perspective: '300px',
+                    borderRadius: '50% 50% 40% 40% / 60% 60% 40% 40%'
+                  }}
                 >
                   About
                 </button>
@@ -100,7 +109,11 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                 {/* Portal - Right upper side */}
                 <button 
                   onClick={navigateToPortal}
-                  className="absolute -top-14 -right-10 sm:-top-16 sm:-right-14 md:-top-20 md:-right-20 lg:-top-24 lg:-right-24 transform rotate-12 font-sans text-sm sm:text-base md:text-lg font-medium text-dark-300 hover:text-neon-emerald transition-all duration-300 hover:scale-110 cursor-pointer z-10 min-w-max px-2 py-1 rounded-lg hover:bg-dark-800/20"
+                  className="absolute -top-14 -right-10 sm:-top-16 sm:-right-14 md:-top-20 md:-right-20 lg:-top-24 lg:-right-24 transform rotate-12 -skew-x-2 skew-y-1 font-sans text-sm sm:text-base md:text-lg font-medium text-dark-300 hover:text-neon-emerald transition-all duration-300 hover:scale-110 hover:-skew-x-3 hover:skew-y-2 cursor-pointer z-10 min-w-max px-3 py-2 rounded-tr-xl rounded-bl-xl rounded-tl-md rounded-br-md hover:bg-dark-800/20 border border-transparent hover:border-neon-emerald/30"
+                  style={{ 
+                    transformStyle: 'preserve-3d',
+                    perspective: '200px'
+                  }}
                 >
                   Portal
                 </button>

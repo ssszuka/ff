@@ -2,15 +2,14 @@ import { useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import type { UnifiedData } from "@/lib/unified-data-service";
 import type { HomeSocialsData } from "@/lib/home-data";
-import { Skeleton } from "@/components/ui/skeleton";
+// Removed Skeleton import - no loading states needed
 
 interface HeroSectionProps {
-  data: UnifiedData | null;
+  data: UnifiedData;
   homeData: HomeSocialsData;
-  isLoading: boolean;
 }
 
-export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
+export function HeroSection({ data, homeData }: HeroSectionProps) {
   const avatarRef = useRef<HTMLImageElement>(null);
   const [, setLocation] = useLocation();
 
@@ -68,7 +67,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
     }
   }, []);
 
-  const { owner } = data || { owner: null };
+  const { owner } = data; // Always have data from DEFAULT_DATA
 
   return (
     <section className="relative min-h-screen flex items-center justify-center hero-bg">
@@ -81,9 +80,9 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
               
               <img 
                 ref={avatarRef}
-                src={isLoading || !owner ? "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='100' fill='%23374151'/%3E%3C/svg%3E" : owner.avatarUrl}
-                alt={owner?.displayName || 'Avatar'}
-                className={`w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full border-4 border-neon-purple animate-pulse-glow ${isLoading ? 'loading-shimmer' : ''}`}
+                src={owner.avatarUrl}
+                alt={owner.displayName}
+                className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full border-4 border-neon-purple animate-pulse-glow"
                 data-testid="img-hero-avatar"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='100' fill='%23374151'/%3E%3C/svg%3E";
@@ -129,27 +128,14 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
           {/* Name & Title */}
           <div data-aos="fade-up" data-aos-delay="100">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-3 md:mb-4 gradient-text" data-testid="text-hero-name">
-              {isLoading || !owner ? (
-                <Skeleton className="h-12 md:h-16 lg:h-20 w-80 mx-auto mb-2 bg-dark-700/50" />
-              ) : (
-                owner.displayName
-              )}
+              {owner.displayName}
             </h1>
-            {isLoading || !owner ? (
-              <>
-                <Skeleton className="h-6 md:h-8 w-48 mx-auto mb-2 bg-dark-700/50" />
-                <Skeleton className="h-20 w-full max-w-2xl mx-auto bg-dark-700/50" />
-              </>
-            ) : (
-              <>
-                <p className="text-lg sm:text-xl md:text-2xl text-dark-300 mb-2 font-light" data-testid="text-hero-tagline">
-                  YouTuber & Gamer
-                </p>
-                <p className="text-base sm:text-lg text-dark-400 mb-6 md:mb-8 max-w-2xl mx-auto px-4" data-testid="text-hero-subtitle">
-                  Passionate creator from Madhya Pradesh, India. Join me on my journey through YouTube, gaming, and more!
-                </p>
-              </>
-            )}
+            <p className="text-lg sm:text-xl md:text-2xl text-dark-300 mb-2 font-light" data-testid="text-hero-tagline">
+              YouTuber & Gamer
+            </p>
+            <p className="text-base sm:text-lg text-dark-400 mb-6 md:mb-8 max-w-2xl mx-auto px-4" data-testid="text-hero-subtitle">
+              Passionate creator from Madhya Pradesh, India. Join me on my journey through YouTube, gaming, and more!
+            </p>
           </div>
 
           {/* Navigation Buttons */}

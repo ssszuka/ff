@@ -1,4 +1,5 @@
-// Unified Data Service - Handles all data fetching with caching and fallback
+// Unified Data Service - Instant default data with background API refresh
+import { DEFAULT_DATA } from './default-data';
 export interface UnifiedData {
   health: {
     status: string;
@@ -71,6 +72,13 @@ class UnifiedDataService {
   private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
   private readonly BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://janvi.jarvibeta.xyz';
   private readonly FALLBACK_URL = '/cdn/assets/fallback-data.json';
+  
+  /**
+   * Get default data immediately - no loading, no network
+   */
+  getDefault(): UnifiedData {
+    return DEFAULT_DATA;
+  }
   
   /**
    * Get data with caching logic
@@ -174,18 +182,56 @@ class UnifiedDataService {
   }
   
   /**
-   * Force refresh data (bypass cache)
+   * Background fetch for real-time data updates
+   * This runs silently and doesn't block UI
    */
-  async refreshData(): Promise<{
+  async fetchFresh(): Promise<{
     data: UnifiedData;
-    isLoading: boolean;
     error: string | null;
     isConnected: boolean;
     isFromFallback: boolean;
   }> {
-    // Clear cache to force refresh
-    this.cache = null;
-    return this.getData();
+    try {
+      // Try to fetch from backend
+      const backendUrl = `${this.BACKEND_URL}/api/info`;
+      const response = await fetch(backendUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // Shorter timeout for background fetch
+        signal: AbortSignal.timeout(8000) // 8 second timeout
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Backend responded with status: ${response.status}`);
+      }
+      
+      const data: UnifiedData = await response.json();
+      
+      // Cache the successful response
+      this.cache = {
+        data,
+        timestamp: Date.now(),
+        isFromFallback: false
+      };
+      
+      return {
+        data,
+        error: null,
+        isConnected: true,
+        isFromFallback: false
+      };
+      
+    } catch (error) {
+      // Silent failure - return error info but don't crash
+      return {
+        data: DEFAULT_DATA,
+        error: error instanceof Error ? error.message : 'Background fetch failed',
+        isConnected: false,
+        isFromFallback: true
+      };
+    }
   }
   
   /**
@@ -212,37 +258,41 @@ export const unifiedDataService = new UnifiedDataService();
 import { useState, useEffect } from 'react';
 
 export function useUnifiedData() {
-  const [data, setData] = useState<UnifiedData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // Start with default data immediately - no loading state!
+  const [data, setData] = useState<UnifiedData>(DEFAULT_DATA);
   const [error, setError] = useState<string | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-  const [isFromFallback, setIsFromFallback] = useState(false);
+  const [isFromDefault, setIsFromDefault] = useState(true);
   
   useEffect(() => {
     let mounted = true;
     
-    const fetchData = async () => {
+    // Background fetch - doesn't block UI
+    const backgroundFetch = async () => {
       try {
-        setIsLoading(true);
-        const result = await unifiedDataService.getData();
+        const result = await unifiedDataService.fetchFresh();
         
-        if (mounted) {
+        if (mounted && !result.isFromFallback) {
+          // Only update if we got real API data
           setData(result.data);
-          setError(result.error);
           setIsConnected(result.isConnected);
-          setIsFromFallback(result.isFromFallback);
-          setIsLoading(false);
+          setIsFromDefault(false);
+          setError(null);
+        } else if (mounted && result.error) {
+          // API failed, but keep default data showing
+          setError(result.error);
+          setIsConnected(false);
         }
       } catch (err) {
         if (mounted) {
-          setError(err instanceof Error ? err.message : 'Failed to fetch data');
-          setIsLoading(false);
+          setError(err instanceof Error ? err.message : 'Background fetch failed');
           setIsConnected(false);
         }
       }
     };
     
-    fetchData();
+    // Start background fetch immediately
+    backgroundFetch();
     
     return () => {
       mounted = false;
@@ -251,26 +301,30 @@ export function useUnifiedData() {
   
   const refetch = async () => {
     try {
-      setIsLoading(true);
-      const result = await unifiedDataService.refreshData();
-      setData(result.data);
-      setError(result.error);
-      setIsConnected(result.isConnected);
-      setIsFromFallback(result.isFromFallback);
-      setIsLoading(false);
+      const result = await unifiedDataService.fetchFresh();
+      
+      if (!result.isFromFallback) {
+        // Successfully got real API data
+        setData(result.data);
+        setIsConnected(true);
+        setIsFromDefault(false);
+        setError(null);
+      } else {
+        // API failed, keep showing default data
+        setError(result.error);
+        setIsConnected(false);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to refresh data');
-      setIsLoading(false);
       setIsConnected(false);
     }
   };
   
   return {
     data,
-    isLoading,
     error,
     isConnected,
-    isFromFallback,
+    isFromDefault,
     refetch
   };
 }

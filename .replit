@@ -17,6 +17,7 @@ args = "React Dev Server"
 [[workflows.workflow]]
 name = "React Dev Server"
 author = "agent"
+mode = "sequential"
 
 [workflows.workflow.metadata]
 outputType = "webview"

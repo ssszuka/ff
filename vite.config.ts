@@ -19,6 +19,6 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
     port: PORT,
-    allowedHosts: ["all", "localhost", "dfe97583-edc8-47ef-9e4d-23ea021d26e7-00-3246q5h0rvy31.pike.replit.dev"]
+    allowedHosts: ["all", "localhost", "b798c8ed-2483-487d-ab9c-86b6abdd6633-00-1ew0jjzyv8ctz.sisko.replit.dev"]
   },
 });

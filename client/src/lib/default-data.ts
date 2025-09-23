@@ -1,0 +1,64 @@
+import type { UnifiedData } from './unified-data-service';
+
+// Static default data for instant loading
+// This eliminates network requests and provides immediate content
+export const DEFAULT_DATA: UnifiedData = {
+  "health": {
+    "status": "offline",
+    "timestamp": "NA",
+    "uptime": {
+      "uptimeMs": "NA",
+      "uptimeFormatted": "NA",
+      "startTime": "NA"
+    }
+  },
+  "bot": {
+    "id": "1398712692818313347",
+    "username": "Dreamer helper",
+    "displayName": "Dreamer helper",
+    "tag": "Dreamer helper#2407",
+    "avatarUrl": "https://cdn.discordapp.com/avatars/1398712692818313347/a_75fef4dc25e07479e1b2c233c60841a6.gif",
+    "bannerUrl": "https://cdn.discordapp.com/banners/1398712692818313347/0c93cd9c123db828b3d02c60b6d5da97.png",
+    "verified": false,
+    "createdAt": "2025-01-26T18:58:42.712Z"
+  },
+  "guild": {
+    "id": "1080560914262139001",
+    "name": "Dreamer's Land",
+    "memberCount": "NA",
+    "memberCountFormatted": "NA",
+    "verifiedUserCount": "NA",
+    "verifiedUserCountFormatted": "NA",
+    "iconUrl": "https://cdn.discordapp.com/icons/1368953017717489745/a_1b25cb0345a6fd2c925610540d43b9db.gif",
+    "bannerUrl": "https://cdn.discordapp.com/banners/1368953017717489745/c2147ed2625f10d77b131f8dd48ec1fe.png"
+  },
+  "owner": {
+    "id": "1212719184870383621",
+    "username": "janvidreamer",
+    "displayName": "Janvi Dreamer",
+    "avatarUrl": "https://cdn.discordapp.com/avatars/1212719184870383621/708267cbb3cdc76a6637837101fca3b5.webp",
+    "bannerUrl": null,
+    "status": "dnd",
+    "createdAt": "2024-02-29T11:13:04.906Z",
+    "about": "Janvi Dreamer, whose real name is Janvi Gautam, from Madhya Pradesh, India. Born on 23rd February, she is a passionate creator who began her YouTube journey in 2022. Beyond content creation, Janvi finds joy in reading, writing, and playing video games, which fuel her creativity and imagination. She is also an avid traveller, always eager and enthusiastic to explore new places and experiences."
+  },
+  "youtube": {
+    "channelId": "UCa4-5c2gCYxqummRhmh6V4Q",
+    "channelTitle": "Janvi Dreamer",
+    "description": "ᴀ ɢɪʀʟ ᴡɪᴛʜ ᴍᴀɴʏ ᴅʀᴇᴀᴍꜱ ᴄᴀʟʟᴇᴅ 'ᴅʀᴇᴀᴍᴇʀ'...🖤\n\nso Iam Janvi ! \n\nFrom..🇮🇳 MADHYA PRADESH (heart of India)\n\nMy Goal: Bade bade sapno ko pura karna..💗\n\n\n800 : 08/03/2022\n900 : 19/04/2022\n1K : 01/05/2022 11:40am (IST)\n2K : 12/11/22 \n3K : 12/11/23 11:05 am (IST)",
+    "customUsername": "@janvidreamer",
+    "subscriberCount": "NA",
+    "subscriberCountFormatted": "NA",
+    "videoCount": "NA",
+    "videoCountFormatted": "NA",
+    "viewCount": "NA",
+    "viewCountFormatted": "NA",
+    "membersCount": "NA",
+    "membersCountFormatted": "NA",
+    "logoUrl": "https://yt3.ggpht.com/MBlSoyQR9uahh8uDYvnvRGk78YGU8Dx_rfRXxlSDyOuahEb_HIEKaMi1DsL2j_T08AESNz2upRs=s800-c-k-c0x00ffffff-no-rj",
+    "bannerUrl": "https://yt3.googleusercontent.com/nITvt8f61KPbypgwuYrxlsRsGDZvtZ12ufRfGYkC-FaiEB3Bb7A_W4wXRovBl2KSDrdGNhFD",
+    "channelUrl": "https://www.youtube.com/channel/UCa4-5c2gCYxqummRhmh6V4Q",
+    "publishedAt": "2021-02-21T04:46:51.650238Z",
+    "country": "IN"
+  }
+};

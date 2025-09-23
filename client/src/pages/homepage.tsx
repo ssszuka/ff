@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { LoadingScreen } from "@/components/loading-screen";
 import { HeroSection } from "@/components/hero-section";
 import { AboutSection } from "@/components/about-section";
 import { SocialSection } from "@/components/social-section";
@@ -10,9 +9,7 @@ import { updateMetaTags, initializeAnimations, checkReducedMotion } from "@/lib/
 import { appConfig } from "@/lib/config";
 
 export function Homepage() {
-  const [showLoading, setShowLoading] = useState(appConfig.FEATURES.LOADING_SCREEN);
   const [animationsInitialized, setAnimationsInitialized] = useState(false);
-  const [forceShow, setForceShow] = useState(false);
   
   const {
     data,
@@ -38,21 +35,9 @@ export function Homepage() {
     }
   }, [data, isLoading]);
   
-  // Emergency fallback to ensure content shows even if loading fails
+  // Initialize animations immediately
   useEffect(() => {
-    if (appConfig.FEATURES.LOADING_SCREEN) {
-      const emergencyTimeout = setTimeout(() => {
-        setForceShow(true);
-        setShowLoading(false);
-      }, 5000); // Force show after 5 seconds
-      
-      return () => clearTimeout(emergencyTimeout);
-    }
-  }, []);
-
-  // Initialize animations after loading
-  useEffect(() => {
-    if (!showLoading && !animationsInitialized && !checkReducedMotion()) {
+    if (!animationsInitialized && !checkReducedMotion()) {
       const timer = setTimeout(() => {
         initializeAnimations();
         setAnimationsInitialized(true);
@@ -60,12 +45,7 @@ export function Homepage() {
       
       return () => clearTimeout(timer);
     }
-  }, [showLoading, animationsInitialized]);
-  
-  // Handle loading completion
-  const handleLoadingComplete = () => {
-    setShowLoading(false);
-  };
+  }, [animationsInitialized]);
   
   // Error boundary
   if (error && !data) {
@@ -91,15 +71,8 @@ export function Homepage() {
       {/* Background Pattern */}
       <div className="fixed inset-0 bg-grain pointer-events-none"></div>
       
-      {/* Loading Screen */}
-      <LoadingScreen 
-        isVisible={showLoading}
-        onComplete={handleLoadingComplete}
-        timeout={appConfig.UI.LOADING_TIMEOUT}
-      />
-      
       {/* Main Content */}
-      <main className={showLoading && !forceShow ? "hidden" : ""} data-testid="main-content">
+      <main data-testid="main-content">
         <HeroSection 
           data={data}
           homeData={homeData}

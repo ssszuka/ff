@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { useUnifiedData } from "@/lib/unified-data-service";
-import { LoadingScreen } from "@/components/loading-screen";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Skeleton } from "@/components/ui/skeleton";
 import { 
   Users, 
   UserCheck, 
@@ -20,8 +18,22 @@ import {
 import { initializeAnimations, checkReducedMotion } from "@/lib/meta-utils";
 
 export function VerificationPortal() {
-  const [showLoading, setShowLoading] = useState(true);
   const [animationsInitialized, setAnimationsInitialized] = useState(false);
+
+  // Fallback data - embedded directly for instant display
+  const fallbackGuild = {
+    name: "Dreamer's Land",
+    iconUrl: "https://cdn.discordapp.com/icons/1368953017717489745/a_1b25cb0345a6fd2c925610540d43b9db.gif",
+    memberCountFormatted: "N/A",
+    verifiedUserCountFormatted: "N/A"
+  };
+
+  const fallbackYoutube = {
+    channelTitle: "Janvi Dreamer",
+    logoUrl: "/cdn/assets/image/logo.avif",
+    subscriberCountFormatted: "N/A",
+    channelUrl: "https://www.youtube.com/channel/UCa4-5c2gCYxqummRhmh6V4Q"
+  };
   
   const {
     data,
@@ -89,14 +101,9 @@ export function VerificationPortal() {
     updateTwitterTag('twitter:image', imageUrl);
   }, [data]);
   
-  // Handle loading completion
-  const handleLoadingComplete = () => {
-    setShowLoading(false);
-  };
-  
-  // Initialize animations after loading
+  // Initialize animations immediately
   useEffect(() => {
-    if (!showLoading && !animationsInitialized && !checkReducedMotion()) {
+    if (!animationsInitialized && !checkReducedMotion()) {
       const timer = setTimeout(() => {
         initializeAnimations();
         setAnimationsInitialized(true);
@@ -104,7 +111,7 @@ export function VerificationPortal() {
       
       return () => clearTimeout(timer);
     }
-  }, [showLoading, animationsInitialized]);
+  }, [animationsInitialized]);
   
   // Error state for failed data loading
   if (error && !data) {
@@ -145,35 +152,20 @@ export function VerificationPortal() {
       {/* Background Pattern */}
       <div className="fixed inset-0 bg-grain pointer-events-none"></div>
       
-      {/* Loading Screen */}
-      <LoadingScreen 
-        isVisible={showLoading}
-        onComplete={handleLoadingComplete}
-        timeout={2000}
-      />
-      
       {/* Main Content */}
-      <main className={`min-h-screen ${showLoading ? "hidden" : ""}`} data-testid="portal-main">
+      <main className="min-h-screen" data-testid="portal-main">
         {/* Header */}
         <header className="sticky top-0 z-40 border-b border-white/10 bg-dark-950/80 backdrop-blur-md" data-testid="portal-header">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               {/* Logo */}
               <div className="flex items-center space-x-3">
-                {isLoading ? (
-                  <Skeleton className="w-8 h-8 rounded-full" />
-                ) : data?.guild?.iconUrl ? (
-                  <Avatar className="w-8 h-8" data-testid="img-server-logo">
-                    <AvatarImage src={data.guild.iconUrl} alt="Server Icon" />
-                    <AvatarFallback>{data.guild.name.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                ) : null}
-                <h1 className="text-xl font-bold text-white" data-testid="text-server-name">
-                  {isLoading ? (
-                    <Skeleton className="w-32 h-6" />
-                  ) : (
-                    data?.guild?.name || "Dreamer's Land"
-                  )}
+                <Avatar className="w-8 h-8 transition-all duration-500 ease-in-out" data-testid="img-server-logo">
+                  <AvatarImage src={data?.guild?.iconUrl || fallbackGuild.iconUrl} alt="Server Icon" />
+                  <AvatarFallback>{(data?.guild?.name || fallbackGuild.name).charAt(0)}</AvatarFallback>
+                </Avatar>
+                <h1 className="text-xl font-bold text-white transition-all duration-500 ease-in-out" data-testid="text-server-name">
+                  {data?.guild?.name || fallbackGuild.name}
                 </h1>
               </div>
               
@@ -197,25 +189,17 @@ export function VerificationPortal() {
               <CardContent className="p-8">
                 {/* Server Icon */}
                 <div className="mb-6">
-                  {isLoading ? (
-                    <Skeleton className="w-20 h-20 rounded-full mx-auto" />
-                  ) : data?.guild?.iconUrl ? (
-                    <Avatar className="w-20 h-20 mx-auto shadow-lg ring-2 ring-neon-purple/20" data-testid="img-server-icon-large">
-                      <AvatarImage src={data.guild.iconUrl} alt="Server Icon" />
-                      <AvatarFallback className="text-2xl">{data.guild.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                  ) : null}
+                  <Avatar className="w-20 h-20 mx-auto shadow-lg ring-2 ring-neon-purple/20 transition-all duration-500 ease-in-out" data-testid="img-server-icon-large">
+                    <AvatarImage src={data?.guild?.iconUrl || fallbackGuild.iconUrl} alt="Server Icon" />
+                    <AvatarFallback className="text-2xl">{(data?.guild?.name || fallbackGuild.name).charAt(0)}</AvatarFallback>
+                  </Avatar>
                 </div>
                 
                 {/* Title */}
-                <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4" data-testid="text-welcome-title">
+                <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4 transition-all duration-500 ease-in-out" data-testid="text-welcome-title">
                   Welcome to{' '}
                   <span className="gradient-text">
-                    {isLoading ? (
-                      <Skeleton className="inline-block w-32 h-8" />
-                    ) : (
-                      data?.guild?.name || "Dreamer's Land"
-                    )}
+                    {data?.guild?.name || fallbackGuild.name}
                   </span>
                   {' '}Verification Portal
                 </h3>
@@ -233,12 +217,8 @@ export function VerificationPortal() {
                       <div className="flex items-center space-x-3">
                         <Users className="w-8 h-8 text-neon-cyan" />
                         <div>
-                          <div className="text-2xl font-bold text-neon-cyan" data-testid="text-member-count">
-                            {isLoading ? (
-                              <Skeleton className="w-16 h-8" />
-                            ) : (
-                              data?.guild?.memberCountFormatted || "N/A"
-                            )}
+                          <div className="text-2xl font-bold text-neon-cyan transition-all duration-500 ease-in-out" data-testid="text-member-count">
+                            {data?.guild?.memberCountFormatted || fallbackGuild.memberCountFormatted}
                           </div>
                           <div className="text-dark-300 text-sm">Total Members</div>
                         </div>
@@ -251,12 +231,8 @@ export function VerificationPortal() {
                       <div className="flex items-center space-x-3">
                         <UserCheck className="w-8 h-8 text-neon-emerald" />
                         <div>
-                          <div className="text-2xl font-bold text-neon-emerald" data-testid="text-verified-count">
-                            {isLoading ? (
-                              <Skeleton className="w-16 h-8" />
-                            ) : (
-                              data?.guild?.verifiedUserCountFormatted || "N/A"
-                            )}
+                          <div className="text-2xl font-bold text-neon-emerald transition-all duration-500 ease-in-out" data-testid="text-verified-count">
+                            {data?.guild?.verifiedUserCountFormatted || fallbackGuild.verifiedUserCountFormatted}
                           </div>
                           <div className="text-dark-300 text-sm">Verified Members</div>
                         </div>
@@ -346,16 +322,7 @@ export function VerificationPortal() {
                 </div>
                 
                 <div className="flex items-center space-x-4">
-                  {isLoading ? (
-                    <>
-                      <Skeleton className="w-16 h-16 rounded-full" />
-                      <div className="flex-1 text-left">
-                        <Skeleton className="w-32 h-6 mb-2" />
-                        <Skeleton className="w-24 h-4" />
-                      </div>
-                      <Skeleton className="w-24 h-10 rounded-xl" />
-                    </>
-                  ) : data?.youtube ? (
+                  {data?.youtube ? (
                     <>
                       <Avatar className="w-16 h-16" data-testid="img-youtube-avatar">
                         <AvatarImage src={data.youtube.logoUrl} alt="YouTube Channel" />
@@ -381,7 +348,34 @@ export function VerificationPortal() {
                       </Button>
                     </>
                   ) : (
-                    <div className="text-center text-dark-400 w-full">
+                    // Show fallback YouTube data when API data is not available
+                    <>
+                      <Avatar className="w-16 h-16 transition-all duration-500 ease-in-out" data-testid="img-youtube-avatar">
+                        <AvatarImage src={fallbackYoutube.logoUrl} alt="YouTube Channel" />
+                        <AvatarFallback>
+                          <Youtube className="w-8 h-8 text-red-500" />
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 text-left">
+                        <h4 className="text-lg font-semibold text-white transition-all duration-500 ease-in-out" data-testid="text-youtube-name">
+                          {fallbackYoutube.channelTitle}
+                        </h4>
+                        <p className="text-dark-300 transition-all duration-500 ease-in-out" data-testid="text-youtube-subscribers">
+                          {fallbackYoutube.subscriberCountFormatted} subs
+                        </p>
+                      </div>
+                      <Button 
+                        className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white shadow-md hover:shadow-lg transition-all duration-200 active:scale-95"
+                        onClick={() => window.open(fallbackYoutube.channelUrl, '_blank', 'noopener,noreferrer')}
+                        data-testid="button-subscribe-youtube"
+                      >
+                        <Youtube className="w-4 h-4 mr-2" />
+                        Subscribe
+                      </Button>
+                    </>
+                  )}
+                  {!data?.youtube && (
+                    <div className="text-center text-dark-400 w-full hidden">
                       YouTube channel information unavailable
                     </div>
                   )}

@@ -156,6 +156,23 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
           {/* Navigation Buttons */}
           <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-8 md:mb-12 px-4" data-aos="fade-up" data-aos-delay="200">
             <button 
+              onClick={() => scrollToSection('about-section')}
+              className="group bg-gradient-to-br from-blue-500 to-cyan-500 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-blue-400 hover:to-cyan-400 transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-blue-500/40 text-sm md:text-base border border-transparent hover:border-blue-500/50 backdrop-filter backdrop-blur-sm relative overflow-hidden"
+              data-testid="button-about-nav"
+              style={{ 
+                transformStyle: 'preserve-3d',
+                perspective: '200px'
+              }}
+            >
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <i className="fas fa-user mr-2 group-hover:scale-110 transition-transform duration-200 relative z-10"></i>
+              <span className="relative z-10">
+                About
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
+              </span>
+            </button>
+
+            <button 
               onClick={() => scrollToSection('socials-section')}
               className="group bg-gradient-to-br from-pink-500 to-purple-600 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-pink-400 hover:to-purple-500 transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-pink-500/40 text-sm md:text-base border border-transparent hover:border-pink-500/50 backdrop-filter backdrop-blur-sm relative overflow-hidden"
               data-testid="button-socials-nav"
@@ -164,27 +181,10 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                 perspective: '200px'
               }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-pink-400/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <i className="fas fa-users mr-2 group-hover:scale-110 transition-transform duration-200 relative z-10"></i>
               <span className="relative z-10">
                 Socials
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
-              </span>
-            </button>
-
-            <button 
-              onClick={() => scrollToSection('about-section')}
-              className="group bg-gradient-to-br from-blue-500 to-cyan-500 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-blue-400 to-cyan-400 transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-blue-500/40 text-sm md:text-base border border-transparent hover:border-blue-500/50 backdrop-filter backdrop-blur-sm relative overflow-hidden"
-              data-testid="button-about-nav"
-              style={{ 
-                transformStyle: 'preserve-3d',
-                perspective: '200px'
-              }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-cyan-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <i className="fas fa-user mr-2 group-hover:scale-110 transition-transform duration-200 relative z-10"></i>
-              <span className="relative z-10">
-                About
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
               </span>
             </button>

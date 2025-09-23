@@ -84,7 +84,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                 {/* Socials - Left upper side */}
                 <button 
                   onClick={() => scrollToSection('socials-section')}
-                  className="absolute -top-10 -left-12 md:-top-16 md:-left-20 transform -rotate-12 font-sans text-base md:text-lg font-medium text-dark-300 hover:text-neon-purple transition-all duration-300 hover:scale-110 cursor-pointer"
+                  className="absolute -top-14 -left-10 sm:-top-16 sm:-left-14 md:-top-20 md:-left-20 lg:-top-24 lg:-left-24 transform -rotate-12 font-sans text-sm sm:text-base md:text-lg font-medium text-dark-300 hover:text-neon-purple transition-all duration-300 hover:scale-110 cursor-pointer z-10 min-w-max px-2 py-1 rounded-lg hover:bg-dark-800/20"
                 >
                   Socials
                 </button>
@@ -92,7 +92,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                 {/* About - Top center */}
                 <button 
                   onClick={() => scrollToSection('about-section')}
-                  className="absolute -top-12 left-1/2 md:-top-20 transform -translate-x-1/2 rotate-2 font-sans text-base md:text-lg font-medium text-dark-300 hover:text-neon-cyan transition-all duration-300 hover:scale-110 cursor-pointer"
+                  className="absolute -top-16 left-1/2 sm:-top-20 md:-top-24 lg:-top-28 transform -translate-x-1/2 rotate-2 font-sans text-sm sm:text-base md:text-lg font-medium text-dark-300 hover:text-neon-cyan transition-all duration-300 hover:scale-110 cursor-pointer z-10 min-w-max px-2 py-1 rounded-lg hover:bg-dark-800/20"
                 >
                   About
                 </button>
@@ -100,7 +100,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                 {/* Portal - Right upper side */}
                 <button 
                   onClick={navigateToPortal}
-                  className="absolute -top-10 -right-12 md:-top-16 md:-right-20 transform rotate-12 font-sans text-base md:text-lg font-medium text-dark-300 hover:text-neon-emerald transition-all duration-300 hover:scale-110 cursor-pointer"
+                  className="absolute -top-14 -right-10 sm:-top-16 sm:-right-14 md:-top-20 md:-right-20 lg:-top-24 lg:-right-24 transform rotate-12 font-sans text-sm sm:text-base md:text-lg font-medium text-dark-300 hover:text-neon-emerald transition-all duration-300 hover:scale-110 cursor-pointer z-10 min-w-max px-2 py-1 rounded-lg hover:bg-dark-800/20"
                 >
                   Portal
                 </button>

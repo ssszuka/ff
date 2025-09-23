@@ -197,7 +197,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                 perspective: '200px'
               }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-400/20 to-indigo-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <i className="fas fa-rocket mr-2 group-hover:scale-110 transition-transform duration-200 relative z-10"></i>
               <span className="relative z-10">
                 Portal

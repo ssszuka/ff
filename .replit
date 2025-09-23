@@ -27,6 +27,33 @@ task = "shell.exec"
 args = "npm run dev"
 waitForPort = 5000
 
+[[workflows.workflow]]
+name = "Install Dependencies"
+author = 47908771
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pnpm install"
+
+[[workflows.workflow]]
+name = "Build Project"
+author = 47908771
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pnpm run build"
+
+[[workflows.workflow]]
+name = "Preview Build"
+author = 47908771
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pnpm run preview"
+
 [[ports]]
 localPort = 5000
 externalPort = 80

@@ -79,45 +79,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
           {/* Avatar with Navigation */}
           <div className="mb-6 md:mb-8" data-aos="zoom-in" data-aos-duration="500">
             <div className="relative inline-block">
-              {/* Navigation Items */}
-              <div>
-                {/* Socials - Left upper side */}
-                <button 
-                  onClick={() => scrollToSection('socials-section')}
-                  className="absolute -top-14 -left-10 sm:-top-16 sm:-left-14 md:-top-20 md:-left-20 lg:-top-24 lg:-left-24 transform -rotate-12 skew-x-2 skew-y-1 font-sans text-sm sm:text-base md:text-lg font-medium text-dark-300 hover:text-neon-purple transition-all duration-300 hover:scale-110 hover:skew-x-3 hover:skew-y-2 cursor-pointer z-10 min-w-max px-3 py-2 rounded-tl-xl rounded-br-xl rounded-tr-md rounded-bl-md hover:bg-dark-800/20 border border-transparent hover:border-neon-purple/30"
-                  style={{ 
-                    transformStyle: 'preserve-3d',
-                    perspective: '200px'
-                  }}
-                >
-                  Socials
-                </button>
-                
-                {/* About - Top center */}
-                <button 
-                  onClick={() => scrollToSection('about-section')}
-                  className="absolute -top-16 left-1/2 sm:-top-20 md:-top-24 lg:-top-28 transform -translate-x-1/2 rotate-2 skew-y-1 font-sans text-sm sm:text-base md:text-lg font-medium text-dark-300 hover:text-neon-cyan transition-all duration-300 hover:scale-110 hover:skew-y-2 cursor-pointer z-10 min-w-max px-3 py-2 rounded-2xl hover:bg-dark-800/20 border border-transparent hover:border-neon-cyan/30"
-                  style={{ 
-                    transformStyle: 'preserve-3d',
-                    perspective: '300px',
-                    borderRadius: '50% 50% 40% 40% / 60% 60% 40% 40%'
-                  }}
-                >
-                  About
-                </button>
-                
-                {/* Portal - Right upper side */}
-                <button 
-                  onClick={navigateToPortal}
-                  className="absolute -top-14 -right-10 sm:-top-16 sm:-right-14 md:-top-20 md:-right-20 lg:-top-24 lg:-right-24 transform rotate-12 -skew-x-2 skew-y-1 font-sans text-sm sm:text-base md:text-lg font-medium text-dark-300 hover:text-neon-emerald transition-all duration-300 hover:scale-110 hover:-skew-x-3 hover:skew-y-2 cursor-pointer z-10 min-w-max px-3 py-2 rounded-tr-xl rounded-bl-xl rounded-tl-md rounded-br-md hover:bg-dark-800/20 border border-transparent hover:border-neon-emerald/30"
-                  style={{ 
-                    transformStyle: 'preserve-3d',
-                    perspective: '200px'
-                  }}
-                >
-                  Portal
-                </button>
-              </div>
+              
               <img 
                 ref={avatarRef}
                 src={isLoading || !owner ? "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='100' fill='%23374151'/%3E%3C/svg%3E" : owner.avatarUrl}
@@ -191,46 +153,55 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
             )}
           </div>
 
-          {/* Social CTA Buttons - Always show since they come from homeData */}
+          {/* Navigation Buttons */}
           <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-8 md:mb-12 px-4" data-aos="fade-up" data-aos-delay="200">
-            {socials?.youtube && (
-              <a 
-                href={socials.youtube.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group bg-gradient-to-r from-red-600 to-red-500 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-red-500 hover:to-red-400 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-red-500/25 text-sm md:text-base"
-                data-testid="link-youtube-cta"
-              >
-                <i className="fab fa-youtube mr-2"></i>
-                YouTube
-              </a>
-            )}
+            <button 
+              onClick={() => scrollToSection('socials-section')}
+              className="group bg-gradient-to-r from-neon-purple to-purple-600 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-purple-500 hover:to-purple-400 transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-neon-purple/30 text-sm md:text-base border border-transparent hover:border-neon-purple/50 backdrop-filter backdrop-blur-sm"
+              data-testid="button-socials-nav"
+              style={{ 
+                transformStyle: 'preserve-3d',
+                perspective: '200px'
+              }}
+            >
+              <i className="fas fa-users mr-2 group-hover:scale-110 transition-transform duration-200"></i>
+              <span className="relative">
+                Socials
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
+              </span>
+            </button>
 
-            {socials?.discord && (
-              <a 
-                href={socials.discord.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-purple-500/25 text-sm md:text-base"
-                data-testid="link-discord-cta"
-              >
-                <i className="fab fa-discord mr-2"></i>
-                Discord
-              </a>
-            )}
+            <button 
+              onClick={() => scrollToSection('about-section')}
+              className="group bg-gradient-to-r from-neon-cyan to-cyan-600 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-cyan-500 hover:to-cyan-400 transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-neon-cyan/30 text-sm md:text-base border border-transparent hover:border-neon-cyan/50 backdrop-filter backdrop-blur-sm"
+              data-testid="button-about-nav"
+              style={{ 
+                transformStyle: 'preserve-3d',
+                perspective: '200px'
+              }}
+            >
+              <i className="fas fa-user mr-2 group-hover:scale-110 transition-transform duration-200"></i>
+              <span className="relative">
+                About
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
+              </span>
+            </button>
 
-            {socials?.instagram && (
-              <a 
-                href={socials.instagram.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group bg-gradient-to-r from-pink-600 to-purple-600 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-pink-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-pink-500/25 text-sm md:text-base"
-                data-testid="link-instagram-cta"
-              >
-                <i className="fab fa-instagram mr-2"></i>
-                Instagram
-              </a>
-            )}
+            <button 
+              onClick={navigateToPortal}
+              className="group bg-gradient-to-r from-neon-emerald to-emerald-600 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-emerald-500 hover:to-emerald-400 transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-neon-emerald/30 text-sm md:text-base border border-transparent hover:border-neon-emerald/50 backdrop-filter backdrop-blur-sm"
+              data-testid="button-portal-nav"
+              style={{ 
+                transformStyle: 'preserve-3d',
+                perspective: '200px'
+              }}
+            >
+              <i className="fas fa-rocket mr-2 group-hover:scale-110 transition-transform duration-200"></i>
+              <span className="relative">
+                Portal
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
+              </span>
+            </button>
           </div>
 
           {/* Scroll Indicator */}

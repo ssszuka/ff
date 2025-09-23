@@ -79,7 +79,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
           {/* Avatar with Navigation */}
           <div className="mb-6 md:mb-8" data-aos="zoom-in" data-aos-duration="500">
             <div className="relative inline-block">
-              {/* Navigation Items - Mobile और Desktop दोनों के लिए */}
+              {/* Navigation Items */}
               <div>
                 {/* Socials - Left upper side */}
                 <button 
@@ -222,13 +222,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
 
           {/* Scroll Indicator */}
           <div className="animate-bounce cursor-pointer" data-aos="fade-in" data-aos-delay="300" onClick={() => {
-            const aboutSection = document.querySelector('section[class*="py-12"]') || document.querySelector('section[class*="py-20"]');
-            if (aboutSection) {
-              aboutSection.scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
-              });
-            }
+            scrollToSection('about-section');
           }}>
             <i className="fas fa-chevron-down text-2xl text-dark-400 hover:text-neon-purple transition-colors duration-300"></i>
           </div>

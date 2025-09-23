@@ -368,7 +368,7 @@ export function VerificationPortal() {
                           {data.youtube.channelTitle}
                         </h4>
                         <p className="text-dark-300" data-testid="text-youtube-subscribers">
-                          {data.youtube.subscriberCountFormatted ? `${data.youtube.subscriberCountFormatted} subscribers` : 'N/A'}
+                          {data.youtube.subscriberCountFormatted ? `${data.youtube.subscriberCountFormatted} subs` : 'N/A'}
                         </p>
                       </div>
                       <Button 
@@ -377,7 +377,7 @@ export function VerificationPortal() {
                         data-testid="button-subscribe-youtube"
                       >
                         <Youtube className="w-4 h-4 mr-2" />
-                        Subs
+                        Subscribe
                       </Button>
                     </>
                   ) : (

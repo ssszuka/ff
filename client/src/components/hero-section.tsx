@@ -72,40 +72,39 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
   const { socials } = homeData;
 
   return (
-    <section className="relative min-h-[80vh] md:min-h-screen flex flex-col items-center justify-center hero-bg pt-8 md:pt-16">
-      
+    <section className="relative min-h-screen flex items-center justify-center hero-bg">
+
       <div className="container mx-auto px-6 text-center relative z-10">
-        {/* Navigation - Curved Circular Layout */}
-        <div className="relative flex justify-center items-center mb-4 md:mb-6">
-          {/* About - Top center, curved upward */}
-          <button 
-            onClick={() => scrollToSection('about-section')}
-            className="absolute transform -translate-y-8 md:-translate-y-10 rotate-2 font-mono text-sm md:text-base font-bold text-dark-200 hover:text-neon-cyan transition-all duration-300 hover:scale-110 cursor-pointer"
-            style={{ transform: 'translateY(-2rem) rotate(2deg)' }}
-          >
-            About
-          </button>
-          
-          {/* Socials - Bottom left, curved */}
-          <button 
-            onClick={() => scrollToSection('socials-section')}
-            className="absolute transform -translate-x-16 md:-translate-x-20 translate-y-4 md:translate-y-6 -rotate-25 font-mono text-base md:text-lg font-bold text-dark-200 hover:text-neon-purple transition-all duration-300 hover:scale-110 cursor-pointer"
-          >
-            Socials
-          </button>
-          
-          {/* Portal - Bottom right, curved */}
-          <button 
-            onClick={navigateToPortal}
-            className="absolute transform translate-x-16 md:translate-x-20 translate-y-4 md:translate-y-6 rotate-25 font-mono text-base md:text-lg font-bold text-dark-200 hover:text-neon-emerald transition-all duration-300 hover:scale-110 cursor-pointer"
-          >
-            Portal
-          </button>
-        </div>
         <div className="max-w-4xl mx-auto">
-          {/* Avatar */}
+          {/* Avatar with Navigation */}
           <div className="mb-6 md:mb-8" data-aos="zoom-in" data-aos-duration="500">
             <div className="relative inline-block">
+              {/* Navigation Items - Mobile और Desktop दोनों के लिए */}
+              <div>
+                {/* Socials - Left upper side */}
+                <button 
+                  onClick={() => scrollToSection('socials-section')}
+                  className="absolute -top-10 -left-12 md:-top-16 md:-left-20 transform -rotate-12 font-sans text-base md:text-lg font-medium text-dark-300 hover:text-neon-purple transition-all duration-300 hover:scale-110 cursor-pointer"
+                >
+                  Socials
+                </button>
+                
+                {/* About - Top center */}
+                <button 
+                  onClick={() => scrollToSection('about-section')}
+                  className="absolute -top-12 left-1/2 md:-top-20 transform -translate-x-1/2 rotate-2 font-sans text-base md:text-lg font-medium text-dark-300 hover:text-neon-cyan transition-all duration-300 hover:scale-110 cursor-pointer"
+                >
+                  About
+                </button>
+                
+                {/* Portal - Right upper side */}
+                <button 
+                  onClick={navigateToPortal}
+                  className="absolute -top-10 -right-12 md:-top-16 md:-right-20 transform rotate-12 font-sans text-base md:text-lg font-medium text-dark-300 hover:text-neon-emerald transition-all duration-300 hover:scale-110 cursor-pointer"
+                >
+                  Portal
+                </button>
+              </div>
               <img 
                 ref={avatarRef}
                 src={isLoading || !owner ? "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='100' fill='%23374151'/%3E%3C/svg%3E" : owner.avatarUrl}
@@ -223,7 +222,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
 
           {/* Scroll Indicator */}
           <div className="animate-bounce cursor-pointer" data-aos="fade-in" data-aos-delay="300" onClick={() => {
-            const aboutSection = document.getElementById('about-section')
+            const aboutSection = document.querySelector('section[class*="py-12"]') || document.querySelector('section[class*="py-20"]');
             if (aboutSection) {
               aboutSection.scrollIntoView({ 
                 behavior: 'smooth',

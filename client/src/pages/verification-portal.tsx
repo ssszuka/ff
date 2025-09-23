@@ -377,7 +377,7 @@ export function VerificationPortal() {
                         data-testid="button-subscribe-youtube"
                       >
                         <Youtube className="w-4 h-4 mr-2" />
-                        Subscribe
+                        Subs
                       </Button>
                     </>
                   ) : (

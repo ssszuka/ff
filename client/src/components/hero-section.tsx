@@ -69,14 +69,13 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
   }, []);
 
   const { owner } = data || { owner: null };
-  const { socials } = homeData;
 
   return (
     <section className="relative min-h-screen flex items-center justify-center hero-bg">
 
       <div className="container mx-auto px-6 text-center relative z-10">
         <div className="max-w-4xl mx-auto">
-          {/* Avatar with Navigation */}
+          {/* Avatar */}
           <div className="mb-6 md:mb-8" data-aos="zoom-in" data-aos-duration="500">
             <div className="relative inline-block">
               
@@ -90,7 +89,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                   (e.target as HTMLImageElement).src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='100' fill='%23374151'/%3E%3C/svg%3E";
                 }}
               />
-              {/* Only show status if it's not 'NA' and is a valid status */}
+              {/* show status */}
               {owner && data?.owner?.status && !['NA', 'offline'].includes(data.owner.status) && ['online', 'idle', 'dnd'].includes(data.owner.status) && (
                 <div className={`absolute -bottom-4 -right-4 px-2 py-1 rounded-full text-xs font-mono animate-float flex items-center gap-1 ${
                   (data?.owner?.status === 'online') ? 'bg-green-500 text-white' :

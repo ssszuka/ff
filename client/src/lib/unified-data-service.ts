@@ -1,6 +1,4 @@
 // Unified Data Service - Handles API data fetching with caching
-import { defaultOwnerData, defaultGuildData, defaultYoutubeData } from './default-data';
-
 export interface UnifiedData {
   health: {
     status: string;
@@ -66,68 +64,6 @@ interface CacheEntry {
   data: UnifiedData;
   timestamp: number;
 }
-
-// Create fallback data structure that matches UnifiedData interface
-const createFallbackData = (): UnifiedData => ({
-  health: {
-    status: "fallback",
-    timestamp: "NA",
-    uptime: {
-      uptimeMs: "NA",
-      uptimeFormatted: "NA",
-      startTime: "NA"
-    }
-  },
-  bot: {
-    id: "NA",
-    username: "Dreamer Bot",
-    displayName: "Dreamer Bot",
-    tag: "Dreamer Bot#0000",
-    avatarUrl: "/cdn/assets/image/logo.avif",
-    bannerUrl: null,
-    verified: false,
-    createdAt: "NA"
-  },
-  guild: {
-    id: defaultGuildData.id,
-    name: defaultGuildData.name,
-    memberCount: "NA",
-    memberCountFormatted: defaultGuildData.memberCountFormatted,
-    verifiedUserCount: "NA",
-    verifiedUserCountFormatted: defaultGuildData.verifiedUserCountFormatted,
-    iconUrl: defaultGuildData.iconUrl,
-    bannerUrl: null
-  },
-  owner: {
-    id: defaultOwnerData.id,
-    username: defaultOwnerData.username,
-    displayName: defaultOwnerData.displayName,
-    avatarUrl: defaultOwnerData.avatarUrl,
-    bannerUrl: null,
-    status: "offline",
-    createdAt: "NA",
-    about: defaultOwnerData.about
-  },
-  youtube: {
-    channelId: defaultYoutubeData.channelId,
-    channelTitle: defaultYoutubeData.channelTitle,
-    description: "NA",
-    customUsername: defaultYoutubeData.customUsername,
-    subscriberCount: "NA",
-    subscriberCountFormatted: defaultYoutubeData.subscriberCountFormatted,
-    videoCount: "NA",
-    videoCountFormatted: "NA",
-    viewCount: "NA",
-    viewCountFormatted: "NA",
-    membersCount: "NA",
-    membersCountFormatted: "NA",
-    logoUrl: defaultYoutubeData.logoUrl,
-    bannerUrl: "",
-    channelUrl: defaultYoutubeData.channelUrl,
-    publishedAt: "NA",
-    country: "NA"
-  }
-});
 
 class UnifiedDataService {
   private cache: CacheEntry | null = null;

@@ -47,7 +47,7 @@ export function Homepage() {
     }
   }, [animationsInitialized]);
   
-  // Error boundary
+  // Show error boundary only if error exists and no data (moved after all hooks)
   if (error && !data) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-dark-950" data-testid="error-fallback">

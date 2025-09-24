@@ -1,4 +1,4 @@
-// Unified Data Service - Handles all data fetching with caching and fallback
+// Unified Data Service - Handles API data fetching with caching
 export interface UnifiedData {
   health: {
     status: string;
@@ -63,41 +63,35 @@ export interface UnifiedData {
 interface CacheEntry {
   data: UnifiedData;
   timestamp: number;
-  isFromFallback: boolean;
 }
 
 class UnifiedDataService {
   private cache: CacheEntry | null = null;
   private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
   private readonly BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://janvi.jarvibeta.xyz';
-  private readonly FALLBACK_URL = '/cdn/assets/fallback-data.json';
   
   /**
    * Get data with caching logic
-   * - If cache is valid (not expired and not from fallback), return cached data
+   * - If cache is valid (not expired), return cached data
    * - Otherwise, try to fetch from backend
-   * - If backend fails, use fallback (don't cache fallback)
    * - If backend succeeds, cache it for 5 minutes
+   * - If backend fails, return error (components already show default data)
    */
   async getData(): Promise<{
-    data: UnifiedData;
+    data: UnifiedData | null;
     isLoading: boolean;
     error: string | null;
     isConnected: boolean;
-    isFromFallback: boolean;
   }> {
     const now = Date.now();
     
-    // Check if we have valid cached data (not expired and not from fallback)
-    if (this.cache && 
-        (now - this.cache.timestamp < this.CACHE_DURATION) && 
-        !this.cache.isFromFallback) {
+    // Check if we have valid cached data (not expired)
+    if (this.cache && (now - this.cache.timestamp < this.CACHE_DURATION)) {
       return {
         data: this.cache.data,
         isLoading: false,
         error: null,
-        isConnected: true,
-        isFromFallback: false
+        isConnected: true
       };
     }
     
@@ -122,54 +116,34 @@ class UnifiedDataService {
       // Cache the successful response
       this.cache = {
         data,
-        timestamp: now,
-        isFromFallback: false
+        timestamp: now
       };
       
       return {
         data,
         isLoading: false,
         error: null,
-        isConnected: true,
-        isFromFallback: false
+        isConnected: true
       };
       
     } catch (error) {
-      
-      try {
-        // Try to get fallback data
-        const fallbackResponse = await fetch(this.FALLBACK_URL);
-        if (!fallbackResponse.ok) {
-          throw new Error(`Fallback data fetch failed with status: ${fallbackResponse.status}`);
-        }
-        
-        const fallbackData: UnifiedData = await fallbackResponse.json();
-        
-        // Don't cache fallback data, but return it
+      // If we have any cached data (even if expired), use it
+      if (this.cache) {
         return {
-          data: fallbackData,
+          data: this.cache.data,
           isLoading: false,
           error: `Backend unavailable: ${error instanceof Error ? error.message : 'Unknown error'}`,
-          isConnected: false,
-          isFromFallback: true
+          isConnected: false
         };
-        
-      } catch (fallbackError) {
-        
-        // If we have any cached data (even if expired), use it
-        if (this.cache) {
-          return {
-            data: this.cache.data,
-            isLoading: false,
-            error: `All data sources failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-            isConnected: false,
-            isFromFallback: this.cache.isFromFallback
-          };
-        }
-        
-        // Last resort - throw error if we have no data at all
-        throw new Error('No data available from any source');
       }
+      
+      // No cached data available, return error (components will show default data)
+      return {
+        data: null,
+        isLoading: false,
+        error: `Backend unavailable: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        isConnected: false
+      };
     }
   }
   
@@ -177,11 +151,10 @@ class UnifiedDataService {
    * Force refresh data (bypass cache)
    */
   async refreshData(): Promise<{
-    data: UnifiedData;
+    data: UnifiedData | null;
     isLoading: boolean;
     error: string | null;
     isConnected: boolean;
-    isFromFallback: boolean;
   }> {
     // Clear cache to force refresh
     this.cache = null;
@@ -201,7 +174,7 @@ class UnifiedDataService {
   isCacheValid(): boolean {
     if (!this.cache) return false;
     const now = Date.now();
-    return (now - this.cache.timestamp < this.CACHE_DURATION) && !this.cache.isFromFallback;
+    return (now - this.cache.timestamp < this.CACHE_DURATION);
   }
 }
 
@@ -216,7 +189,6 @@ export function useUnifiedData() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-  const [isFromFallback, setIsFromFallback] = useState(false);
   
   useEffect(() => {
     let mounted = true;
@@ -230,7 +202,6 @@ export function useUnifiedData() {
           setData(result.data);
           setError(result.error);
           setIsConnected(result.isConnected);
-          setIsFromFallback(result.isFromFallback);
           setIsLoading(false);
         }
       } catch (err) {
@@ -256,7 +227,6 @@ export function useUnifiedData() {
       setData(result.data);
       setError(result.error);
       setIsConnected(result.isConnected);
-      setIsFromFallback(result.isFromFallback);
       setIsLoading(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to refresh data');
@@ -270,7 +240,6 @@ export function useUnifiedData() {
     isLoading,
     error,
     isConnected,
-    isFromFallback,
     refetch
   };
 }

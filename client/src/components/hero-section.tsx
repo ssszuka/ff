@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import type { UnifiedData } from "@/lib/unified-data-service";
 import type { HomeSocialsData } from "@/lib/home-data";
+import { defaultOwnerData, defaultHeroData } from "@/lib/default-data";
 
 interface HeroSectionProps {
   data: UnifiedData | null;
@@ -69,15 +70,9 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
 
   const { owner } = data || { owner: null };
 
-  // Fallback data - embedded directly in component for instant display
-  const fallbackData = {
-    displayName: "Janvi Dreamer",
-    avatarUrl: "/cdn/assets/image/pfp.avif"
-  };
-
-  // Use API data when available, otherwise show fallback instantly
-  const displayName = owner?.displayName || fallbackData.displayName;
-  const avatarUrl = owner?.avatarUrl || fallbackData.avatarUrl;
+  // Use API data when available, otherwise show default data instantly
+  const displayName = owner?.displayName || defaultHeroData.name;
+  const avatarUrl = owner?.avatarUrl || defaultHeroData.avatarUrl;
 
   return (
     <section className="relative min-h-screen flex items-center justify-center hero-bg">
@@ -95,7 +90,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
                 className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full border-4 border-neon-purple animate-pulse-glow transition-all duration-500 ease-in-out"
                 data-testid="img-hero-avatar"
 onError={(e) => {
-                  (e.target as HTMLImageElement).src = fallbackData.avatarUrl;
+                  (e.target as HTMLImageElement).src = defaultHeroData.avatarUrl;
                 }}
               />
               {/* show status */}

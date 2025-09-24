@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { useUnifiedData } from "@/lib/unified-data-service";
+import { defaultGuildData, defaultYoutubeData } from "@/lib/default-data";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -19,21 +20,6 @@ import { initializeAnimations, checkReducedMotion } from "@/lib/meta-utils";
 
 export function VerificationPortal() {
   const [animationsInitialized, setAnimationsInitialized] = useState(false);
-
-  // Fallback data - embedded directly for instant display
-  const fallbackGuild = {
-    name: "Dreamer's Land",
-    iconUrl: "https://cdn.discordapp.com/icons/1368953017717489745/a_1b25cb0345a6fd2c925610540d43b9db.gif",
-    memberCountFormatted: "N/A",
-    verifiedUserCountFormatted: "N/A"
-  };
-
-  const fallbackYoutube = {
-    channelTitle: "Janvi Dreamer",
-    logoUrl: "/cdn/assets/image/logo.avif",
-    subscriberCountFormatted: "N/A",
-    channelUrl: "https://www.youtube.com/channel/UCa4-5c2gCYxqummRhmh6V4Q"
-  };
   
   const {
     data,
@@ -161,11 +147,11 @@ export function VerificationPortal() {
               {/* Logo */}
               <div className="flex items-center space-x-3">
                 <Avatar className="w-8 h-8 transition-all duration-500 ease-in-out" data-testid="img-server-logo">
-                  <AvatarImage src={data?.guild?.iconUrl || fallbackGuild.iconUrl} alt="Server Icon" />
-                  <AvatarFallback>{(data?.guild?.name || fallbackGuild.name).charAt(0)}</AvatarFallback>
+                  <AvatarImage src={data?.guild?.iconUrl || defaultGuildData.iconUrl} alt="Server Icon" />
+                  <AvatarFallback>{(data?.guild?.name || defaultGuildData.name).charAt(0)}</AvatarFallback>
                 </Avatar>
                 <h1 className="text-xl font-bold text-white transition-all duration-500 ease-in-out" data-testid="text-server-name">
-                  {data?.guild?.name || fallbackGuild.name}
+                  {data?.guild?.name || defaultGuildData.name}
                 </h1>
               </div>
               
@@ -190,8 +176,8 @@ export function VerificationPortal() {
                 {/* Server Icon */}
                 <div className="mb-6">
                   <Avatar className="w-20 h-20 mx-auto shadow-lg ring-2 ring-neon-purple/20 transition-all duration-500 ease-in-out" data-testid="img-server-icon-large">
-                    <AvatarImage src={data?.guild?.iconUrl || fallbackGuild.iconUrl} alt="Server Icon" />
-                    <AvatarFallback className="text-2xl">{(data?.guild?.name || fallbackGuild.name).charAt(0)}</AvatarFallback>
+                    <AvatarImage src={data?.guild?.iconUrl || defaultGuildData.iconUrl} alt="Server Icon" />
+                    <AvatarFallback className="text-2xl">{(data?.guild?.name || defaultGuildData.name).charAt(0)}</AvatarFallback>
                   </Avatar>
                 </div>
                 
@@ -199,7 +185,7 @@ export function VerificationPortal() {
                 <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4 transition-all duration-500 ease-in-out" data-testid="text-welcome-title">
                   Welcome to{' '}
                   <span className="gradient-text">
-                    {data?.guild?.name || fallbackGuild.name}
+                    {data?.guild?.name || defaultGuildData.name}
                   </span>
                   {' '}Verification Portal
                 </h3>
@@ -218,7 +204,7 @@ export function VerificationPortal() {
                         <Users className="w-8 h-8 text-neon-cyan" />
                         <div>
                           <div className="text-2xl font-bold text-neon-cyan transition-all duration-500 ease-in-out" data-testid="text-member-count">
-                            {data?.guild?.memberCountFormatted || fallbackGuild.memberCountFormatted}
+                            {data?.guild?.memberCountFormatted || defaultGuildData.memberCountFormatted}
                           </div>
                           <div className="text-dark-300 text-sm">Total Members</div>
                         </div>
@@ -232,7 +218,7 @@ export function VerificationPortal() {
                         <UserCheck className="w-8 h-8 text-neon-emerald" />
                         <div>
                           <div className="text-2xl font-bold text-neon-emerald transition-all duration-500 ease-in-out" data-testid="text-verified-count">
-                            {data?.guild?.verifiedUserCountFormatted || fallbackGuild.verifiedUserCountFormatted}
+                            {data?.guild?.verifiedUserCountFormatted || defaultGuildData.verifiedUserCountFormatted}
                           </div>
                           <div className="text-dark-300 text-sm">Verified Members</div>
                         </div>
@@ -351,22 +337,22 @@ export function VerificationPortal() {
                     // Show fallback YouTube data when API data is not available
                     <>
                       <Avatar className="w-16 h-16 transition-all duration-500 ease-in-out" data-testid="img-youtube-avatar">
-                        <AvatarImage src={fallbackYoutube.logoUrl} alt="YouTube Channel" />
+                        <AvatarImage src={defaultYoutubeData.logoUrl} alt="YouTube Channel" />
                         <AvatarFallback>
                           <Youtube className="w-8 h-8 text-red-500" />
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1 text-left">
                         <h4 className="text-lg font-semibold text-white transition-all duration-500 ease-in-out" data-testid="text-youtube-name">
-                          {fallbackYoutube.channelTitle}
+                          {defaultYoutubeData.channelTitle}
                         </h4>
                         <p className="text-dark-300 transition-all duration-500 ease-in-out" data-testid="text-youtube-subscribers">
-                          {fallbackYoutube.subscriberCountFormatted} subs
+                          {defaultYoutubeData.subscriberCountFormatted} subs
                         </p>
                       </div>
                       <Button 
                         className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white shadow-md hover:shadow-lg transition-all duration-200 active:scale-95"
-                        onClick={() => window.open(fallbackYoutube.channelUrl, '_blank', 'noopener,noreferrer')}
+                        onClick={() => window.open(defaultYoutubeData.channelUrl, '_blank', 'noopener,noreferrer')}
                         data-testid="button-subscribe-youtube"
                       >
                         <Youtube className="w-4 h-4 mr-2" />

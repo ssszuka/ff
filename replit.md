@@ -22,7 +22,9 @@ Preferred communication style: Simple, everyday language.
 - **Animations**: Framer Motion for component animations, AOS for scroll animations, GSAP for interactive effects
 
 ## Data Management
-- **Data Source**: Hybrid approach using local fallback data and optional remote API
+- **Default Data System**: Centralized `/lib/default-data.ts` with modular exports for instant content display
+- **Data Source**: Hybrid approach using instant default data with background API replacement
+- **Loading Strategy**: Instant fallback display → background API loading → smooth data replacement
 - **Caching**: 5-minute cache duration with automatic fallback to static data
 - **Types**: Comprehensive TypeScript interfaces for data structures
 - **Service Layer**: Centralized data service with error handling and cache management
@@ -31,13 +33,14 @@ Preferred communication style: Simple, everyday language.
 - **Layout**: Modular section-based components (Hero, About, Social, Footer)
 - **UI Components**: Reusable Shadcn/ui components with consistent styling
 - **Responsive Design**: Mobile-first approach with optimized touch interactions
-- **Loading States**: Custom loading screens and skeleton components
+- **Instant Loading**: Default data displays immediately with smooth transitions when API data loads
 
 ## Performance Optimizations
 - **Bundle Splitting**: Vite's automatic code splitting
 - **Image Optimization**: WebP support with fallbacks
 - **Animation Performance**: Reduced motion support and mobile-optimized animations
 - **Caching Strategy**: Service worker ready with static asset caching
+- **Zero Loading Time**: Instant content display using centralized default data system
 
 # External Dependencies
 

@@ -99,39 +99,6 @@ export function VerificationPortal() {
     }
   }, [animationsInitialized]);
   
-  // Error state for failed data loading
-  if (error && !data) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-dark-950" data-testid="error-portal">
-        <div className="text-center max-w-md mx-auto px-6">
-          <div className="mb-6">
-            <Shield className="w-16 h-16 text-neon-orange mx-auto mb-4" />
-            <h1 className="text-3xl font-bold text-white mb-2">Portal Unavailable</h1>
-            <p className="text-dark-300 mb-4">
-              We're having trouble loading the verification portal. Please try again later.
-            </p>
-          </div>
-          <div className="space-y-3">
-            <Button 
-              onClick={() => refetch()} 
-              className="bg-neon-purple hover:bg-neon-purple/80 text-white w-full"
-              data-testid="button-retry"
-            >
-              Try Again
-            </Button>
-            <Button 
-              onClick={() => window.location.href = '/'} 
-              variant="outline"
-              className="border-dark-600 text-dark-300 hover:text-white w-full"
-              data-testid="button-home"
-            >
-              Return Home
-            </Button>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <>

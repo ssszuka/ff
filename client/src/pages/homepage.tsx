@@ -47,24 +47,6 @@ export function Homepage() {
     }
   }, [animationsInitialized]);
   
-  // Show error boundary only if error exists and no data (moved after all hooks)
-  if (error && !data) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-dark-950" data-testid="error-fallback">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">Oops! Something went wrong</h1>
-          <p className="text-dark-300 mb-6">We're having trouble loading the page. Please try again later.</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="bg-neon-purple hover:bg-neon-purple/80 text-white px-6 py-3 rounded-full font-semibold transition-colors"
-            data-testid="button-reload"
-          >
-            Reload Page
-          </button>
-        </div>
-      </div>
-    );
-  }
   
   return (
     <>

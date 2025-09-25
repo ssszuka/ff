@@ -176,6 +176,13 @@ class UnifiedDataService {
     const now = Date.now();
     return (now - this.cache.timestamp < this.CACHE_DURATION);
   }
+  
+  /**
+   * Get cached data if available (for React hook initialization)
+   */
+  getCachedData(): UnifiedData | null {
+    return this.cache ? this.cache.data : null;
+  }
 }
 
 // Export singleton instance
@@ -183,30 +190,54 @@ export const unifiedDataService = new UnifiedDataService();
 
 // Hook for React components
 import { useState, useEffect } from 'react';
+import { defaultAppData } from './default-data';
 
 export function useUnifiedData() {
-  const [data, setData] = useState<UnifiedData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // Check if we have valid cached data first
+  const isCachedDataValid = unifiedDataService.isCacheValid();
+  const cachedData = unifiedDataService.getCachedData();
+  
+  // Initialize state based on cache availability
+  const [data, setData] = useState<UnifiedData | null>(() => {
+    if (cachedData) {
+      // If we have ANY cached data (even expired), show it immediately
+      return cachedData;
+    }
+    // Only use default data when no cached data exists at all
+    return defaultAppData as UnifiedData;
+  });
+  
+  const [isLoading, setIsLoading] = useState(cachedData ? !isCachedDataValid : false); // Loading if cached data exists but is expired
   const [error, setError] = useState<string | null>(null);
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState(cachedData ? true : false); // Connected if we have any cached data
   
   useEffect(() => {
     let mounted = true;
     
     const fetchData = async () => {
+      // If we have valid cached data, no need to fetch
+      if (unifiedDataService.isCacheValid()) {
+        return;
+      }
+      
       try {
-        setIsLoading(true);
         const result = await unifiedDataService.getData();
         
         if (mounted) {
-          setData(result.data);
-          setError(result.error);
-          setIsConnected(result.isConnected);
+          if (result.data) {
+            // Successfully got API data, replace current data
+            setData(result.data);
+            setIsConnected(result.isConnected);
+          }
+          // Never set error that would trigger error boundary
+          // Keep showing current data (either default or cached)
+          setError(null);
           setIsLoading(false);
         }
       } catch (err) {
         if (mounted) {
-          setError(err instanceof Error ? err.message : 'Failed to fetch data');
+          // Keep current data, don't set error that would trigger boundary
+          setError(null);
           setIsLoading(false);
           setIsConnected(false);
         }
@@ -224,12 +255,16 @@ export function useUnifiedData() {
     try {
       setIsLoading(true);
       const result = await unifiedDataService.refreshData();
-      setData(result.data);
-      setError(result.error);
-      setIsConnected(result.isConnected);
+      if (result.data) {
+        setData(result.data);
+        setIsConnected(result.isConnected);
+      }
+      // Never set error that would trigger error boundary
+      setError(null);
       setIsLoading(false);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to refresh data');
+      // Keep current data, don't set error that would trigger boundary
+      setError(null);
       setIsLoading(false);
       setIsConnected(false);
     }

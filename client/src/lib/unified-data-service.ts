@@ -127,8 +127,9 @@ class UnifiedDataService {
       };
       
     } catch (error) {
-      // If we have any cached data (even if expired), use it
-      if (this.cache) {
+      // NEVER use expired cached data - treat expired cache as if it doesn't exist
+      // Only return valid (non-expired) cached data if available
+      if (this.cache && (now - this.cache.timestamp < this.CACHE_DURATION)) {
         return {
           data: this.cache.data,
           isLoading: false,
@@ -137,7 +138,7 @@ class UnifiedDataService {
         };
       }
       
-      // No cached data available, return error (components will show default data)
+      // No valid cached data available, return error (components will show default data)
       return {
         data: null,
         isLoading: false,
@@ -178,10 +179,31 @@ class UnifiedDataService {
   }
   
   /**
-   * Get cached data if available (for React hook initialization)
+   * Get cached data ONLY if valid (within 5 minutes) - for React hook initialization
    */
   getCachedData(): UnifiedData | null {
-    return this.cache ? this.cache.data : null;
+    if (!this.cache) return null;
+    const now = Date.now();
+    // Only return cached data if it's still valid (within 5 minutes)
+    return (now - this.cache.timestamp < this.CACHE_DURATION) ? this.cache.data : null;
+  }
+  
+  /**
+   * Get cache timestamp for expiry detection
+   */
+  getCacheTimestamp(): number | null {
+    return this.cache ? this.cache.timestamp : null;
+  }
+  
+  /**
+   * Get remaining cache time in milliseconds
+   */
+  getRemainingCacheTime(): number {
+    if (!this.cache) return 0;
+    const now = Date.now();
+    const elapsed = now - this.cache.timestamp;
+    const remaining = this.CACHE_DURATION - elapsed;
+    return Math.max(0, remaining);
   }
 }
 
@@ -197,20 +219,22 @@ export function useUnifiedData() {
   const isCachedDataValid = unifiedDataService.isCacheValid();
   const cachedData = unifiedDataService.getCachedData();
   
-  // Initialize state based on cache availability
+  // Initialize state based on VALID cache availability only
   const [data, setData] = useState<UnifiedData | null>(() => {
-    if (cachedData) {
-      // If we have ANY cached data (even expired), show it immediately
+    if (cachedData && isCachedDataValid) {
+      // Only use cached data if it's valid (within 5 minutes)
       return cachedData;
     }
-    // Only use default data when no cached data exists at all
+    // Use default data when no valid cached data exists
     return defaultAppData as UnifiedData;
   });
   
-  const [isLoading, setIsLoading] = useState(cachedData ? !isCachedDataValid : false); // Loading if cached data exists but is expired
+  // Loading state: only true when we need to fetch (no valid cache exists)
+  const [isLoading, setIsLoading] = useState(!cachedData); // Loading if no valid cached data
   const [error, setError] = useState<string | null>(null);
-  const [isConnected, setIsConnected] = useState(cachedData ? true : false); // Connected if we have any cached data
+  const [isConnected, setIsConnected] = useState(!!cachedData); // Connected if we have valid cached data
   
+  // Initial data fetching effect
   useEffect(() => {
     let mounted = true;
     
@@ -250,6 +274,74 @@ export function useUnifiedData() {
       mounted = false;
     };
   }, []);
+  
+  // Cache expiry detection and automatic re-fetching effect
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null;
+    let mounted = true;
+    
+    const setupCacheExpiryTimer = () => {
+      // Clear any existing timeout
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+      
+      // Get remaining cache time
+      const remainingTime = unifiedDataService.getRemainingCacheTime();
+      
+      if (remainingTime > 0) {
+        // Set timeout for when cache expires
+        timeoutId = setTimeout(async () => {
+          if (!mounted) return;
+          
+          // Cache has expired - reset to default data and fetch fresh
+          console.log('Cache expired, resetting to default data and fetching fresh data...');
+          setData(defaultAppData as UnifiedData);
+          setIsLoading(true);
+          setIsConnected(false);
+          setError(null);
+          
+          try {
+            // Force refresh (bypass cache)
+            const result = await unifiedDataService.refreshData();
+            
+            if (mounted) {
+              if (result.data) {
+                setData(result.data);
+                setIsConnected(result.isConnected);
+              }
+              setError(null);
+              setIsLoading(false);
+              
+              // Setup new timer for the fresh cache
+              setupCacheExpiryTimer();
+            }
+          } catch (err) {
+            if (mounted) {
+              // Keep showing default data
+              setError(null);
+              setIsLoading(false);
+              setIsConnected(false);
+              
+              // Try to setup timer again (maybe cache got updated during error)
+              setupCacheExpiryTimer();
+            }
+          }
+        }, remainingTime);
+      }
+    };
+    
+    // Setup initial timer
+    setupCacheExpiryTimer();
+    
+    return () => {
+      mounted = false;
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [data]); // Re-run when data changes (new cache gets created)
   
   const refetch = async () => {
     try {

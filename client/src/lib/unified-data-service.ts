@@ -60,22 +60,15 @@ export interface UnifiedData {
   };
 }
 
-interface CacheEntry {
-  data: UnifiedData;
-  timestamp: number;
-}
 
 class UnifiedDataService {
-  private cache: CacheEntry | null = null;
-  private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
   private readonly BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://janvi.jarvibeta.xyz';
   
   /**
-   * Get data with caching logic
-   * - If cache is valid (not expired), return cached data
-   * - Otherwise, try to fetch from backend
-   * - If backend succeeds, cache it for 5 minutes
-   * - If backend fails, return error (components already show default data)
+   * Get data with Cloudflare server-side caching
+   * - Always fetch from backend API (Cloudflare handles 5-minute caching)
+   * - If API succeeds, return fresh data
+   * - If API fails, return error (components will show default data)
    */
   async getData(): Promise<{
     data: UnifiedData | null;
@@ -83,31 +76,20 @@ class UnifiedDataService {
     error: string | null;
     isConnected: boolean;
   }> {
-    const now = Date.now();
-    
-    // Check if we have valid cached data (not expired)
-    if (this.cache && (now - this.cache.timestamp < this.CACHE_DURATION)) {
-      return {
-        data: this.cache.data,
-        isLoading: false,
-        error: null,
-        isConnected: true
-      };
-    }
-    
     try {
-      // Try to fetch from backend
+      // Always fetch from backend - Cloudflare will handle server-side caching
       const backendUrl = `${this.BACKEND_URL}/api/info`;
       const response = await fetch(backendUrl, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json'
-          // NOTE: Cloudflare CDN caching requires RESPONSE headers from the backend, not request headers
-          // For Cloudflare CDN to cache this API endpoint, the backend should send:
-          // - Cache-Control: public, max-age=300, s-maxage=300
-          // - Cloudflare-Cache-TTL: 300 (optional, Cloudflare-specific header)
-          // Request headers like Cache-Control are ignored by Cloudflare CDN
+          'Content-Type': 'application/json',
+          // Important: Backend must send these headers for proper Cloudflare caching:
+          // - Cache-Control: public, max-age=300, s-maxage=300 (5 minutes)
+          // - Cloudflare-Cache-TTL: 300 (optional, Cloudflare-specific)
+          // These headers ensure Cloudflare caches API responses for all users
         },
+        // Prevent browser caching - let Cloudflare CDN handle all caching
+        cache: 'no-store',
         // Add timeout to prevent hanging
         signal: AbortSignal.timeout(10000) // 10 second timeout
       });
@@ -118,12 +100,6 @@ class UnifiedDataService {
       
       const data: UnifiedData = await response.json();
       
-      // Cache the successful response
-      this.cache = {
-        data,
-        timestamp: now
-      };
-      
       return {
         data,
         isLoading: false,
@@ -132,18 +108,7 @@ class UnifiedDataService {
       };
       
     } catch (error) {
-      // NEVER use expired cached data - treat expired cache as if it doesn't exist
-      // Only return valid (non-expired) cached data if available
-      if (this.cache && (now - this.cache.timestamp < this.CACHE_DURATION)) {
-        return {
-          data: this.cache.data,
-          isLoading: false,
-          error: `Backend unavailable: ${error instanceof Error ? error.message : 'Unknown error'}`,
-          isConnected: false
-        };
-      }
-      
-      // No valid cached data available, return error (components will show default data)
+      // No browser-level cache fallback - return error (components will show default data)
       return {
         data: null,
         isLoading: false,
@@ -154,7 +119,7 @@ class UnifiedDataService {
   }
   
   /**
-   * Force refresh data (bypass cache)
+   * Force refresh data (same as getData since no browser caching)
    */
   async refreshData(): Promise<{
     data: UnifiedData | null;
@@ -162,35 +127,15 @@ class UnifiedDataService {
     error: string | null;
     isConnected: boolean;
   }> {
-    // Clear cache to force refresh
-    this.cache = null;
+    // With server-side caching, refreshData is same as getData
     return this.getData();
   }
   
   /**
-   * Clear cache
+   * No browser cache to clear (server-side caching only)
    */
   clearCache(): void {
-    this.cache = null;
-  }
-  
-  /**
-   * Check if data is cached and still valid
-   */
-  isCacheValid(): boolean {
-    if (!this.cache) return false;
-    const now = Date.now();
-    return (now - this.cache.timestamp < this.CACHE_DURATION);
-  }
-  
-  /**
-   * Get cached data ONLY if valid (within 5 minutes) - for React hook initialization
-   */
-  getCachedData(): UnifiedData | null {
-    if (!this.cache) return null;
-    const now = Date.now();
-    // Only return cached data if it's still valid (within 5 minutes)
-    return (now - this.cache.timestamp < this.CACHE_DURATION) ? this.cache.data : null;
+    // No-op: Server-side caching cannot be cleared from client
   }
   
 }
@@ -203,52 +148,40 @@ import { useState, useEffect } from 'react';
 import { defaultAppData } from './default-data';
 
 export function useUnifiedData() {
-  // Check if we have valid cached data first
-  const isCachedDataValid = unifiedDataService.isCacheValid();
-  const cachedData = unifiedDataService.getCachedData();
-  
-  // Initialize state based on VALID cache availability only
+  // Always start with default data (no browser cache to check)
   const [data, setData] = useState<UnifiedData | null>(() => {
-    if (cachedData && isCachedDataValid) {
-      // Only use cached data if it's valid (within 5 minutes)
-      return cachedData;
-    }
-    // Use default data when no valid cached data exists
+    // Always use default data first - API data will load in background
     return defaultAppData as UnifiedData;
   });
   
-  // Loading state: only true when we need to fetch (no valid cache exists)
-  const [isLoading, setIsLoading] = useState(!cachedData); // Loading if no valid cached data
+  // Always start as loading (we need to fetch from API)
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isConnected, setIsConnected] = useState(!!cachedData); // Connected if we have valid cached data
+  const [isConnected, setIsConnected] = useState(false); // Start as disconnected, will update after API call
   
-  // Initial data fetching effect
+  // Initial data fetching effect - always fetch (Cloudflare handles caching)
   useEffect(() => {
     let mounted = true;
     
     const fetchData = async () => {
-      // If we have valid cached data, no need to fetch
-      if (unifiedDataService.isCacheValid()) {
-        return;
-      }
-      
       try {
+        // Always fetch from API - Cloudflare will serve cached data if available
         const result = await unifiedDataService.getData();
         
         if (mounted) {
           if (result.data) {
-            // Successfully got API data, replace current data
+            // Successfully got API data (cached or fresh), replace default data
             setData(result.data);
             setIsConnected(result.isConnected);
           }
           // Never set error that would trigger error boundary
-          // Keep showing current data (either default or cached)
+          // Keep showing default data if API fails
           setError(null);
           setIsLoading(false);
         }
       } catch (err) {
         if (mounted) {
-          // Keep current data, don't set error that would trigger boundary
+          // Keep showing default data, don't set error that would trigger boundary
           setError(null);
           setIsLoading(false);
           setIsConnected(false);
@@ -256,6 +189,7 @@ export function useUnifiedData() {
       }
     };
     
+    // Always fetch on component mount
     fetchData();
     
     return () => {

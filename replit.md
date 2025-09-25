@@ -6,6 +6,16 @@ Janvi Dreamer is a personal portfolio website for a gaming content creator and Y
 
 Preferred communication style: Simple, everyday language.
 
+# Package Management Rules
+
+**Important**: Always use `pnpm` for package management instead of `npm`. This includes:
+- Installing packages: `pnpm install <package-name>`
+- Installing dev dependencies: `pnpm install -D <package-name>`
+- Running scripts: `pnpm run <script-name>`
+- Installing all dependencies: `pnpm install`
+
+Never use `npm install` or `npm` commands for this project.
+
 # System Architecture
 
 ## Frontend Architecture

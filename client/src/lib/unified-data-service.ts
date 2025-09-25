@@ -101,7 +101,12 @@ class UnifiedDataService {
       const response = await fetch(backendUrl, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
+          // NOTE: Cloudflare CDN caching requires RESPONSE headers from the backend, not request headers
+          // For Cloudflare CDN to cache this API endpoint, the backend should send:
+          // - Cache-Control: public, max-age=300, s-maxage=300
+          // - Cloudflare-Cache-TTL: 300 (optional, Cloudflare-specific header)
+          // Request headers like Cache-Control are ignored by Cloudflare CDN
         },
         // Add timeout to prevent hanging
         signal: AbortSignal.timeout(10000) // 10 second timeout
@@ -188,23 +193,6 @@ class UnifiedDataService {
     return (now - this.cache.timestamp < this.CACHE_DURATION) ? this.cache.data : null;
   }
   
-  /**
-   * Get cache timestamp for expiry detection
-   */
-  getCacheTimestamp(): number | null {
-    return this.cache ? this.cache.timestamp : null;
-  }
-  
-  /**
-   * Get remaining cache time in milliseconds
-   */
-  getRemainingCacheTime(): number {
-    if (!this.cache) return 0;
-    const now = Date.now();
-    const elapsed = now - this.cache.timestamp;
-    const remaining = this.CACHE_DURATION - elapsed;
-    return Math.max(0, remaining);
-  }
 }
 
 // Export singleton instance
@@ -275,73 +263,6 @@ export function useUnifiedData() {
     };
   }, []);
   
-  // Cache expiry detection and automatic re-fetching effect
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout | null = null;
-    let mounted = true;
-    
-    const setupCacheExpiryTimer = () => {
-      // Clear any existing timeout
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-        timeoutId = null;
-      }
-      
-      // Get remaining cache time
-      const remainingTime = unifiedDataService.getRemainingCacheTime();
-      
-      if (remainingTime > 0) {
-        // Set timeout for when cache expires
-        timeoutId = setTimeout(async () => {
-          if (!mounted) return;
-          
-          // Cache has expired - reset to default data and fetch fresh
-          console.log('Cache expired, resetting to default data and fetching fresh data...');
-          setData(defaultAppData as UnifiedData);
-          setIsLoading(true);
-          setIsConnected(false);
-          setError(null);
-          
-          try {
-            // Force refresh (bypass cache)
-            const result = await unifiedDataService.refreshData();
-            
-            if (mounted) {
-              if (result.data) {
-                setData(result.data);
-                setIsConnected(result.isConnected);
-              }
-              setError(null);
-              setIsLoading(false);
-              
-              // Setup new timer for the fresh cache
-              setupCacheExpiryTimer();
-            }
-          } catch (err) {
-            if (mounted) {
-              // Keep showing default data
-              setError(null);
-              setIsLoading(false);
-              setIsConnected(false);
-              
-              // Try to setup timer again (maybe cache got updated during error)
-              setupCacheExpiryTimer();
-            }
-          }
-        }, remainingTime);
-      }
-    };
-    
-    // Setup initial timer
-    setupCacheExpiryTimer();
-    
-    return () => {
-      mounted = false;
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [data]); // Re-run when data changes (new cache gets created)
   
   const refetch = async () => {
     try {

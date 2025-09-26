@@ -63,11 +63,56 @@ export interface UnifiedData {
 
 class UnifiedDataService {
   private readonly BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://janvi.jarvibeta.xyz';
+  private readonly CACHE_KEY = 'unified_data_cache';
+  private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
   
   /**
-   * Get data with Cloudflare server-side caching
-   * - Always fetch from backend API (Cloudflare handles 5-minute caching)
-   * - If API succeeds, return fresh data
+   * Get cached data from localStorage if valid (< 5 minutes old)
+   */
+  getCachedData(): UnifiedData | null {
+    try {
+      const cachedItem = localStorage.getItem(this.CACHE_KEY);
+      if (!cachedItem) return null;
+      
+      const { data, timestamp } = JSON.parse(cachedItem);
+      const now = Date.now();
+      
+      // Check if cache is still valid (less than 5 minutes old)
+      if (now - timestamp < this.CACHE_DURATION) {
+        return data;
+      }
+      
+      // Cache expired, remove it
+      this.clearCache();
+      return null;
+    } catch (error) {
+      // If error reading cache, clear it
+      this.clearCache();
+      return null;
+    }
+  }
+  
+  /**
+   * Save data to localStorage with current timestamp
+   */
+  private setCachedData(data: UnifiedData): void {
+    try {
+      const cacheItem = {
+        data,
+        timestamp: Date.now()
+      };
+      localStorage.setItem(this.CACHE_KEY, JSON.stringify(cacheItem));
+    } catch (error) {
+      // If localStorage is full or unavailable, silently fail
+      console.warn('Failed to cache data:', error);
+    }
+  }
+  
+  /**
+   * Get data with browser-level caching
+   * - First check browser cache (5-minute expiration)
+   * - If valid cache exists, return cached data (no API call)
+   * - If no cache or expired, fetch from backend API and cache result
    * - If API fails, return error (components will show default data)
    */
   async getData(): Promise<{
@@ -76,8 +121,20 @@ class UnifiedDataService {
     error: string | null;
     isConnected: boolean;
   }> {
+    // First check if we have valid cached data
+    const cachedData = this.getCachedData();
+    if (cachedData) {
+      // Return cached data immediately (no API call needed)
+      return {
+        data: cachedData,
+        isLoading: false,
+        error: null,
+        isConnected: true
+      };
+    }
+    
+    // No valid cache, fetch from backend API
     try {
-      // Always fetch from backend - Cloudflare will handle server-side caching
       const backendUrl = `${this.BACKEND_URL}/api/info`;
       const response = await fetch(backendUrl, {
         method: 'GET',
@@ -94,6 +151,9 @@ class UnifiedDataService {
       
       const data: UnifiedData = await response.json();
       
+      // Cache the fresh data from API
+      this.setCachedData(data);
+      
       return {
         data,
         isLoading: false,
@@ -102,7 +162,7 @@ class UnifiedDataService {
       };
       
     } catch (error) {
-      // No browser-level cache fallback - return error (components will show default data)
+      // API failed - return error (components will show default data)
       return {
         data: null,
         isLoading: false,
@@ -113,7 +173,7 @@ class UnifiedDataService {
   }
   
   /**
-   * Force refresh data (same as getData since no browser caching)
+   * Force refresh data (bypass cache and fetch fresh data from API)
    */
   async refreshData(): Promise<{
     data: UnifiedData | null;
@@ -121,15 +181,58 @@ class UnifiedDataService {
     error: string | null;
     isConnected: boolean;
   }> {
-    // With server-side caching, refreshData is same as getData
-    return this.getData();
+    // Clear existing cache before fetching fresh data
+    this.clearCache();
+    
+    // Fetch fresh data from API
+    try {
+      const backendUrl = `${this.BACKEND_URL}/api/info`;
+      const response = await fetch(backendUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // Add timeout to prevent hanging
+        signal: AbortSignal.timeout(15000) // 15 second timeout
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Backend responded with status: ${response.status}`);
+      }
+      
+      const data: UnifiedData = await response.json();
+      
+      // Cache the fresh data
+      this.setCachedData(data);
+      
+      return {
+        data,
+        isLoading: false,
+        error: null,
+        isConnected: true
+      };
+      
+    } catch (error) {
+      // API failed - return error (components will show default data)
+      return {
+        data: null,
+        isLoading: false,
+        error: `Backend unavailable: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        isConnected: false
+      };
+    }
   }
   
   /**
-   * No browser cache to clear (server-side caching only)
+   * Clear browser cache
    */
   clearCache(): void {
-    // No-op: Server-side caching cannot be cleared from client
+    try {
+      localStorage.removeItem(this.CACHE_KEY);
+    } catch (error) {
+      // Silently fail if localStorage is unavailable
+      console.warn('Failed to clear cache:', error);
+    }
   }
   
 }
@@ -142,29 +245,54 @@ import { useState, useEffect } from 'react';
 import { defaultAppData } from './default-data';
 
 export function useUnifiedData() {
-  // Always start with default data (no browser cache to check)
+  // Check for cached data first, then fall back to default data
   const [data, setData] = useState<UnifiedData | null>(() => {
-    // Always use default data first - API data will load in background
+    // Check if we have valid cached data
+    const cachedData = unifiedDataService.getCachedData();
+    if (cachedData) {
+      // Use cached data directly
+      return cachedData;
+    }
+    // No valid cache, use default data
     return defaultAppData as UnifiedData;
   });
   
-  // Always start as loading (we need to fetch from API)
-  const [isLoading, setIsLoading] = useState(true);
+  // Start as loading only if no cached data exists
+  const [isLoading, setIsLoading] = useState(() => {
+    const cachedData = unifiedDataService.getCachedData();
+    return !cachedData; // Only loading if no cached data
+  });
   const [error, setError] = useState<string | null>(null);
-  const [isConnected, setIsConnected] = useState(false); // Start as disconnected, will update after API call
+  const [isConnected, setIsConnected] = useState(() => {
+    const cachedData = unifiedDataService.getCachedData();
+    return !!cachedData; // Connected if we have cached data
+  });
   
-  // Initial data fetching effect - always fetch (Cloudflare handles caching)
+  // Initial data fetching effect - only fetch if no valid cached data
   useEffect(() => {
     let mounted = true;
     
     const fetchData = async () => {
+      // Check if we already have valid cached data
+      const cachedData = unifiedDataService.getCachedData();
+      if (cachedData) {
+        // We have valid cached data, no need to fetch from API
+        if (mounted) {
+          setData(cachedData);
+          setIsLoading(false);
+          setError(null);
+          setIsConnected(true);
+        }
+        return;
+      }
+      
       try {
-        // Always fetch from API - Cloudflare will serve cached data if available
+        // No valid cache, fetch from API (which will also cache the result)
         const result = await unifiedDataService.getData();
         
         if (mounted) {
           if (result.data) {
-            // Successfully got API data (cached or fresh), replace default data
+            // Successfully got API data, replace default data
             setData(result.data);
             setIsConnected(result.isConnected);
           }
@@ -183,7 +311,7 @@ export function useUnifiedData() {
       }
     };
     
-    // Always fetch on component mount
+    // Fetch only if needed (no valid cache)
     fetchData();
     
     return () => {

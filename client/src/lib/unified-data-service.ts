@@ -83,15 +83,9 @@ class UnifiedDataService {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          // Important: Backend must send these headers for proper Cloudflare caching:
-          // - Cache-Control: public, max-age=300, s-maxage=300 (5 minutes)
-          // - Cloudflare-Cache-TTL: 300 (optional, Cloudflare-specific)
-          // These headers ensure Cloudflare caches API responses for all users
         },
-        // Prevent browser caching - let Cloudflare CDN handle all caching
-        cache: 'no-store',
         // Add timeout to prevent hanging
-        signal: AbortSignal.timeout(10000) // 10 second timeout
+        signal: AbortSignal.timeout(15000) // 15 second timeout
       });
       
       if (!response.ok) {

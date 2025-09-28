@@ -15,7 +15,7 @@ import {
   Sparkles,
   Crown
 } from "lucide-react";
-import { initializeAnimations, checkReducedMotion } from "@/lib/meta-utils";
+import { initializeAnimations, checkReducedMotion, updateOGTagSafe, updateTwitterTagSafe, updateMetaTagSafe } from "@/lib/meta-utils";
 
 export function VerificationPortal() {
   const [animationsInitialized, setAnimationsInitialized] = useState(false);
@@ -32,58 +32,29 @@ export function VerificationPortal() {
   useEffect(() => {
     const title = "Verification Portal | Dreamer's Land";
     const description = "Official verification portal for Dreamer's Land Discord server. Verify your YouTube subscription to unlock exclusive roles and access.";
-    const imageUrl = data?.guild?.iconUrl || "";
+    const fallbackImage = "/cdn/assets/og-image.jpg";
+    const imageUrl = data?.guild?.iconUrl || ''; // Ensure string type for meta functions
     const currentUrl = window.location.href;
     
     // Update page title
     document.title = title;
     
-    // Update meta description
-    const descriptionMeta = document.querySelector('meta[name="description"]');
-    if (descriptionMeta) {
-      (descriptionMeta as HTMLMetaElement).content = description;
-    } else {
-      const meta = document.createElement('meta');
-      meta.name = "description";
-      meta.content = description;
-      document.head.appendChild(meta);
-    }
+    // Update meta description safely
+    updateMetaTagSafe('description', description);
     
-    // Update or create OpenGraph tags
-    const updateOGTag = (property: string, content: string) => {
-      let tag = document.querySelector(`meta[property="${property}"]`);
-      if (!tag) {
-        tag = document.createElement('meta');
-        (tag as HTMLMetaElement).setAttribute('property', property);
-        document.head.appendChild(tag);
-      }
-      (tag as HTMLMetaElement).content = content;
-    };
+    // OpenGraph tags - use safe functions with fallbacks
+    updateOGTagSafe('og:title', title);
+    updateOGTagSafe('og:description', description);
+    updateOGTagSafe('og:image', imageUrl, fallbackImage); // Use fallback when imageUrl is empty
+    updateOGTagSafe('og:url', currentUrl);
+    updateOGTagSafe('og:type', 'website');
+    updateOGTagSafe('og:site_name', data?.guild?.name || "Dreamer's Land");
     
-    // Update or create Twitter Card tags
-    const updateTwitterTag = (name: string, content: string) => {
-      let tag = document.querySelector(`meta[name="${name}"]`);
-      if (!tag) {
-        tag = document.createElement('meta');
-        (tag as HTMLMetaElement).setAttribute('name', name);
-        document.head.appendChild(tag);
-      }
-      (tag as HTMLMetaElement).content = content;
-    };
-    
-    // OpenGraph tags
-    updateOGTag('og:title', title);
-    updateOGTag('og:description', description);
-    updateOGTag('og:image', imageUrl);
-    updateOGTag('og:url', currentUrl);
-    updateOGTag('og:type', 'website');
-    updateOGTag('og:site_name', data?.guild?.name || "Dreamer's Land");
-    
-    // Twitter Card tags
-    updateTwitterTag('twitter:card', 'summary_large_image');
-    updateTwitterTag('twitter:title', title);
-    updateTwitterTag('twitter:description', description);
-    updateTwitterTag('twitter:image', imageUrl);
+    // Twitter Card tags - use safe functions with fallbacks
+    updateTwitterTagSafe('twitter:card', 'summary_large_image');
+    updateTwitterTagSafe('twitter:title', title);
+    updateTwitterTagSafe('twitter:description', description);
+    updateTwitterTagSafe('twitter:image', imageUrl, fallbackImage); // Use fallback when imageUrl is empty
   }, [data]);
   
   // Initialize animations immediately

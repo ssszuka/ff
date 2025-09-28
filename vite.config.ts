@@ -17,15 +17,10 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        main: path.resolve(import.meta.dirname, "client", "pages", "index.html"),
+        index: path.resolve(import.meta.dirname, "client", "pages", "index.html"),
         portal: path.resolve(import.meta.dirname, "client", "pages", "portal.html"),
         "not-found": path.resolve(import.meta.dirname, "client", "pages", "not-found.html"),
       },
-      output: {
-        entryFileNames: 'assets/[name]-[hash].js',
-        chunkFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]'
-      }
     },
   },
   server: {

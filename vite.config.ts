@@ -18,7 +18,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: path.resolve(import.meta.dirname, "client", "pages", "index.html"),
-        portal: path.resolve(import.meta.dirname, "client", "pages", "portal.html"),
+        "portal/index": path.resolve(import.meta.dirname, "client", "pages", "portal", "index.html"),
         "not-found": path.resolve(import.meta.dirname, "client", "pages", "not-found.html"),
       },
     },

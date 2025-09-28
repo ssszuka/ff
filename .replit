@@ -24,7 +24,7 @@ outputType = "webview"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd client && npm run dev -- --host 0.0.0.0 --port 5000"
+args = "pnpm run dev -- --host 0.0.0.0 --port 5000"
 waitForPort = 5000
 
 [[workflows.workflow]]
@@ -59,16 +59,16 @@ localPort = 5000
 externalPort = 80
 
 [[ports]]
-localPort = 5001
-externalPort = 6800
-
-[[ports]]
 localPort = 5002
 externalPort = 3003
 
 [[ports]]
 localPort = 33361
 externalPort = 6000
+
+[[ports]]
+localPort = 35451
+externalPort = 6800
 
 [[ports]]
 localPort = 37151

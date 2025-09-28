@@ -1,3 +1,16 @@
-# Cloudflare Pages SPA routing
-# Handle client-side routing by redirecting all non-asset requests to not-found.html
-/* /not-found.html 200
+
+# Cloudflare Pages MPA routing
+# Serve specific HTML files for each route
+
+# Homepage
+/ /index.html 200
+
+# Portal page
+/portal /portal/index.html 200
+
+# 404 page for not found routes
+/not-found /not-found.html 200
+/404 /not-found.html 200
+
+# Catch-all for undefined routes - redirect to 404 page
+/* /not-found.html 404

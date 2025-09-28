@@ -15,9 +15,7 @@ function moveFile(src, dest) {
     
     // Move the file
     fs.renameSync(src, dest);
-    console.log(`Moved: ${path.relative(distDir, src)} → ${path.relative(distDir, dest)}`);
   } catch (error) {
-    console.error(`Error moving ${src} to ${dest}:`, error.message);
   }
 }
 
@@ -28,19 +26,14 @@ function removeEmptyDir(dir) {
       const files = fs.readdirSync(dir);
       if (files.length === 0) {
         fs.rmdirSync(dir);
-        console.log(`Removed empty directory: ${path.relative(distDir, dir)}`);
       }
     }
   } catch (error) {
-    console.error(`Error removing directory ${dir}:`, error.message);
   }
 }
 
-console.log('🔧 Post-build: Restructuring HTML output files...');
-
 // Check if pages directory exists
 if (!fs.existsSync(pagesDir)) {
-  console.log('❌ Pages directory not found. Build may have failed.');
   process.exit(1);
 }
 
@@ -68,9 +61,3 @@ if (fs.existsSync(sourcePortal)) {
 // Clean up empty directories
 removeEmptyDir(path.join(pagesDir, 'portal')); // Remove pages/portal if empty
 removeEmptyDir(pagesDir); // Remove pages if empty
-
-console.log('✅ Post-build: HTML file restructuring completed!');
-console.log('📁 Final structure:');
-console.log('   /dist/index.html');
-console.log('   /dist/portal/index.html');
-console.log('   /dist/not-found.html');

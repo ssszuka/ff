@@ -104,7 +104,6 @@ class UnifiedDataService {
       localStorage.setItem(this.CACHE_KEY, JSON.stringify(cacheItem));
     } catch (error) {
       // If localStorage is full or unavailable, silently fail
-      console.warn('Failed to cache data:', error);
     }
   }
   
@@ -231,7 +230,6 @@ class UnifiedDataService {
       localStorage.removeItem(this.CACHE_KEY);
     } catch (error) {
       // Silently fail if localStorage is unavailable
-      console.warn('Failed to clear cache:', error);
     }
   }
   

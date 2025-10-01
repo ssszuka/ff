@@ -17,9 +17,9 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        main: path.resolve(import.meta.dirname, 'client/index.html'),
-        portal: path.resolve(import.meta.dirname, 'client/portal.html'),
-        notfound: path.resolve(import.meta.dirname, 'client/404.html')
+        main: path.resolve(import.meta.dirname, 'client/pages/index.html'),
+        portal: path.resolve(import.meta.dirname, 'client/pages/portal.html'),
+        notfound: path.resolve(import.meta.dirname, 'client/pages/404.html')
       },
       output: {
         manualChunks: (id) => {

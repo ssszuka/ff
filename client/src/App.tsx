@@ -1,6 +1,5 @@
 import { lazy, Suspense } from "react";
 import { Route, Switch } from "wouter";
-import { RouteLoading } from "@/components/route-loading";
 
 const Homepage = lazy(() => import("@/pages/homepage").then(module => ({ default: module.Homepage })));
 const VerificationPortal = lazy(() => import("@/pages/verification-portal").then(module => ({ default: module.VerificationPortal })));
@@ -8,7 +7,7 @@ const NotFound = lazy(() => import("@/pages/not-found"));
 
 function App() {
   return (
-    <Suspense fallback={<RouteLoading />}>
+    <Suspense fallback={null}>
       <Switch>
         {/* Homepage */}
         <Route path="/" component={Homepage} />

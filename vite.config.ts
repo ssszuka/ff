@@ -15,6 +15,27 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'vendor';
+            }
+            if (id.includes('wouter')) {
+              return 'vendor';
+            }
+            if (id.includes('@radix-ui') || id.includes('lucide-react')) {
+              return 'ui';
+            }
+            if (id.includes('framer-motion') || id.includes('@tanstack')) {
+              return 'utils';
+            }
+            return 'vendor';
+          }
+        },
+      },
+    },
   },
   server: {
     host: "0.0.0.0",

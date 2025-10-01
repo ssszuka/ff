@@ -1,6 +1,6 @@
 # Overview
 
-Janvi Dreamer is a personal portfolio website for a gaming content creator and YouTuber from Madhya Pradesh, India. The site serves as a professional showcase featuring an interactive homepage with personal information, social media links, and a Discord verification portal. Built with React and modern web technologies using route-based code splitting for optimal multi-page performance, it emphasizes visual appeal with animations, dark/light theme support, and responsive design.
+Janvi Dreamer is a personal portfolio website for a gaming content creator and YouTuber from Madhya Pradesh, India. The site serves as a professional showcase featuring an interactive homepage with personal information, social media links, and a Discord verification portal. Built as a Multi-Page Application (MPA) with React and Vite, each page has its own HTML file and loads only the scripts and styles it needs for optimal performance and SEO.
 
 # User Preferences
 
@@ -19,11 +19,12 @@ Never use `npm install` or `npm` commands for this project.
 # System Architecture
 
 ## Frontend Architecture
+- **Architecture Type**: Multi-Page Application (MPA) with separate HTML files per route
 - **Framework**: React 18 with TypeScript for type safety and modern development
-- **Routing**: Wouter for lightweight client-side routing with React.lazy() for route-based code splitting
-- **Build System**: Vite for fast development and optimized production builds with manual chunk splitting
+- **Routing**: Native navigation with anchor tags (no client-side routing)
+- **Build System**: Vite multi-page build configuration with manual chunk splitting
 - **State Management**: TanStack Query for server state and caching with React hooks for local state
-- **Code Splitting**: Route-based lazy loading ensures each page loads independently with its own chunk
+- **Entry Points**: Separate entry files for each page (home.tsx, portal.tsx, notfound.tsx)
 
 ## UI and Styling
 - **Design System**: Shadcn/ui components built on Radix UI primitives
@@ -47,11 +48,13 @@ Never use `npm install` or `npm` commands for this project.
 - **Instant Loading**: Default data displays immediately with smooth transitions when API data loads
 
 ## Performance Optimizations
-- **Route-Based Code Splitting**: React.lazy() with Suspense for independent page loading
-- **Manual Chunk Splitting**: Vendor libraries (290kB), route-specific chunks (homepage 16kB, portal 16kB, not-found 3kB)
-- **Lazy Loading**: Each route loads only its required code and data on-demand
+- **Multi-Page Architecture**: Each page has its own HTML file and loads only required scripts
+- **Page-Specific Scripts**: Homepage loads AOS/GSAP animations; Portal and 404 pages don't (lighter bundles)
+- **Manual Chunk Splitting**: Vendor libraries (289kB), page-specific chunks (home 16.9kB, portal 15.8kB, 404 2.8kB)
+- **Separate Entry Points**: Each page has its own entry file that loads only needed components
+- **SEO Optimized**: Each page has unique metadata, Open Graph tags, and JSON-LD structured data
 - **Image Optimization**: WebP support with fallbacks
-- **Animation Performance**: Reduced motion support and mobile-optimized animations
+- **Animation Performance**: Animations only on homepage; reduced motion support
 - **Caching Strategy**: Service worker ready with static asset caching
 - **Zero Loading Time**: Instant content display using centralized default data system
 

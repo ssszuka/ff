@@ -16,13 +16,15 @@ export default defineConfig({
     outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
     rollupOptions: {
+      input: {
+        main: path.resolve(import.meta.dirname, 'client/index.html'),
+        portal: path.resolve(import.meta.dirname, 'client/portal.html'),
+        notfound: path.resolve(import.meta.dirname, 'client/404.html')
+      },
       output: {
         manualChunks: (id) => {
           if (id.includes('node_modules')) {
             if (id.includes('react') || id.includes('react-dom')) {
-              return 'vendor';
-            }
-            if (id.includes('wouter')) {
               return 'vendor';
             }
             if (id.includes('@radix-ui') || id.includes('lucide-react')) {

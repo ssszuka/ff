@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { Link } from "wouter";
+import { useEffect } from "react";
 import { useUnifiedData } from "@/lib/unified-data-service";
 import { defaultGuildData, defaultYoutubeData } from "@/lib/default-data";
 import { Button } from "@/components/ui/button";
@@ -16,10 +15,8 @@ import {
   Sparkles,
   Crown
 } from "lucide-react";
-import { initializeAnimations, checkReducedMotion } from "@/lib/meta-utils";
 
 export function VerificationPortal() {
-  const [animationsInitialized, setAnimationsInitialized] = useState(false);
   
   const {
     data,
@@ -86,18 +83,6 @@ export function VerificationPortal() {
     updateTwitterTag('twitter:description', description);
     updateTwitterTag('twitter:image', imageUrl);
   }, [data]);
-  
-  // Initialize animations immediately
-  useEffect(() => {
-    if (!animationsInitialized && !checkReducedMotion()) {
-      const timer = setTimeout(() => {
-        initializeAnimations();
-        setAnimationsInitialized(true);
-      }, 100);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [animationsInitialized]);
   
   // Error state for failed data loading
   if (error && !data) {
@@ -238,7 +223,7 @@ export function VerificationPortal() {
                     Join Discord
                   </Button>
                   
-                  <Link href="/" className="block">
+                  <a href="/" className="block">
                     <Button 
                       variant="outline" 
                       className="w-full sm:min-w-[200px] border-2 border-gray-600 text-gray-300 hover:text-white hover:border-blue-500 hover:bg-blue-500/10 font-semibold py-4 px-8 rounded-2xl transition-all duration-200 hover:shadow-lg text-base md:text-lg"
@@ -247,20 +232,20 @@ export function VerificationPortal() {
                       <Home className="w-5 h-5 mr-3" />
                       Go to Homepage
                     </Button>
-                  </Link>
+                  </a>
                 </div>
                 
                 {/* Links */}
                 <div className="mt-8 pt-6 border-t border-white/10">
                   <div className="flex flex-wrap justify-center gap-6 text-sm">
-                    <Link href="/guide" className="text-dark-400 hover:text-white transition-colors inline-flex items-center cursor-help" data-testid="link-guide">
+                    <a href="/guide" className="text-dark-400 hover:text-white transition-colors inline-flex items-center cursor-help" data-testid="link-guide">
                       <BookOpen className="w-4 h-4 mr-2" />
                       Verification Guide
-                    </Link>
-                    <Link href="/privacy-policy" className="text-dark-400 hover:text-white transition-colors inline-flex items-center" data-testid="link-privacy">
+                    </a>
+                    <a href="/privacy-policy" className="text-dark-400 hover:text-white transition-colors inline-flex items-center" data-testid="link-privacy">
                       <Shield className="w-4 h-4 mr-2" />
                       Privacy Policy
-                    </Link>
+                    </a>
                   </div>
                 </div>
               </CardContent>
@@ -275,26 +260,26 @@ export function VerificationPortal() {
                 </div>
                 <p className="text-dark-300 mb-4">
                   Visit the{' '}
-                  <Link href="/guide" className="text-neon-emerald font-semibold hover:text-neon-emerald/80 hover:underline transition cursor-help" data-testid="link-guide-inline">
+                  <a href="/guide" className="text-neon-emerald font-semibold hover:text-neon-emerald/80 hover:underline transition cursor-help" data-testid="link-guide-inline">
                     Verification Guide
-                  </Link>
+                  </a>
                   {' '}if you need help.
                   <br />
                   Contact our Moderators on Dreamer's Land Discord Server for assistance.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <Link href="/guide">
+                  <a href="/guide">
                     <Button variant="outline" className="border-dark-600 text-dark-300 hover:text-white cursor-help" data-testid="button-how-to-verify">
                       <BookOpen className="w-4 h-4 mr-2" />
                       How to Verify
                     </Button>
-                  </Link>
-                  <Link href="/">
+                  </a>
+                  <a href="/">
                     <Button variant="ghost" className="text-dark-300 hover:text-white" data-testid="button-visit-main">
                       <Home className="w-4 h-4 mr-2" />
                       Visit Homepage
                     </Button>
-                  </Link>
+                  </a>
                 </div>
               </CardContent>
             </Card>
@@ -392,15 +377,15 @@ export function VerificationPortal() {
                 </span>
               </div>
               <div className="flex space-x-6 text-sm">
-                <Link href="/" className="text-dark-400 hover:text-white transition-colors" data-testid="link-footer-home">
+                <a href="/" className="text-dark-400 hover:text-white transition-colors" data-testid="link-footer-home">
                   Homepage
-                </Link>
-                <Link href="/guide" className="text-dark-400 hover:text-white transition-colors cursor-help" data-testid="link-footer-guide">
+                </a>
+                <a href="/guide" className="text-dark-400 hover:text-white transition-colors cursor-help" data-testid="link-footer-guide">
                   Guide
-                </Link>
-                <Link href="/privacy-policy" className="text-dark-400 hover:text-white transition-colors cursor-help" data-testid="link-footer-privacy">
+                </a>
+                <a href="/privacy-policy" className="text-dark-400 hover:text-white transition-colors cursor-help" data-testid="link-footer-privacy">
                   Privacy
-                </Link>
+                </a>
               </div>
             </div>
           </div>

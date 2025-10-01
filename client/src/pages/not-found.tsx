@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";  
-import { Link } from "wouter";  
 import { FileWarning } from "lucide-react";  
 import { useEffect, useState } from "react";  
 
@@ -101,7 +100,7 @@ export default function NotFoundPage() {
         </p>  
 
         {/* Return button */}  
-        <Link href="/">  
+        <a href="/">  
           <motion.button  
             whileHover={{  
               scale: 1.08,  
@@ -117,7 +116,7 @@ export default function NotFoundPage() {
           >  
             Return Home  
           </motion.button>  
-        </Link>  
+        </a>  
       </motion.div>  
     </div>  
   );  

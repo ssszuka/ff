@@ -15,13 +15,6 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
-    rollupOptions: {
-      input: {
-        index: path.resolve(import.meta.dirname, "client", "pages", "index.html"),
-        "portal/index": path.resolve(import.meta.dirname, "client", "pages", "portal", "index.html"),
-        "not-found": path.resolve(import.meta.dirname, "client", "pages", "not-found.html"),
-      },
-    },
   },
   server: {
     host: "0.0.0.0",

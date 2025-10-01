@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useLocation } from "wouter";
 import type { UnifiedData } from "@/lib/unified-data-service";
 import type { HomeSocialsData } from "@/lib/home-data";
 import { defaultOwnerData, defaultHeroData } from "@/lib/default-data";
@@ -11,6 +12,7 @@ interface HeroSectionProps {
 
 export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
   const avatarRef = useRef<HTMLImageElement>(null);
+  const [, setLocation] = useLocation();
 
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
@@ -23,7 +25,7 @@ export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
   };
 
   const navigateToPortal = () => {
-    window.location.href = '/portal';
+    setLocation('/portal');
   };
 
   useEffect(() => {

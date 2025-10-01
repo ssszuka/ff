@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "wouter";
 import { useUnifiedData } from "@/lib/unified-data-service";
 import { defaultGuildData, defaultYoutubeData } from "@/lib/default-data";
 import { Button } from "@/components/ui/button";
@@ -15,7 +16,7 @@ import {
   Sparkles,
   Crown
 } from "lucide-react";
-import { initializeAnimations, checkReducedMotion, updateOGTagSafe, updateTwitterTagSafe, updateMetaTagSafe } from "@/lib/meta-utils";
+import { initializeAnimations, checkReducedMotion } from "@/lib/meta-utils";
 
 export function VerificationPortal() {
   const [animationsInitialized, setAnimationsInitialized] = useState(false);
@@ -32,29 +33,58 @@ export function VerificationPortal() {
   useEffect(() => {
     const title = "Verification Portal | Dreamer's Land";
     const description = "Official verification portal for Dreamer's Land Discord server. Verify your YouTube subscription to unlock exclusive roles and access.";
-    const fallbackImage = "/cdn/assets/og-image.jpg";
-    const imageUrl = data?.guild?.iconUrl || ''; // Ensure string type for meta functions
+    const imageUrl = data?.guild?.iconUrl || "";
     const currentUrl = window.location.href;
     
     // Update page title
     document.title = title;
     
-    // Update meta description safely
-    updateMetaTagSafe('description', description);
+    // Update meta description
+    const descriptionMeta = document.querySelector('meta[name="description"]');
+    if (descriptionMeta) {
+      (descriptionMeta as HTMLMetaElement).content = description;
+    } else {
+      const meta = document.createElement('meta');
+      meta.name = "description";
+      meta.content = description;
+      document.head.appendChild(meta);
+    }
     
-    // OpenGraph tags - use safe functions with fallbacks
-    updateOGTagSafe('og:title', title);
-    updateOGTagSafe('og:description', description);
-    updateOGTagSafe('og:image', imageUrl, fallbackImage); // Use fallback when imageUrl is empty
-    updateOGTagSafe('og:url', currentUrl);
-    updateOGTagSafe('og:type', 'website');
-    updateOGTagSafe('og:site_name', data?.guild?.name || "Dreamer's Land");
+    // Update or create OpenGraph tags
+    const updateOGTag = (property: string, content: string) => {
+      let tag = document.querySelector(`meta[property="${property}"]`);
+      if (!tag) {
+        tag = document.createElement('meta');
+        (tag as HTMLMetaElement).setAttribute('property', property);
+        document.head.appendChild(tag);
+      }
+      (tag as HTMLMetaElement).content = content;
+    };
     
-    // Twitter Card tags - use safe functions with fallbacks
-    updateTwitterTagSafe('twitter:card', 'summary_large_image');
-    updateTwitterTagSafe('twitter:title', title);
-    updateTwitterTagSafe('twitter:description', description);
-    updateTwitterTagSafe('twitter:image', imageUrl, fallbackImage); // Use fallback when imageUrl is empty
+    // Update or create Twitter Card tags
+    const updateTwitterTag = (name: string, content: string) => {
+      let tag = document.querySelector(`meta[name="${name}"]`);
+      if (!tag) {
+        tag = document.createElement('meta');
+        (tag as HTMLMetaElement).setAttribute('name', name);
+        document.head.appendChild(tag);
+      }
+      (tag as HTMLMetaElement).content = content;
+    };
+    
+    // OpenGraph tags
+    updateOGTag('og:title', title);
+    updateOGTag('og:description', description);
+    updateOGTag('og:image', imageUrl);
+    updateOGTag('og:url', currentUrl);
+    updateOGTag('og:type', 'website');
+    updateOGTag('og:site_name', data?.guild?.name || "Dreamer's Land");
+    
+    // Twitter Card tags
+    updateTwitterTag('twitter:card', 'summary_large_image');
+    updateTwitterTag('twitter:title', title);
+    updateTwitterTag('twitter:description', description);
+    updateTwitterTag('twitter:image', imageUrl);
   }, [data]);
   
   // Initialize animations immediately
@@ -208,7 +238,7 @@ export function VerificationPortal() {
                     Join Discord
                   </Button>
                   
-                  <a href="/" className="block">
+                  <Link href="/" className="block">
                     <Button 
                       variant="outline" 
                       className="w-full sm:min-w-[200px] border-2 border-gray-600 text-gray-300 hover:text-white hover:border-blue-500 hover:bg-blue-500/10 font-semibold py-4 px-8 rounded-2xl transition-all duration-200 hover:shadow-lg text-base md:text-lg"
@@ -217,20 +247,20 @@ export function VerificationPortal() {
                       <Home className="w-5 h-5 mr-3" />
                       Go to Homepage
                     </Button>
-                  </a>
+                  </Link>
                 </div>
                 
                 {/* Links */}
                 <div className="mt-8 pt-6 border-t border-white/10">
                   <div className="flex flex-wrap justify-center gap-6 text-sm">
-                    <a href="/guide" className="text-dark-400 hover:text-white transition-colors inline-flex items-center cursor-help" data-testid="link-guide">
+                    <Link href="/guide" className="text-dark-400 hover:text-white transition-colors inline-flex items-center cursor-help" data-testid="link-guide">
                       <BookOpen className="w-4 h-4 mr-2" />
                       Verification Guide
-                    </a>
-                    <a href="/privacy-policy" className="text-dark-400 hover:text-white transition-colors inline-flex items-center" data-testid="link-privacy">
+                    </Link>
+                    <Link href="/privacy-policy" className="text-dark-400 hover:text-white transition-colors inline-flex items-center" data-testid="link-privacy">
                       <Shield className="w-4 h-4 mr-2" />
                       Privacy Policy
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </CardContent>
@@ -245,26 +275,26 @@ export function VerificationPortal() {
                 </div>
                 <p className="text-dark-300 mb-4">
                   Visit the{' '}
-                  <a href="/guide" className="text-neon-emerald font-semibold hover:text-neon-emerald/80 hover:underline transition cursor-help" data-testid="link-guide-inline">
+                  <Link href="/guide" className="text-neon-emerald font-semibold hover:text-neon-emerald/80 hover:underline transition cursor-help" data-testid="link-guide-inline">
                     Verification Guide
-                  </a>
+                  </Link>
                   {' '}if you need help.
                   <br />
                   Contact our Moderators on Dreamer's Land Discord Server for assistance.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <a href="/guide">
+                  <Link href="/guide">
                     <Button variant="outline" className="border-dark-600 text-dark-300 hover:text-white cursor-help" data-testid="button-how-to-verify">
                       <BookOpen className="w-4 h-4 mr-2" />
                       How to Verify
                     </Button>
-                  </a>
-                  <a href="/">
+                  </Link>
+                  <Link href="/">
                     <Button variant="ghost" className="text-dark-300 hover:text-white" data-testid="button-visit-main">
                       <Home className="w-4 h-4 mr-2" />
                       Visit Homepage
                     </Button>
-                  </a>
+                  </Link>
                 </div>
               </CardContent>
             </Card>
@@ -362,15 +392,15 @@ export function VerificationPortal() {
                 </span>
               </div>
               <div className="flex space-x-6 text-sm">
-                <a href="/" className="text-dark-400 hover:text-white transition-colors" data-testid="link-footer-home">
+                <Link href="/" className="text-dark-400 hover:text-white transition-colors" data-testid="link-footer-home">
                   Homepage
-                </a>
-                <a href="/guide" className="text-dark-400 hover:text-white transition-colors cursor-help" data-testid="link-footer-guide">
+                </Link>
+                <Link href="/guide" className="text-dark-400 hover:text-white transition-colors cursor-help" data-testid="link-footer-guide">
                   Guide
-                </a>
-                <a href="/privacy-policy" className="text-dark-400 hover:text-white transition-colors cursor-help" data-testid="link-footer-privacy">
+                </Link>
+                <Link href="/privacy-policy" className="text-dark-400 hover:text-white transition-colors cursor-help" data-testid="link-footer-privacy">
                   Privacy
-                </a>
+                </Link>
               </div>
             </div>
           </div>

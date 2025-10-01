@@ -1,7 +1,3 @@
-
-# Multi-Page Application routing
-/            /index.html   200
-/portal      /portal.html  200
-
-# Catch-all rule for 404 - works on Netlify, Cloudflare Pages, etc.
-/*           /404.html     404
+# Cloudflare Pages SPA routing
+# Handle client-side routing by redirecting all non-asset requests to index.html
+/* /index.html 200

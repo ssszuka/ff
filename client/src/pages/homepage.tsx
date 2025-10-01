@@ -1,14 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { HeroSection } from "@/components/hero-section";
 import { AboutSection } from "@/components/about-section";
 import { SocialSection } from "@/components/social-section";
 import { Footer } from "@/components/footer";
 import { useUnifiedData } from "@/lib/unified-data-service";
 import { homeData } from "@/lib/home-data";
-import { updateMetaTags } from "@/lib/meta-utils";
+import { updateMetaTags, initializeAnimations, checkReducedMotion } from "@/lib/meta-utils";
 import { appConfig } from "@/lib/config";
 
 export function Homepage() {
+  const [animationsInitialized, setAnimationsInitialized] = useState(false);
   
   const {
     data,
@@ -33,6 +34,19 @@ export function Homepage() {
       updateMetaTags(homepageData);
     }
   }, [data, isLoading]);
+  
+  // Initialize animations immediately
+  useEffect(() => {
+    if (!animationsInitialized && !checkReducedMotion()) {
+      const timer = setTimeout(() => {
+        initializeAnimations();
+        setAnimationsInitialized(true);
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [animationsInitialized]);
+  
   
   return (
     <>

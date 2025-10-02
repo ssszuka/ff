@@ -1,3 +1,7 @@
-# Cloudflare Pages SPA routing
-# Handle client-side routing by redirecting all non-asset requests to index.html
-/* /index.html 200
+# Cloudflare Pages routing
+# Serve specific pages
+/portal /portal/index.html 200
+/ /index.html 200
+
+# 404 fallback - all other routes
+/* /404.html 404

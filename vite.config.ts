@@ -23,9 +23,6 @@ export default defineConfig({
             if (id.includes('react') || id.includes('react-dom')) {
               return 'vendor';
             }
-            if (id.includes('wouter')) {
-              return 'vendor';
-            }
             if (id.includes('@radix-ui') || id.includes('lucide-react')) {
               return 'ui';
             }

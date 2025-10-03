@@ -1,4 +1,3 @@
-@import './fonts.css';
 @import './cursor.css';
 @tailwind base;
 @tailwind components;
@@ -39,10 +38,9 @@
     --sidebar-border: hsl(217, 32%, 17%);
     --sidebar-ring: hsl(262, 83%, 58%);
     --radius: 0.5rem;
-    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-    --font-serif: 'Playfair Display', Georgia, serif;
-    --font-mono: 'Inter', ui-monospace, monospace;
-    --font-dancing: 'Dancing Script', cursive;
+    --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    --font-dancing: 'Dancing Script', cursive, ui-serif;
     
     /* Custom colors for Janvi Dreamer theme */
     --dark-50: hsl(210, 40%, 98%);

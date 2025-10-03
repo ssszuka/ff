@@ -1,5 +1,4 @@
 import type { UnifiedData } from "@/lib/unified-data-service";
-import { defaultOwnerData } from "@/lib/default-data";
 
 interface AboutSectionProps {
   data: UnifiedData | null;
@@ -9,8 +8,7 @@ interface AboutSectionProps {
 export function AboutSection({ data, isLoading }: AboutSectionProps) {
   const owner = data?.owner;
   
-  // Use API data when available, otherwise show default data
-  const aboutText = owner?.about || defaultOwnerData.about;
+  const aboutText = "Janvi Dreamer, whose real name is Janvi Gautam, from Madhya Pradesh, India. Born on 23rd February, she is a passionate creator who began her YouTube journey in 2022. Beyond content creation, Janvi finds joy in reading, writing, and playing video games, which fuel her creativity and imagination. She is also an avid traveller, always eager and enthusiastic to explore new places and experiences.";
   
   const badges = [
     {
@@ -61,8 +59,8 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
           <div className="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
             <div data-aos="zoom-in-right" data-aos-delay="100" className="h-full">
               <div className="bg-dark-800/50 p-6 md:p-8 rounded-2xl social-card h-full flex flex-col justify-center">
-                <p className="text-base md:text-lg leading-relaxed text-dark-200 mb-4 md:mb-6 font-dancing" data-testid="text-about-description">
-                  {aboutText}
+                <p className="text-base md:text-lg leading-relaxed text-dark-200 mb-4 md:mb-6 font-display" data-testid="text-about-description">
+                  {isLoading ? aboutText : (owner?.about || aboutText)}
                 </p>
                 
                 <div className="flex items-center text-dark-400 text-sm md:text-base" data-testid="text-about-location">

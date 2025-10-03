@@ -36,7 +36,7 @@
     <!-- Text "JANVI" -->
     <text 
       font-family="robot"
-      font-size="3.2"
+      font-size="3"
       font-weight="700"
       fill="#00FFFF"
       pointer-events="none"

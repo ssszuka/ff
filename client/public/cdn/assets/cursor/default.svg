@@ -37,7 +37,7 @@
     <!-- Bent Text -->
     <text 
       font-family="robot"
-      font-size="3.4"
+      font-size="3"
       font-weight="700"
       fill="#00FFFF"
       text-anchor="middle"

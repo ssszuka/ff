@@ -20,7 +20,7 @@ export default function NotFoundPage() {
   }, []);  
 
   return (  
-    <div className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-neutral-950 text-neutral-100">  
+    <div className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-neutral-950 text-neutral-100" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>  
       {/* Animated background gradient */}  
       <motion.div  
         initial={{ opacity: 0 }}  

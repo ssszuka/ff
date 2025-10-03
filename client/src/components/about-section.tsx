@@ -8,8 +8,6 @@ interface AboutSectionProps {
 export function AboutSection({ data, isLoading }: AboutSectionProps) {
   const owner = data?.owner;
   
-  const aboutText = "Janvi Dreamer, whose real name is Janvi Gautam, from Madhya Pradesh, India. Born on 23rd February, she is a passionate creator who began her YouTube journey in 2022. Beyond content creation, Janvi finds joy in reading, writing, and playing video games, which fuel her creativity and imagination. She is also an avid traveller, always eager and enthusiastic to explore new places and experiences.";
-  
   const badges = [
     {
       icon: "fab fa-youtube",
@@ -60,7 +58,7 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
             <div data-aos="zoom-in-right" data-aos-delay="100" className="h-full">
               <div className="bg-dark-800/50 p-6 md:p-8 rounded-2xl social-card h-full flex flex-col justify-center">
                 <p className="text-base md:text-lg leading-relaxed text-dark-200 mb-4 md:mb-6 font-dancing" data-testid="text-about-description">
-                  {isLoading ? aboutText : (owner?.about || aboutText)}
+                  {isLoading ? aboutText : (owner?.about)}
                 </p>
                 
                 <div className="flex items-center text-dark-400 text-sm md:text-base" data-testid="text-about-location">

@@ -38,9 +38,9 @@
     --sidebar-border: hsl(217, 32%, 17%);
     --sidebar-ring: hsl(262, 83%, 58%);
     --radius: 0.5rem;
-    --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
-    --font-dancing: 'Dancing Script', cursive, ui-serif;
+    --font-primary: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-2nd: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    --font-3rd: 'Raleway', 'Helvetica Neue', Arial, sans-serif;
     
     /* Custom colors for Janvi Dreamer theme */
     --dark-50: hsl(210, 40%, 98%);

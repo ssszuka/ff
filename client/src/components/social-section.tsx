@@ -60,7 +60,7 @@ export function SocialSection({ data, homeData, isLoading }: SocialSectionProps)
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 md:mb-16" data-aos="zoom-in-up">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4 md:mb-6 text-white" data-testid="text-social-title">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-2nd font-bold mb-4 md:mb-6 text-white" data-testid="text-social-title">
               Connect & Follow
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-dark-300 max-w-2xl mx-auto px-4" data-testid="text-social-subtitle">

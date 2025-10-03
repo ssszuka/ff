@@ -83,10 +83,12 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["var(--font-sans)"],
-        serif: ["var(--font-serif)"],
-        dancing: ["var(--font-dancing)"],
-        display: ["var(--font-serif)"],
+        primary: ["var(--font-primary)"],
+        "2nd": ["var(--font-2nd)"],
+        "3rd": ["var(--font-3rd)"],
+        sans: ["var(--font-primary)"],
+        serif: ["var(--font-2nd)"],
+        display: ["var(--font-2nd)"],
       },
       keyframes: {
         "accordion-down": {

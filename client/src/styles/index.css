@@ -81,7 +81,7 @@
 
 @layer components {
   .bg-grain {
-    background-image: url("/cdn/assets/image/bg.svg");
+    background-image: url("/cdn/assets/image/bg/1.svg");
   }
   
   .gradient-text {

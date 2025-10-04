@@ -76,19 +76,12 @@ export function SocialSection({ data, homeData, isLoading }: SocialSectionProps)
                 data-aos="zoom-in-down" 
                 data-aos-delay={50 + (index * 50)}
                 data-testid={`card-social-${platform.testId}`}
-                style={{
-                  transition: 'all 0.3s ease-in-out'
-                }}
               >
                 <div className="text-center">
-                  <div className={`w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br ${platform.gradient} rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:scale-125 group-hover:rotate-12 transition-all duration-300 group-hover:shadow-lg`}
-                    style={{
-                      transition: 'all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)'
-                    }}
-                  >
-                    <i className={`${platform.icon} text-white text-lg md:text-2xl group-hover:scale-110 transition-transform duration-300`}></i>
+                  <div className={`w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br ${platform.gradient} rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-all duration-300 group-hover:shadow-lg`}>
+                    <i className={`${platform.icon} text-white text-lg md:text-2xl`}></i>
                   </div>
-                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:${platform.gradient} transition-all duration-300" data-testid={`text-${platform.testId}-name`}>
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2" data-testid={`text-${platform.testId}-name`}>
                     {platform.name}
                   </h3>
                   <p className="text-dark-300 text-xs md:text-sm mb-3 md:mb-4 group-hover:text-dark-200 transition-colors duration-300" data-testid={`text-${platform.testId}-handle`}>
@@ -98,11 +91,10 @@ export function SocialSection({ data, homeData, isLoading }: SocialSectionProps)
                     href={platform.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`block bg-gradient-to-r ${platform.gradient} text-white py-2 px-3 md:px-4 rounded-full text-xs md:text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-${platform.gradient.split(' ')[1].replace('to-', '')}/50 relative overflow-hidden group/button`}
+                    className={`block bg-gradient-to-r ${platform.gradient} text-white py-2 px-3 md:px-4 rounded-full text-xs md:text-sm font-medium transition-all duration-300 hover:scale-110 hover:shadow-2xl relative overflow-hidden group/button before:absolute before:inset-0 before:bg-white/20 before:translate-y-full hover:before:translate-y-0 before:transition-transform before:duration-300`}
                     data-testid={`link-${platform.testId}`}
                   >
                     <span className="relative z-10">{platform.buttonText}</span>
-                    <span className={`absolute inset-0 bg-gradient-to-r ${platform.hoverGradient} opacity-0 group-hover/button:opacity-100 transition-opacity duration-300`}></span>
                   </a>
                 </div>
               </div>

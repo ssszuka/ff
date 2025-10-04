@@ -128,8 +128,10 @@ onError={(e) => {
 
           {/* Name & Title */}
           <div data-aos="fade-up" data-aos-delay="100">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-2nd font-bold mb-3 md:mb-4 gradient-text transition-all duration-500 ease-in-out" data-testid="text-hero-name">
-              {displayName}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-2nd font-bold mb-3 md:mb-4 transition-all duration-500 ease-in-out" data-testid="text-hero-name">
+              <span className="gradient-text">
+                {displayName}
+              </span>
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl text-dark-300 mb-2 font-light transition-all duration-500 ease-in-out" data-testid="text-hero-tagline">
               YouTuber & Gamer

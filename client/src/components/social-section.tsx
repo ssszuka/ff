@@ -7,7 +7,7 @@ interface SocialSectionProps {
   isLoading: boolean;
 }
 
-export function SocialSection({ data, homeData, isLoading }: SocialSectionProps) {
+export function SocialSection({ data, homeData }: SocialSectionProps) {
   const { socials, server } = homeData;
   
   // Removed GSAP hover animations to prevent conflict with AOS animations
@@ -19,7 +19,7 @@ export function SocialSection({ data, homeData, isLoading }: SocialSectionProps)
       gradient: 'from-red-500 to-red-600',
       hoverGradient: 'from-red-400 to-red-500',
       handle: socials?.youtube?.handle || '@janvidreamer',
-      url: socials?.youtube?.url || '#',
+      url: socials?.youtube?.url || 'https://www.youtube.com/channel/UCa4-5c2gCYxqummRhmh6V4Q',
       buttonText: 'Subscribe',
       testId: 'youtube',
     },

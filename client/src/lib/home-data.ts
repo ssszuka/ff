@@ -50,7 +50,7 @@ export const homeData: HomeSocialsData = {
   },
   server: {
     name: 'Dreamer\'s Land',
-    logo: 'https://cdn.discordapp.com/icons/1368953017717489745/a_1b25cb0345a6fd2c925610540d43b9db.gif',
+    logo: '/cdn/logo.avif',
     inviteUrl: 'https://joindc.pages.dev',
     description: 'Join our amazing community of dreamers!'
   }

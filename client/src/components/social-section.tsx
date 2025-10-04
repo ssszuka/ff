@@ -1,25 +1,19 @@
-import type { HomeSocialsData } from "@/lib/home-data";
 import type { UnifiedData } from "@/lib/unified-data-service";
 
 interface SocialSectionProps {
   data: UnifiedData | null;
-  homeData: HomeSocialsData;
   isLoading: boolean;
 }
 
-export function SocialSection({ data, homeData }: SocialSectionProps) {
-  const { socials, server } = homeData;
-  
-  // Removed GSAP hover animations to prevent conflict with AOS animations
-  
+export function SocialSection({ data }: SocialSectionProps) {
   const socialPlatforms = [
     {
       name: 'YouTube',
       icon: 'fab fa-youtube',
       gradient: 'from-red-500 to-red-600',
       hoverGradient: 'from-red-400 to-red-500',
-      handle: socials?.youtube?.handle || '@janvidreamer',
-      url: socials?.youtube?.url || 'https://www.youtube.com/channel/UCa4-5c2gCYxqummRhmh6V4Q',
+      handle: '@janvidreamer',
+      url: 'https://www.youtube.com/channel/UCa4-5c2gCYxqummRhmh6V4Q',
       buttonText: 'Subscribe',
       testId: 'youtube',
     },
@@ -28,8 +22,8 @@ export function SocialSection({ data, homeData }: SocialSectionProps) {
       icon: 'fab fa-instagram',
       gradient: 'from-pink-500 to-purple-600',
       hoverGradient: 'from-pink-400 to-purple-500',
-      handle: socials?.instagram?.handle || '@janvidreamer',
-      url: socials?.instagram?.url || '#',
+      handle: '@janvidreamer',
+      url: 'https://instagram.com/janvidreamer',
       buttonText: 'Follow',
       testId: 'instagram',
     },
@@ -39,7 +33,7 @@ export function SocialSection({ data, homeData }: SocialSectionProps) {
       gradient: 'from-indigo-500 to-purple-600',
       hoverGradient: 'from-indigo-400 to-purple-500',
       handle: 'Personal Profile',
-      url: data?.owner?.id ? `https://discord.com/users/${data.owner.id}` : socials?.discord?.url || '#',
+      url: data?.owner?.id ? `https://discord.com/users/${data.owner.id}` : 'https://discord.gg/dreamer',
       buttonText: 'Add Friend',
       testId: 'discord-user',
     },
@@ -49,7 +43,7 @@ export function SocialSection({ data, homeData }: SocialSectionProps) {
       gradient: 'from-blue-500 to-cyan-500',
       hoverGradient: 'from-blue-400 to-cyan-400',
       handle: 'Community Server',
-      url: server?.inviteUrl || '#',
+      url: 'https://joindc.pages.dev',
       buttonText: 'Join Server',
       testId: 'discord-server',
     },

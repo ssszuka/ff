@@ -1,15 +1,13 @@
 import { useEffect, useRef } from "react";
 import type { UnifiedData } from "@/lib/unified-data-service";
-import type { HomeSocialsData } from "@/lib/home-data";
 import { defaultOwnerData, defaultHeroData } from "@/lib/default-data";
 
 interface HeroSectionProps {
   data: UnifiedData | null;
-  homeData: HomeSocialsData;
   isLoading: boolean;
 }
 
-export function HeroSection({ data, homeData, isLoading }: HeroSectionProps) {
+export function HeroSection({ data, isLoading }: HeroSectionProps) {
   const avatarRef = useRef<HTMLImageElement>(null);
 
   const scrollToSection = (sectionId: string) => {

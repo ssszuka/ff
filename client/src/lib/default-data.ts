@@ -12,7 +12,7 @@ export const defaultOwnerData = {
 export const defaultGuildData = {
   id: "1080560914262139001",
   name: "Dreamer's Land",
-  iconUrl: "https://cdn.discordapp.com/icons/1368953017717489745/a_1b25cb0345a6fd2c925610540d43b9db.gif",
+  iconUrl: "/cdn/assets/image/guild-logo.avif",
   memberCountFormatted: "N/A",
   verifiedUserCountFormatted: "N/A"
 };

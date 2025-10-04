@@ -85,7 +85,6 @@ export default {
       fontFamily: {
         primary: ["var(--font-primary)"],
         "2nd": ["var(--font-2nd)"],
-        "3rd": ["var(--font-3rd)"],
         sans: ["var(--font-primary)"],
         serif: ["var(--font-2nd)"],
         display: ["var(--font-2nd)"],

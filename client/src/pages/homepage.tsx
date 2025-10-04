@@ -4,9 +4,7 @@ import { AboutSection } from "@/components/about-section";
 import { SocialSection } from "@/components/social-section";
 import { Footer } from "@/components/footer";
 import { useUnifiedData } from "@/lib/unified-data-service";
-import { homeData } from "@/lib/home-data";
 import { updateMetaTags, initializeAnimations, checkReducedMotion } from "@/lib/meta-utils";
-import { appConfig } from "@/lib/config";
 
 export function Homepage() {
   const [animationsInitialized, setAnimationsInitialized] = useState(false);
@@ -21,12 +19,32 @@ export function Homepage() {
   // Update meta tags when data changes
   useEffect(() => {
     if (data && !isLoading) {
-      // Create homepage data structure for meta tags
       const homepageData = {
         owner: data.owner,
-        socials: homeData.socials,
+        socials: {
+          youtube: {
+            handle: '@janvidreamer',
+            url: 'https://www.youtube.com/channel/UCa4-5c2gCYxqummRhmh6V4Q'
+          },
+          discord: {
+            handle: "Dreamer's Land",
+            url: 'https://discord.gg/dreamer',
+            inviteCode: 'dreamer'
+          },
+          instagram: {
+            handle: '@janvidreamer',
+            url: 'https://instagram.com/janvidreamer'
+          },
+          twitter: {
+            handle: '@janvidreamer',
+            url: 'https://twitter.com/janvidreamer'
+          }
+        },
         server: {
-          ...homeData.server,
+          name: "Dreamer's Land",
+          logo: '/cdn/assets/image/guild-logo.avif',
+          inviteUrl: 'https://joindc.pages.dev',
+          description: 'Join our amazing community of dreamers!',
           memberCount: data.guild?.memberCount,
           memberCountFormatted: data.guild?.memberCountFormatted
         }
@@ -57,7 +75,6 @@ export function Homepage() {
       <main data-testid="main-content">
         <HeroSection 
           data={data}
-          homeData={homeData}
           isLoading={isLoading}
         />
         
@@ -68,7 +85,6 @@ export function Homepage() {
         
         <SocialSection 
           data={data}
-          homeData={homeData}
           isLoading={isLoading}
         />
         

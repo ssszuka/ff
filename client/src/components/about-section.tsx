@@ -59,7 +59,7 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
           <div className="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
             <div data-aos="zoom-in-right" data-aos-delay="100" className="h-full">
               <div className="bg-dark-800/50 p-6 md:p-8 rounded-2xl social-card h-full flex flex-col justify-center">
-                <p className="text-base md:text-lg leading-relaxed text-dark-200 mb-4 md:mb-6 font-3rd" data-testid="text-about-description">
+                <p className="text-base md:text-lg leading-relaxed text-dark-200 mb-4 md:mb-6 font-2nd" data-testid="text-about-description">
                   {isLoading ? aboutText : (owner?.about || aboutText)}
                 </p>
                 

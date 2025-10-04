@@ -16,7 +16,7 @@ export function Footer({ isConnected }: FooterProps) {
               </p>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-dark-500 text-xs font-mono" data-testid="text-footer-status">
+              <span className="text-dark-500 text-xs font-primary" data-testid="text-footer-status">
                 Status: <span className={isConnected ? 'text-neon-emerald' : 'text-neon-orange'}>{isConnected ? 'Connected' : 'Offline'}</span>
               </span>
             </div>

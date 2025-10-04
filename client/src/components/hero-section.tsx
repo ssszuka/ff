@@ -93,7 +93,7 @@ onError={(e) => {
               />
               {/* show status */}
               {owner && data?.owner?.status && !['NA', 'offline'].includes(data.owner.status) && ['online', 'idle', 'dnd'].includes(data.owner.status) && (
-                <div className={`absolute -bottom-4 -right-4 px-2 py-1 rounded-full text-xs font-mono animate-float flex items-center gap-1 ${
+                <div className={`absolute -bottom-4 -right-4 px-2 py-1 rounded-full text-xs font-primary animate-float flex items-center gap-1 ${
                   (data?.owner?.status === 'online') ? 'bg-green-500 text-white' :
                   (data?.owner?.status === 'idle') ? 'bg-yellow-500 text-black' :
                   (data?.owner?.status === 'dnd') ? 'bg-red-400 text-white' :

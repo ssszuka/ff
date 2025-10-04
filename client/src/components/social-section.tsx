@@ -72,29 +72,37 @@ export function SocialSection({ data, homeData, isLoading }: SocialSectionProps)
             {socialPlatforms.map((platform, index) => (
               <div 
                 key={platform.name}
-                className="social-card bg-dark-800/30 p-4 md:p-6 rounded-2xl group" 
+                className="social-card bg-dark-800/30 p-4 md:p-6 rounded-2xl group hover:bg-dark-800/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-2" 
                 data-aos="zoom-in-down" 
                 data-aos-delay={50 + (index * 50)}
                 data-testid={`card-social-${platform.testId}`}
+                style={{
+                  transition: 'all 0.3s ease-in-out'
+                }}
               >
                 <div className="text-center">
-                  <div className={`w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br ${platform.gradient} rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-transform`}>
-                    <i className={`${platform.icon} text-white text-lg md:text-2xl`}></i>
+                  <div className={`w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br ${platform.gradient} rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:scale-125 group-hover:rotate-12 transition-all duration-300 group-hover:shadow-lg`}
+                    style={{
+                      transition: 'all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)'
+                    }}
+                  >
+                    <i className={`${platform.icon} text-white text-lg md:text-2xl group-hover:scale-110 transition-transform duration-300`}></i>
                   </div>
-                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2" data-testid={`text-${platform.testId}-name`}>
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:${platform.gradient} transition-all duration-300" data-testid={`text-${platform.testId}-name`}>
                     {platform.name}
                   </h3>
-                  <p className="text-dark-300 text-xs md:text-sm mb-3 md:mb-4" data-testid={`text-${platform.testId}-handle`}>
+                  <p className="text-dark-300 text-xs md:text-sm mb-3 md:mb-4 group-hover:text-dark-200 transition-colors duration-300" data-testid={`text-${platform.testId}-handle`}>
                     {platform.handle}
                   </p>
                   <a 
                     href={platform.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`block bg-gradient-to-r ${platform.gradient} hover:bg-gradient-to-r hover:${platform.hoverGradient} text-white py-2 px-3 md:px-4 rounded-full text-xs md:text-sm font-medium transition-all`}
+                    className={`block bg-gradient-to-r ${platform.gradient} text-white py-2 px-3 md:px-4 rounded-full text-xs md:text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-${platform.gradient.split(' ')[1].replace('to-', '')}/50 relative overflow-hidden group/button`}
                     data-testid={`link-${platform.testId}`}
                   >
-                    {platform.buttonText}
+                    <span className="relative z-10">{platform.buttonText}</span>
+                    <span className={`absolute inset-0 bg-gradient-to-r ${platform.hoverGradient} opacity-0 group-hover/button:opacity-100 transition-opacity duration-300`}></span>
                   </a>
                 </div>
               </div>

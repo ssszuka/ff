@@ -256,7 +256,7 @@ export function VerificationPortal() {
                       <BookOpen className="w-4 h-4 mr-2" />
                       Verification Guide
                     </a>
-                    <a href="/privacy-policy" className="text-dark-400 hover:text-white transition-colors inline-flex items-center" data-testid="link-privacy">
+                    <a href="/portal/privacy-policy" className="text-dark-400 hover:text-white transition-colors inline-flex items-center" data-testid="link-privacy">
                       <Shield className="w-4 h-4 mr-2" />
                       Privacy Policy
                     </a>
@@ -397,7 +397,7 @@ export function VerificationPortal() {
                 <a href="/guide" className="text-dark-400 hover:text-white transition-colors cursor-help" data-testid="link-footer-guide">
                   Guide
                 </a>
-                <a href="/privacy-policy" className="text-dark-400 hover:text-white transition-colors cursor-help" data-testid="link-footer-privacy">
+                <a href="/portal/privacy-policy" className="text-dark-400 hover:text-white transition-colors cursor-help" data-testid="link-footer-privacy">
                   Privacy
                 </a>
               </div>

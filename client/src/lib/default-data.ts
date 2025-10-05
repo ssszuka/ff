@@ -13,8 +13,8 @@ export const defaultGuildData = {
   id: "1080560914262139001",
   name: "Dreamer's Land",
   iconUrl: "/cdn/assets/image/guild-logo.avif",
-  memberCountFormatted: "N/A",
-  verifiedUserCountFormatted: "N/A"
+  memberCountFormatted: "NA",
+  verifiedUserCountFormatted: "NA"
 };
 
 export const defaultYoutubeData = {
@@ -22,7 +22,7 @@ export const defaultYoutubeData = {
   channelTitle: "Janvi Dreamer",
   customUsername: "@janvidreamer",
   logoUrl: "/cdn/assets/image/logo.avif",
-  subscriberCountFormatted: "N/A",
+  subscriberCountFormatted: "NA",
   channelUrl: "https://www.youtube.com/channel/UCa4-5c2gCYxqummRhmh6V4Q"
 };
 

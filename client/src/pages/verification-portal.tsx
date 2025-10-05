@@ -320,7 +320,7 @@ export function VerificationPortal() {
                           {data.youtube.channelTitle}
                         </h4>
                         <p className="text-dark-300" data-testid="text-youtube-subscribers">
-                          {data.youtube.subscriberCountFormatted ? `${data.youtube.subscriberCountFormatted} subs` : 'N/A'}
+                          {data.youtube.subscriberCountFormatted ? `${data.youtube.subscriberCountFormatted} subs` : 'NA'}
                         </p>
                       </div>
                       <Button 

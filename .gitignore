@@ -25,6 +25,7 @@ lerna-debug.log*
 *.sln
 *.sw?
 .replit
+.local/
 
 # TypeScript cache
 *.tsbuildinfo
@@ -36,7 +37,7 @@ tsconfig.tsbuildinfo
 .env.*
 !.env.example
 
-# Custom assets (not tracked in Git)
+# Custom assets
 attached_assets/
 
 # Optional lock files (ignore if using multiple package managers)

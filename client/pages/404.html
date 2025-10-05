@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Page Not Found</title>
+    <link rel="icon" href="/cdn/assets/favicon/favicon.ico">
     <style>
         * {
             margin: 0;
@@ -79,25 +80,24 @@
     <div class="container">
         <div class="error-code">404</div>
         <h1>Page Not Found</h1>
-        <p>The page you're looking for doesn't exist or has been moved.</p>
-        <button class="btn" onclick="goBack()">Go Back</button>
+        <p>
+            The page you're looking for doesn't exist
+        </p>
+        <button class="btn" onclick="goBack()">
+            Go Back
+        </button>
     </div>
 
     <script>
         function goBack() {
             try {
                 const ref = document.referrer;
-
-                // Check if referrer exists and is not the current page
                 if (ref && ref !== window.location.href && ref !== '') {
-                    // User came from another page, redirect to that page
                     window.location.href = ref;
                 } else {
-                    // No referrer found or came directly, redirect to home
                     window.location.href = '/';
                 }
             } catch (error) {
-                // If any error occurs, redirect to home
                 console.error('Navigation error:', error);
                 window.location.href = '/';
             }

@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import type { UnifiedData } from "@/lib/unified-data-service";
 import { defaultOwnerData, defaultHeroData } from "@/lib/default-data";
 
@@ -8,8 +7,6 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ data, isLoading }: HeroSectionProps) {
-  const avatarRef = useRef<HTMLImageElement>(null);
-
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
@@ -23,46 +20,6 @@ export function HeroSection({ data, isLoading }: HeroSectionProps) {
   const navigateToPortal = () => {
     window.location.href = '/portal';
   };
-
-  useEffect(() => {
-    // GSAP animations for avatar interaction (mobile and desktop)
-    if (typeof window !== 'undefined' && 'gsap' in window && avatarRef.current) {
-      const gsap = (window as any).gsap;
-      const avatar = avatarRef.current;
-      const isMobile = window.innerWidth < 768;
-
-      const animateIn = () => {
-        gsap.to(avatar, {
-          scale: isMobile ? 1.05 : 1.1, // Smaller scale on mobile
-          rotation: isMobile ? 3 : 5, // Less rotation on mobile
-          duration: 0.3,
-          ease: "power2.out"
-        });
-      };
-
-      const animateOut = () => {
-        gsap.to(avatar, {
-          scale: 1,
-          rotation: 0,
-          duration: 0.3,
-          ease: "power2.out"
-        });
-      };
-
-      // Add both mouse and touch events for better mobile support
-      avatar.addEventListener('mouseenter', animateIn);
-      avatar.addEventListener('mouseleave', animateOut);
-      avatar.addEventListener('touchstart', animateIn);
-      avatar.addEventListener('touchend', animateOut);
-
-      return () => {
-        avatar.removeEventListener('mouseenter', animateIn);
-        avatar.removeEventListener('mouseleave', animateOut);
-        avatar.removeEventListener('touchstart', animateIn);
-        avatar.removeEventListener('touchend', animateOut);
-      };
-    }
-  }, []);
 
   const { owner } = data || { owner: null };
 
@@ -80,7 +37,6 @@ export function HeroSection({ data, isLoading }: HeroSectionProps) {
             <div className="relative inline-block">
               
               <img 
-                ref={avatarRef}
                 src={avatarUrl}
                 alt={displayName}
                 className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full border-4 border-neon-purple animate-pulse-glow transition-all duration-500 ease-in-out"

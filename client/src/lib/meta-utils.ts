@@ -38,11 +38,6 @@ export function initializeAnimations() {
       mirrorOffset: 260, // Specific offset for mirror (out) animations - triggers much earlier
     });
   }
-
-  // Initialize GSAP animations if available
-  if (typeof window !== 'undefined' && 'gsap' in window) {
-    // GSAP is available, animations will be handled by individual components
-  }
 }
 
 export function checkReducedMotion(): boolean {

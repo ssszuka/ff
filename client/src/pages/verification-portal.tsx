@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useUnifiedData } from "@/lib/unified-data-service";
 import { defaultGuildData, defaultYoutubeData } from "@/lib/default-data";
 import { Button } from "@/components/ui/button";
@@ -15,11 +15,8 @@ import {
   Sparkles,
   Crown
 } from "lucide-react";
-import { initializeAnimations, checkReducedMotion } from "@/lib/meta-utils";
 
 export function VerificationPortal() {
-  const [animationsInitialized, setAnimationsInitialized] = useState(false);
-  
   const {
     data,
     isLoading,
@@ -85,18 +82,6 @@ export function VerificationPortal() {
     updateTwitterTag('twitter:description', description);
     updateTwitterTag('twitter:image', imageUrl);
   }, [data]);
-  
-  // Initialize animations immediately
-  useEffect(() => {
-    if (!animationsInitialized && !checkReducedMotion()) {
-      const timer = setTimeout(() => {
-        initializeAnimations();
-        setAnimationsInitialized(true);
-      }, 100);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [animationsInitialized]);
   
   // Error state for failed data loading
   if (error && !data) {

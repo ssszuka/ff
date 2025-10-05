@@ -74,6 +74,10 @@ localPort = 37885
 externalPort = 6800
 
 [[ports]]
+localPort = 39025
+externalPort = 8008
+
+[[ports]]
 localPort = 39375
 externalPort = 4200
 
@@ -99,3 +103,4 @@ externalPort = 8000
 
 [nix]
 packages = ["unzipNLS"]
+channel = "stable-25_05"

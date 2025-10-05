@@ -5,6 +5,7 @@ import { SocialSection } from "@/components/social-section";
 import { Footer } from "@/components/footer";
 import { useUnifiedData } from "@/lib/unified-data-service";
 import { updateMetaTags, initializeAnimations, checkReducedMotion } from "@/lib/meta-utils";
+import 'aos/dist/aos.css';
 
 export function Homepage() {
   const [animationsInitialized, setAnimationsInitialized] = useState(false);

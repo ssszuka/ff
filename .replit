@@ -1,2 +1,28 @@
 [agent]
 expertMode = true
+run = "pnpm run dev"
+entrypoint = "client/pages/index.html"
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "pnpm run build && pnpm run preview"]
+deploymentTarget = "static"
+ignorePorts = false
+
+[workflows]
+runButton = "Development Server"
+
+[[workflows.workflow]]
+name = "Development Server"
+author = 47050562
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pnpm install"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pnpm run dev"

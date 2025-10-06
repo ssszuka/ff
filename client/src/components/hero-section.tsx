@@ -2,7 +2,7 @@ import type { InfoData } from "@/lib/info-data";
 import { defaultOwnerData, defaultHeroData } from "@/lib/default-data";
 
 interface HeroSectionProps {
-  data: UnifiedData | null;
+  data: InfoData | null;
   isLoading: boolean;
 }
 

@@ -14,6 +14,12 @@ export default defineConfig({
       threshold: 1024,
       deleteOriginFile: false,
     }),
+    viteCompression({
+      algorithm: 'gzip',
+      ext: '.gz',
+      threshold: 1024,
+      deleteOriginFile: false,
+    }),
   ],
   resolve: {
     alias: {

@@ -1,4 +1,5 @@
 import type { InfoData } from "@/lib/info-data";
+import { Youtube, Instagram, MessageCircle, Users } from "lucide-react";
 
 interface SocialSectionProps {
   data: InfoData | null;
@@ -9,7 +10,7 @@ export function SocialSection({ data }: SocialSectionProps) {
   const socialPlatforms = [
     {
       name: 'YouTube',
-      icon: 'fab fa-youtube',
+      icon: Youtube,
       gradient: 'from-red-500 to-red-600',
       hoverGradient: 'from-red-400 to-red-500',
       handle: '@janvidreamer',
@@ -19,7 +20,7 @@ export function SocialSection({ data }: SocialSectionProps) {
     },
     {
       name: 'Instagram',
-      icon: 'fab fa-instagram',
+      icon: Instagram,
       gradient: 'from-pink-500 to-purple-600',
       hoverGradient: 'from-pink-400 to-purple-500',
       handle: '@janvidreamer',
@@ -29,7 +30,7 @@ export function SocialSection({ data }: SocialSectionProps) {
     },
     {
       name: 'Discord',
-      icon: 'fab fa-discord',
+      icon: MessageCircle,
       gradient: 'from-indigo-500 to-purple-600',
       hoverGradient: 'from-indigo-400 to-purple-500',
       handle: 'Personal Profile',
@@ -39,7 +40,7 @@ export function SocialSection({ data }: SocialSectionProps) {
     },
     {
       name: "Dreamer's Land",
-      icon: 'fas fa-users',
+      icon: Users,
       gradient: 'from-blue-500 to-cyan-500',
       hoverGradient: 'from-blue-400 to-cyan-400',
       handle: 'Community Server',
@@ -73,7 +74,7 @@ export function SocialSection({ data }: SocialSectionProps) {
               >
                 <div className="text-center">
                   <div className={`w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br ${platform.gradient} rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-all duration-300 group-hover:shadow-lg`}>
-                    <i className={`${platform.icon} text-white text-lg md:text-2xl`}></i>
+                    <platform.icon className="text-white w-6 h-6 md:w-8 md:h-8" />
                   </div>
                   <h3 className="text-lg md:text-xl font-semibold text-white mb-2" data-testid={`text-${platform.testId}-name`}>
                     {platform.name}

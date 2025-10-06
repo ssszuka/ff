@@ -3,20 +3,20 @@ import { HeroSection } from "@/components/hero-section";
 import { AboutSection } from "@/components/about-section";
 import { SocialSection } from "@/components/social-section";
 import { Footer } from "@/components/footer";
-import { useUnifiedData } from "@/lib/unified-data-service";
+import { useInfoData } from "@/lib/info-data";
 import { updateMetaTags, initializeAnimations, checkReducedMotion } from "@/lib/meta-utils";
 import 'aos/dist/aos.css';
 
 export function Homepage() {
   const [animationsInitialized, setAnimationsInitialized] = useState(false);
-  
+
   const {
     data,
     isLoading,
     error,
     isConnected
-  } = useUnifiedData();
-  
+  } = useInfoData();
+
   // Update meta tags when data changes
   useEffect(() => {
     if (data && !isLoading) {
@@ -53,7 +53,7 @@ export function Homepage() {
       updateMetaTags(homepageData);
     }
   }, [data, isLoading]);
-  
+
   // Initialize animations immediately
   useEffect(() => {
     if (!animationsInitialized && !checkReducedMotion()) {
@@ -61,34 +61,34 @@ export function Homepage() {
         initializeAnimations();
         setAnimationsInitialized(true);
       }, 100);
-      
+
       return () => clearTimeout(timer);
     }
   }, [animationsInitialized]);
-  
-  
+
+
   return (
     <>
       {/* Background Pattern */}
       <div className="fixed inset-0 bg-grain pointer-events-none"></div>
-      
+
       {/* Main Content */}
       <main data-testid="main-content">
         <HeroSection 
           data={data}
           isLoading={isLoading}
         />
-        
+
         <AboutSection 
           data={data}
           isLoading={isLoading}
         />
-        
+
         <SocialSection 
           data={data}
           isLoading={isLoading}
         />
-        
+
         <Footer 
           isConnected={isConnected}
         />

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useUnifiedData } from "@/lib/unified-data-service";
+import { useInfoData } from "@/lib/info-data";
 import { defaultGuildData, defaultYoutubeData } from "@/lib/default-data";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -23,7 +23,7 @@ export function VerificationPortal() {
     error,
     isConnected,
     refetch
-  } = useUnifiedData();
+  } = useInfoData();
   
   // Update meta tags with full SEO implementation
   useEffect(() => {

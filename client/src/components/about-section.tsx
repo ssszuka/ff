@@ -1,7 +1,7 @@
-import type { UnifiedData } from "@/lib/unified-data-service";
+import type { InfoData } from "@/lib/info-data";
 
 interface AboutSectionProps {
-  data: UnifiedData | null;
+  data: InfoData | null;
   isLoading: boolean;
 }
 

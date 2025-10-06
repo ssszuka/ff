@@ -1,4 +1,3 @@
-modules = ["nodejs-20"]
 [agent]
 expertMode = true
 run = "pnpm run dev"
@@ -27,7 +26,3 @@ args = "pnpm install"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "pnpm run dev"
-
-[[ports]]
-localPort = 5000
-externalPort = 80

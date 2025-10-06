@@ -58,9 +58,6 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
     port: PORT,
-    strictPort: true,
-    hmr: {
-      clientPort: PORT
-    }
+    allowedHosts: ["all"]
   },
 });

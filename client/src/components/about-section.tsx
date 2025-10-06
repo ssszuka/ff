@@ -1,4 +1,5 @@
 import type { InfoData } from "@/lib/info-data";
+import { Youtube, Plane, Gamepad, PenLine, MapPin } from "lucide-react";
 
 interface AboutSectionProps {
   data: InfoData | null;
@@ -12,7 +13,7 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
   
   const badges = [
     {
-      icon: "fab fa-youtube",
+      icon: Youtube,
       title: "YouTuber",
       subtitle: "Since 2022",
       gradient: "from-red-500/20 to-red-600/20",
@@ -20,7 +21,7 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
       bg: "bg-red-500",
     },
     {
-      icon: "fas fa-plane",
+      icon: Plane,
       title: "Traveler",
       subtitle: "Explorer at heart",
       gradient: "from-blue-500/20 to-cyan-500/20",
@@ -28,7 +29,7 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
       bg: "bg-blue-500",
     },
     {
-      icon: "fas fa-gamepad",
+      icon: Gamepad,
       title: "Gamer",
       subtitle: "video game adventures",
       gradient: "from-purple-500/20 to-pink-500/20",
@@ -36,7 +37,7 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
       bg: "bg-purple-500",
     },
     {
-      icon: "fas fa-pen-fancy",
+      icon: PenLine,
       title: "Writer",
       subtitle: "Dreams in words ✨",
       gradient: "from-green-500/20 to-emerald-500/20",
@@ -64,7 +65,7 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
                 </p>
                 
                 <div className="flex items-center text-dark-400 text-sm md:text-base" data-testid="text-about-location">
-                  <i className="fas fa-map-marker-alt mr-2"></i>
+                  <MapPin className="w-4 h-4 mr-2" />
                   <span>Madhya Pradesh, India</span>
                 </div>
               </div>
@@ -72,23 +73,26 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
             
             <div data-aos="zoom-in-left" data-aos-delay="100" className="h-full">
               <div className="space-y-3 md:space-y-4 h-full flex flex-col justify-center">
-                {badges.map((badge, index) => (
-                  <div 
-                    key={badge.title}
-                    className={`bg-gradient-to-r ${badge.gradient} p-3 md:p-4 rounded-xl border ${badge.border}`}
-                    data-testid={`card-badge-${badge.title.toLowerCase()}`}
-                  >
-                    <div className="flex items-center">
-                      <div className={`w-10 h-10 md:w-12 md:h-12 ${badge.bg} rounded-full flex items-center justify-center mr-3 md:mr-4`}>
-                        <i className={`${badge.icon} text-white text-lg md:text-xl`}></i>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-white">{badge.title}</h3>
-                        <p className="text-dark-300 text-sm">{badge.subtitle}</p>
+                {badges.map((badge, index) => {
+                  const IconComponent = badge.icon;
+                  return (
+                    <div 
+                      key={badge.title}
+                      className={`bg-gradient-to-r ${badge.gradient} p-3 md:p-4 rounded-xl border ${badge.border}`}
+                      data-testid={`card-badge-${badge.title.toLowerCase()}`}
+                    >
+                      <div className="flex items-center">
+                        <div className={`w-10 h-10 md:w-12 md:h-12 ${badge.bg} rounded-full flex items-center justify-center mr-3 md:mr-4`}>
+                          <IconComponent className="w-5 h-5 md:w-6 md:h-6 text-white" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-white">{badge.title}</h3>
+                          <p className="text-dark-300 text-sm">{badge.subtitle}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>

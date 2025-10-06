@@ -1,4 +1,5 @@
 import type { InfoData } from "@/lib/info-data";
+import { Youtube, Instagram, MessageCircle, Users } from "lucide-react";
 
 interface SocialSectionProps {
   data: InfoData | null;
@@ -9,7 +10,7 @@ export function SocialSection({ data }: SocialSectionProps) {
   const socialPlatforms = [
     {
       name: 'YouTube',
-      icon: 'fab fa-youtube',
+      icon: Youtube,
       gradient: 'from-red-500 to-red-600',
       hoverGradient: 'from-red-400 to-red-500',
       handle: '@janvidreamer',
@@ -19,7 +20,7 @@ export function SocialSection({ data }: SocialSectionProps) {
     },
     {
       name: 'Instagram',
-      icon: 'fab fa-instagram',
+      icon: Instagram,
       gradient: 'from-pink-500 to-purple-600',
       hoverGradient: 'from-pink-400 to-purple-500',
       handle: '@janvidreamer',
@@ -29,7 +30,7 @@ export function SocialSection({ data }: SocialSectionProps) {
     },
     {
       name: 'Discord',
-      icon: 'fab fa-discord',
+      icon: MessageCircle,
       gradient: 'from-indigo-500 to-purple-600',
       hoverGradient: 'from-indigo-400 to-purple-500',
       handle: 'Personal Profile',
@@ -39,7 +40,7 @@ export function SocialSection({ data }: SocialSectionProps) {
     },
     {
       name: "Dreamer's Land",
-      icon: 'fas fa-users',
+      icon: Users,
       gradient: 'from-blue-500 to-cyan-500',
       hoverGradient: 'from-blue-400 to-cyan-400',
       handle: 'Community Server',
@@ -63,36 +64,39 @@ export function SocialSection({ data }: SocialSectionProps) {
           </div>
           
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {socialPlatforms.map((platform, index) => (
-              <div 
-                key={platform.name}
-                className="social-card bg-dark-800/30 p-4 md:p-6 rounded-2xl group hover:bg-dark-800/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-2" 
-                data-aos="zoom-in-down" 
-                data-aos-delay={50 + (index * 50)}
-                data-testid={`card-social-${platform.testId}`}
-              >
-                <div className="text-center">
-                  <div className={`w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br ${platform.gradient} rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-all duration-300 group-hover:shadow-lg`}>
-                    <i className={`${platform.icon} text-white text-lg md:text-2xl`}></i>
+            {socialPlatforms.map((platform, index) => {
+              const IconComponent = platform.icon;
+              return (
+                <div 
+                  key={platform.name}
+                  className="social-card bg-dark-800/30 p-4 md:p-6 rounded-2xl group hover:bg-dark-800/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-2" 
+                  data-aos="zoom-in-down" 
+                  data-aos-delay={50 + (index * 50)}
+                  data-testid={`card-social-${platform.testId}`}
+                >
+                  <div className="text-center">
+                    <div className={`w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br ${platform.gradient} rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-all duration-300 group-hover:shadow-lg`}>
+                      <IconComponent className="w-6 h-6 md:w-8 md:h-8 text-white" />
+                    </div>
+                    <h3 className="text-lg md:text-xl font-semibold text-white mb-2" data-testid={`text-${platform.testId}-name`}>
+                      {platform.name}
+                    </h3>
+                    <p className="text-dark-300 text-xs md:text-sm mb-3 md:mb-4 group-hover:text-dark-200 transition-colors duration-300" data-testid={`text-${platform.testId}-handle`}>
+                      {platform.handle}
+                    </p>
+                    <a 
+                      href={platform.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`block bg-gradient-to-r ${platform.gradient} text-white py-2 px-3 md:px-4 rounded-full text-xs md:text-sm font-medium transition-all duration-300 hover:scale-110 hover:shadow-2xl relative overflow-hidden group/button before:absolute before:inset-0 before:bg-white/20 before:translate-y-full hover:before:translate-y-0 before:transition-transform before:duration-300`}
+                      data-testid={`link-${platform.testId}`}
+                    >
+                      <span className="relative z-10">{platform.buttonText}</span>
+                    </a>
                   </div>
-                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2" data-testid={`text-${platform.testId}-name`}>
-                    {platform.name}
-                  </h3>
-                  <p className="text-dark-300 text-xs md:text-sm mb-3 md:mb-4 group-hover:text-dark-200 transition-colors duration-300" data-testid={`text-${platform.testId}-handle`}>
-                    {platform.handle}
-                  </p>
-                  <a 
-                    href={platform.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`block bg-gradient-to-r ${platform.gradient} text-white py-2 px-3 md:px-4 rounded-full text-xs md:text-sm font-medium transition-all duration-300 hover:scale-110 hover:shadow-2xl relative overflow-hidden group/button before:absolute before:inset-0 before:bg-white/20 before:translate-y-full hover:before:translate-y-0 before:transition-transform before:duration-300`}
-                    data-testid={`link-${platform.testId}`}
-                  >
-                    <span className="relative z-10">{platform.buttonText}</span>
-                  </a>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

@@ -12,6 +12,12 @@ run = ["sh", "-c", "pnpm run build && pnpm run preview"]
 deploymentTarget = "static"
 ignorePorts = false
 
+# Custom compression control (example - agar manually control karna ho)
+[[deployment.responseHeaders]]
+path = "/*"
+name = "Vary"
+value = "Accept-Encoding"
+
 [workflows]
 runButton = "Project"
 

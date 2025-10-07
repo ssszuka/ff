@@ -41,9 +41,9 @@ export function HeroSection({ data }: HeroSectionProps) {
               <img 
                 src={avatarUrl}
                 alt={displayName}
-                className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full border-4 border-neon-purple animate-pulse-glow transition-all duration-500 ease-in-out"
+                className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full border-4 border-neon-purple animate-pulse-glow transition-all duration-500 ease-in-out hover:scale-110 hover:rotate-3 hover:shadow-[0_0_60px_rgba(168,85,247,0.8)] cursor-pointer"
                 data-testid="img-hero-avatar"
-onError={(e) => {
+                onError={(e) => {
                   (e.target as HTMLImageElement).src = defaultHeroData.avatarUrl;
                 }}
               />

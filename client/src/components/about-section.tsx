@@ -1,5 +1,5 @@
 import type { InfoData } from "@/lib/info-data";
-import { Youtube, Plane, Gamepad, PenLine, MapPin } from "lucide-react";
+import { Youtube, TentTree, Gamepad2, PenLine, MapPin } from "lucide-react";
 
 interface AboutSectionProps {
   data: InfoData | null;
@@ -21,7 +21,7 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
       bg: "bg-red-500",
     },
     {
-      icon: Plane,
+      icon: TentTree,
       title: "Traveler",
       subtitle: "Explorer at heart",
       gradient: "from-blue-500/20 to-cyan-500/20",
@@ -29,7 +29,7 @@ export function AboutSection({ data, isLoading }: AboutSectionProps) {
       bg: "bg-blue-500",
     },
     {
-      icon: Gamepad,
+      icon: Gamepad2,
       title: "Gamer",
       subtitle: "video game adventures",
       gradient: "from-purple-500/20 to-pink-500/20",

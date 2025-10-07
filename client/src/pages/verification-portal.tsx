@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useInfoData } from "@/lib/info-data";
 import { defaultGuildData, defaultYoutubeData } from "@/lib/default-data";
 import { Button } from "@/components/ui/button";
@@ -24,64 +23,6 @@ export function VerificationPortal() {
     isConnected,
     refetch
   } = useInfoData();
-  
-  // Update meta tags with full SEO implementation
-  useEffect(() => {
-    const title = "Verification Portal | Dreamer's Land";
-    const description = "Official verification portal for Dreamer's Land Discord server. Verify your YouTube subscription to unlock exclusive roles and access.";
-    const imageUrl = data?.guild?.iconUrl || "";
-    const currentUrl = window.location.href;
-    
-    // Update page title
-    document.title = title;
-    
-    // Update meta description
-    const descriptionMeta = document.querySelector('meta[name="description"]');
-    if (descriptionMeta) {
-      (descriptionMeta as HTMLMetaElement).content = description;
-    } else {
-      const meta = document.createElement('meta');
-      meta.name = "description";
-      meta.content = description;
-      document.head.appendChild(meta);
-    }
-    
-    // Update or create OpenGraph tags
-    const updateOGTag = (property: string, content: string) => {
-      let tag = document.querySelector(`meta[property="${property}"]`);
-      if (!tag) {
-        tag = document.createElement('meta');
-        (tag as HTMLMetaElement).setAttribute('property', property);
-        document.head.appendChild(tag);
-      }
-      (tag as HTMLMetaElement).content = content;
-    };
-    
-    // Update or create Twitter Card tags
-    const updateTwitterTag = (name: string, content: string) => {
-      let tag = document.querySelector(`meta[name="${name}"]`);
-      if (!tag) {
-        tag = document.createElement('meta');
-        (tag as HTMLMetaElement).setAttribute('name', name);
-        document.head.appendChild(tag);
-      }
-      (tag as HTMLMetaElement).content = content;
-    };
-    
-    // OpenGraph tags
-    updateOGTag('og:title', title);
-    updateOGTag('og:description', description);
-    updateOGTag('og:image', imageUrl);
-    updateOGTag('og:url', currentUrl);
-    updateOGTag('og:type', 'website');
-    updateOGTag('og:site_name', data?.guild?.name || "Dreamer's Land");
-    
-    // Twitter Card tags
-    updateTwitterTag('twitter:card', 'summary_large_image');
-    updateTwitterTag('twitter:title', title);
-    updateTwitterTag('twitter:description', description);
-    updateTwitterTag('twitter:image', imageUrl);
-  }, [data]);
   
   // Error state for failed data loading
   if (error && !data) {

@@ -4,7 +4,7 @@ import { AboutSection } from "@/components/about-section";
 import { SocialSection } from "@/components/social-section";
 import { Footer } from "@/components/footer";
 import { useInfoData } from "@/lib/info-data";
-import { updateMetaTags, initializeAnimations, checkReducedMotion } from "@/lib/meta-utils";
+import { initializeAnimations, checkReducedMotion } from "@/lib/meta-utils";
 import 'aos/dist/aos.css';
 
 export function Homepage() {
@@ -16,43 +16,6 @@ export function Homepage() {
     error,
     isConnected
   } = useInfoData();
-
-  // Update meta tags when data changes
-  useEffect(() => {
-    if (data && !isLoading) {
-      const homepageData = {
-        owner: data.owner,
-        socials: {
-          youtube: {
-            handle: '@janvidreamer',
-            url: 'https://www.youtube.com/channel/UCa4-5c2gCYxqummRhmh6V4Q'
-          },
-          discord: {
-            handle: "Dreamer's Land",
-            url: 'https://discord.gg/dreamer',
-            inviteCode: 'dreamer'
-          },
-          instagram: {
-            handle: '@janvidreamer',
-            url: 'https://instagram.com/janvidreamer'
-          },
-          twitter: {
-            handle: '@janvidreamer',
-            url: 'https://twitter.com/janvidreamer'
-          }
-        },
-        server: {
-          name: "Dreamer's Land",
-          logo: '/cdn/assets/image/guild-logo.avif',
-          inviteUrl: 'https://joindc.pages.dev',
-          description: 'Join our amazing community of dreamers!',
-          memberCount: data.guild?.memberCount,
-          memberCountFormatted: data.guild?.memberCountFormatted
-        }
-      };
-      updateMetaTags(homepageData);
-    }
-  }, [data, isLoading]);
 
   // Initialize animations immediately
   useEffect(() => {

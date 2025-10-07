@@ -6,6 +6,7 @@ entrypoint = "client/pages/index.html"
 
 [nix]
 channel = "stable-24_05"
+packages = ["unzipNLS"]
 
 [deployment]
 run = ["sh", "-c", "pnpm run build && pnpm run preview"]

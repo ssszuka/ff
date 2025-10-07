@@ -1,5 +1,6 @@
 import type { InfoData } from "@/lib/info-data";
-import { Youtube, Instagram, MessageCircle, Users } from "lucide-react";
+import { Youtube, Instagram, Users } from "lucide-react";
+import { DiscordIcon } from "@/components/icons/discord-icon";
 
 interface SocialSectionProps {
   data: InfoData | null;
@@ -30,7 +31,7 @@ export function SocialSection({ data }: SocialSectionProps) {
     },
     {
       name: 'Discord',
-      icon: MessageCircle,
+      icon: DiscordIcon,
       gradient: 'from-indigo-500 to-purple-600',
       hoverGradient: 'from-indigo-400 to-purple-500',
       handle: 'Personal Profile',

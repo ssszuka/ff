@@ -291,7 +291,7 @@ export function VerificationPortal() {
                   <h3 className="text-xl font-semibold text-white">YouTube Channel</h3>
                 </div>
                 
-                <div className="flex items-center space-x-4">
+                <div className="flex flex-wrap items-center gap-4">
                   {data?.youtube ? (
                     <>
                       <Avatar className="w-16 h-16" data-testid="img-youtube-avatar">
@@ -300,7 +300,7 @@ export function VerificationPortal() {
                           <Youtube className="w-8 h-8 text-red-500" />
                         </AvatarFallback>
                       </Avatar>
-                      <div className="flex-1 text-left">
+                      <div className="flex-1 min-w-[120px] text-left">
                         <h4 className="text-lg font-semibold text-white" data-testid="text-youtube-name">
                           {data.youtube.channelTitle}
                         </h4>
@@ -309,7 +309,7 @@ export function VerificationPortal() {
                         </p>
                       </div>
                       <Button 
-                        className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white shadow-md hover:shadow-lg transition-all duration-200 active:scale-95"
+                        className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white shadow-md hover:shadow-lg transition-all duration-200 active:scale-95 shrink-0"
                         onClick={() => window.open(data.youtube!.channelUrl, '_blank', 'noopener,noreferrer')}
                         data-testid="button-subscribe-youtube"
                       >
@@ -318,7 +318,6 @@ export function VerificationPortal() {
                       </Button>
                     </>
                   ) : (
-                    // Show fallback YouTube data when API data is not available
                     <>
                       <Avatar className="w-16 h-16 transition-all duration-500 ease-in-out" data-testid="img-youtube-avatar">
                         <AvatarImage src={defaultYoutubeData.logoUrl} alt="YouTube Channel" />
@@ -326,7 +325,7 @@ export function VerificationPortal() {
                           <Youtube className="w-8 h-8 text-red-500" />
                         </AvatarFallback>
                       </Avatar>
-                      <div className="flex-1 text-left">
+                      <div className="flex-1 min-w-[120px] text-left">
                         <h4 className="text-lg font-semibold text-white transition-all duration-500 ease-in-out" data-testid="text-youtube-name">
                           {defaultYoutubeData.channelTitle}
                         </h4>
@@ -335,7 +334,7 @@ export function VerificationPortal() {
                         </p>
                       </div>
                       <Button 
-                        className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white shadow-md hover:shadow-lg transition-all duration-200 active:scale-95"
+                        className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white shadow-md hover:shadow-lg transition-all duration-200 active:scale-95 shrink-0"
                         onClick={() => window.open(defaultYoutubeData.channelUrl, '_blank', 'noopener,noreferrer')}
                         data-testid="button-subscribe-youtube"
                       >
@@ -351,8 +350,8 @@ export function VerificationPortal() {
                   )}
                 </div>
                 
-                <p className="text-dark-400 text-sm mt-4 text-center flex items-center justify-center" data-testid="text-subscribe-message">
-                  <Crown className="w-4 h-4 mr-1 text-neon-purple" />
+                <p className="text-dark-400 text-sm mt-4 text-center" data-testid="text-subscribe-message">
+                  <Crown className="w-4 h-4 inline-block mr-1 text-neon-purple" />
                   Subscribe to unlock exclusive Discord rewards!
                 </p>
               </CardContent>

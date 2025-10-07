@@ -1,5 +1,5 @@
 import type { InfoData } from "@/lib/info-data";
-import { defaultOwnerData, defaultHeroData } from "@/lib/default-data";
+import { defaultHeroData } from "@/lib/default-data";
 import { User, Rocket, ChevronDown, Users } from "lucide-react";
 
 interface HeroSectionProps {
@@ -7,7 +7,7 @@ interface HeroSectionProps {
   isLoading: boolean;
 }
 
-export function HeroSection({ data, isLoading }: HeroSectionProps) {
+export function HeroSection({ data }: HeroSectionProps) {
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {

@@ -1,5 +1,5 @@
 import type { InfoData } from "@/lib/info-data";
-import { Youtube, Instagram, Users } from "lucide-react";
+import { Youtube, Instagram, Castle } from "lucide-react";
 import { discord } from "@/components/icons";
 
 interface SocialSectionProps {
@@ -41,7 +41,7 @@ export function SocialSection({ data }: SocialSectionProps) {
     },
     {
       name: "Dreamer's Land",
-      icon: Users,
+      icon: Castle,
       gradient: 'from-blue-500 to-cyan-500',
       hoverGradient: 'from-blue-400 to-cyan-400',
       handle: 'Community Server',

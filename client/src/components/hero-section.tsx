@@ -102,7 +102,7 @@ onError={(e) => {
           <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-8 md:mb-12 px-4" data-aos="fade-up" data-aos-delay="200">
             <button 
               onClick={() => scrollToSection('about-section')}
-              className="group bg-gradient-to-br from-blue-500 to-cyan-500 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-blue-400 hover:to-cyan-400 transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-blue-500/40 text-sm md:text-base border border-transparent hover:border-blue-500/50 backdrop-filter backdrop-blur-sm relative overflow-hidden"
+              className="group inline-flex items-center justify-center bg-gradient-to-br from-blue-500 to-cyan-500 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-blue-400 hover:to-cyan-400 transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-blue-500/40 text-sm md:text-base border border-transparent hover:border-blue-500/50 backdrop-filter backdrop-blur-sm relative overflow-hidden"
               data-testid="button-about-nav"
               style={{ 
                 transformStyle: 'preserve-3d',
@@ -110,8 +110,8 @@ onError={(e) => {
               }}
             >
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <User className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200 relative z-10" />
-              <span className="relative z-10">
+              <User className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform duration-200 relative z-10" />
+              <span className="relative z-10 ml-2">
                 About
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
               </span>
@@ -119,7 +119,7 @@ onError={(e) => {
 
             <button 
               onClick={() => scrollToSection('socials-section')}
-              className="group bg-gradient-to-br from-pink-500 to-purple-600 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-pink-400 hover:to-purple-500 transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-pink-500/40 text-sm md:text-base border border-transparent hover:border-pink-500/50 backdrop-filter backdrop-blur-sm relative overflow-hidden"
+              className="group inline-flex items-center justify-center bg-gradient-to-br from-pink-500 to-purple-600 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-pink-400 hover:to-purple-500 transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-pink-500/40 text-sm md:text-base border border-transparent hover:border-pink-500/50 backdrop-filter backdrop-blur-sm relative overflow-hidden"
               data-testid="button-socials-nav"
               style={{ 
                 transformStyle: 'preserve-3d',
@@ -127,8 +127,8 @@ onError={(e) => {
               }}
             >
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <Users className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200 relative z-10" />
-              <span className="relative z-10">
+              <Users className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform duration-200 relative z-10" />
+              <span className="relative z-10 ml-2">
                 Socials
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
               </span>
@@ -136,7 +136,7 @@ onError={(e) => {
 
             <button 
               onClick={navigateToPortal}
-              className="group bg-gradient-to-br from-violet-500 to-indigo-600 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-violet-400 hover:to-indigo-500 transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-violet-500/40 text-sm md:text-base border border-transparent hover:border-violet-500/50 backdrop-filter backdrop-blur-sm relative overflow-hidden"
+              className="group inline-flex items-center justify-center bg-gradient-to-br from-violet-500 to-indigo-600 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-violet-400 hover:to-indigo-500 transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-violet-500/40 text-sm md:text-base border border-transparent hover:border-violet-500/50 backdrop-filter backdrop-blur-sm relative overflow-hidden"
               data-testid="button-portal-nav"
               style={{ 
                 transformStyle: 'preserve-3d',
@@ -144,8 +144,8 @@ onError={(e) => {
               }}
             >
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <Rocket className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200 relative z-10" />
-              <span className="relative z-10">
+              <Rocket className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform duration-200 relative z-10" />
+              <span className="relative z-10 ml-2">
                 Portal
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
               </span>
@@ -153,10 +153,10 @@ onError={(e) => {
           </div>
 
           {/* Scroll Indicator */}
-          <div className="animate-bounce cursor-pointer" data-aos="fade-in" data-aos-delay="300" onClick={() => {
+          <div className="flex justify-center animate-bounce cursor-pointer" data-aos="fade-in" data-aos-delay="300" onClick={() => {
             scrollToSection('about-section');
           }}>
-            <ChevronDown className="w-8 h-8 text-dark-400 hover:text-neon-purple transition-colors duration-300" />
+            <ChevronDown className="w-8 h-8 text-dark-400 hover:text-neon-purple transition-colors duration-300 mx-auto" />
           </div>
         </div>
       </div>
